@@ -1,0 +1,4 @@
+source;share/sentry_description/local_setup.bash
+source;share/sentry_description/local_setup.dsv
+source;share/sentry_description/local_setup.sh
+source;share/sentry_description/local_setup.zsh

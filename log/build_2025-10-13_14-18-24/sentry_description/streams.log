@@ -1,0 +1,50 @@
+[0.072s] Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/noah/autonav_ws/src/sentry_description -DCMAKE_INSTALL_PREFIX=/home/noah/autonav_ws/install/sentry_description
+[2.085s] -- The C compiler identification is GNU 11.4.0
+[4.146s] -- The CXX compiler identification is GNU 11.4.0
+[4.212s] -- Detecting C compiler ABI info
+[4.849s] -- Detecting C compiler ABI info - done
+[4.862s] -- Check for working C compiler: /usr/bin/cc - skipped
+[4.899s] -- Detecting C compile features
+[4.910s] -- Detecting C compile features - done
+[4.977s] -- Detecting CXX compiler ABI info
+[5.650s] -- Detecting CXX compiler ABI info - done
+[5.726s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[5.726s] -- Detecting CXX compile features
+[5.726s] -- Detecting CXX compile features - done
+[7.714s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[9.431s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[11.638s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[13.869s] -- Added test 'flake8' to check Python code syntax and style conventions
+[13.922s] -- Added test 'lint_cmake' to check CMake code style
+[13.963s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[14.049s] -- Added test 'xmllint' to check XML markup files
+[14.202s] -- Configuring done
+[14.235s] -- Generating done
+[14.255s] -- Build files have been written to: /home/noah/autonav_ws/build/sentry_description
+[14.360s] Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/noah/autonav_ws/src/sentry_description -DCMAKE_INSTALL_PREFIX=/home/noah/autonav_ws/install/sentry_description
+[14.448s] Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j12 -l12
+[14.599s] Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j12 -l12
+[14.688s] Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
+[14.777s] -- Install configuration: ""
+[14.793s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src
+[14.793s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src/cd
+[14.939s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch
+[14.956s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch/display.launch.py
+[14.956s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/rviz
+[14.968s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/rviz/config.rviz
+[14.968s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/package_run_dependencies/sentry_description
+[14.969s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/parent_prefix_path/sentry_description
+[14.969s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/ament_prefix_path.sh
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/ament_prefix_path.dsv
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/path.sh
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/path.dsv
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.bash
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.sh
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.zsh
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.dsv
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.dsv
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/packages/sentry_description
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig.cmake
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig-version.cmake
+[14.970s] -- Installing: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.xml
+[15.698s] Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description

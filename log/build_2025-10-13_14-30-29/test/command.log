@@ -1,0 +1,4 @@
+Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j12 -l12
+Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j12 -l12
+Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test
+Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test
