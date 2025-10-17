@@ -3,6 +3,7 @@
 /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch/display_rviz.launch.py
 /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch/display.launch.py
 /home/noah/autonav_ws/install/sentry_description/share/sentry_description/rviz/config.rviz
+/home/noah/autonav_ws/install/sentry_description/share/sentry_description/config/ekf.yaml
 /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/package_run_dependencies/sentry_description
 /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/parent_prefix_path/sentry_description
 /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/ament_prefix_path.sh

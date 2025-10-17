@@ -1,0 +1,20 @@
+[0.623s] Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j16 -l16
+[1.526s] Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j16 -l16
+[1.737s] Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test
+[1.737s] -- Install configuration: ""
+[1.738s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/ament_index/resource_index/package_run_dependencies/test
+[1.738s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/ament_index/resource_index/parent_prefix_path/test
+[1.738s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/environment/ament_prefix_path.sh
+[1.738s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/environment/ament_prefix_path.dsv
+[1.784s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/environment/path.sh
+[1.787s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/environment/path.dsv
+[1.787s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/local_setup.bash
+[1.787s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/local_setup.sh
+[1.787s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/local_setup.zsh
+[1.787s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/local_setup.dsv
+[1.793s] -- Installing: /home/noah/autonav_ws/install/test/share/test/package.dsv
+[1.793s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/ament_index/resource_index/packages/test
+[1.793s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/cmake/testConfig.cmake
+[1.793s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/cmake/testConfig-version.cmake
+[1.793s] -- Up-to-date: /home/noah/autonav_ws/install/test/share/test/package.xml
+[2.484s] Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test

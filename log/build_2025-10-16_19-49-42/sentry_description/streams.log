@@ -1,0 +1,31 @@
+[0.657s] Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
+[2.284s] Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
+[2.536s] Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
+[2.887s] -- Install configuration: ""
+[2.887s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src
+[2.888s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src/description
+[2.888s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src/description/sentry_description.urdf
+[2.892s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/src/cd
+[2.893s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch
+[2.893s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch/display_rviz.launch.py
+[2.945s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/launch/display.launch.py
+[2.945s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/rviz
+[2.945s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/rviz/config.rviz
+[2.945s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/config
+[2.945s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/config/ekf.yaml
+[2.974s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/package_run_dependencies/sentry_description
+[2.975s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/parent_prefix_path/sentry_description
+[2.975s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/ament_prefix_path.sh
+[3.064s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/ament_prefix_path.dsv
+[3.176s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/path.sh
+[3.419s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/environment/path.dsv
+[3.553s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.bash
+[3.680s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.sh
+[3.680s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.zsh
+[3.680s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/local_setup.dsv
+[3.680s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.dsv
+[3.680s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/ament_index/resource_index/packages/sentry_description
+[3.681s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig.cmake
+[3.690s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig-version.cmake
+[3.695s] -- Up-to-date: /home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.xml
+[3.701s] Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description

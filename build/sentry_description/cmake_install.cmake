@@ -47,6 +47,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/noah/autonav_ws/src/sentry_description/src"
     "/home/noah/autonav_ws/src/sentry_description/launch"
     "/home/noah/autonav_ws/src/sentry_description/rviz"
+    "/home/noah/autonav_ws/src/sentry_description/config"
     )
 endif()
 

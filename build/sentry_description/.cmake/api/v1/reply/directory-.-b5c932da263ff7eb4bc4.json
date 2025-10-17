@@ -231,7 +231,8 @@
 			[
 				"src",
 				"launch",
-				"rviz"
+				"rviz",
+				"config"
 			],
 			"type" : "directory"
 		},

@@ -1,0 +1,201 @@
+[0.304s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.304s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7a748e2555d0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7a748e255120>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7a748e255120>>, mixin_verb=('build',))
+[1.057s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.058s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.058s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.058s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.058s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.058s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.058s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/noah/autonav_ws'
+[1.058s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.058s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.061s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.061s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.062s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.062s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.062s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.062s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.062s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.192s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.200s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.207s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.216s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.216s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.216s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.220s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.220s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.220s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.220s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.221s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extensions ['ignore', 'ignore_ament_install']
+[1.222s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extension 'ignore'
+[1.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extension 'ignore_ament_install'
+[1.225s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extensions ['colcon_pkg']
+[1.228s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extension 'colcon_pkg'
+[1.238s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extensions ['colcon_meta']
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extension 'colcon_meta'
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extensions ['ros']
+[1.242s] Level 1:colcon.colcon_core.package_identification:_identify(src/sentry_description) by extension 'ros'
+[1.263s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sentry_description' with type 'ros.ament_cmake' and name 'sentry_description'
+[1.275s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extensions ['ignore', 'ignore_ament_install']
+[1.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extension 'ignore'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extension 'ignore_ament_install'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extensions ['colcon_pkg']
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extension 'colcon_pkg'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extensions ['colcon_meta']
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extension 'colcon_meta'
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extensions ['ros']
+[1.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/test) by extension 'ros'
+[1.285s] DEBUG:colcon.colcon_core.package_identification:Package 'src/test' with type 'ros.ament_cmake' and name 'test'
+[1.286s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.286s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.286s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.286s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.286s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.751s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.764s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.809s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 2 installed packages in /home/noah/autonav_ws/install
+[1.842s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 328 installed packages in /opt/ros/humble
+[1.876s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.276s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_args' from command line to 'None'
+[2.299s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_target' from command line to 'None'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_clean_cache' from command line to 'False'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_clean_first' from command line to 'False'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'cmake_force_configure' from command line to 'False'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'ament_cmake_args' from command line to 'None'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'catkin_cmake_args' from command line to 'None'
+[2.305s] Level 5:colcon.colcon_core.verb:set package 'sentry_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.305s] DEBUG:colcon.colcon_core.verb:Building package 'sentry_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/noah/autonav_ws/build/sentry_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/noah/autonav_ws/install/sentry_description', 'merge_install': False, 'path': '/home/noah/autonav_ws/src/sentry_description', 'symlink_install': False, 'test_result_base': None}
+[2.309s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_args' from command line to 'None'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_target' from command line to 'None'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_clean_cache' from command line to 'False'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_clean_first' from command line to 'False'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'cmake_force_configure' from command line to 'False'
+[2.314s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'ament_cmake_args' from command line to 'None'
+[2.317s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'catkin_cmake_args' from command line to 'None'
+[2.317s] Level 5:colcon.colcon_core.verb:set package 'test' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.317s] DEBUG:colcon.colcon_core.verb:Building package 'test' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/noah/autonav_ws/build/test', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/noah/autonav_ws/install/test', 'merge_install': False, 'path': '/home/noah/autonav_ws/src/test', 'symlink_install': False, 'test_result_base': None}
+[2.318s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.367s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.373s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/noah/autonav_ws/src/sentry_description' with build type 'ament_cmake'
+[2.379s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/noah/autonav_ws/src/sentry_description'
+[2.472s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.472s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.477s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.992s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/noah/autonav_ws/src/test' with build type 'ament_cmake'
+[2.999s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/noah/autonav_ws/src/test'
+[2.999s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.000s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.658s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
+[3.796s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j16 -l16
+[4.380s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
+[4.518s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
+[4.745s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/test -- -j16 -l16
+[4.851s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sentry_description)
+[4.909s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/noah/autonav_ws/build/test': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test
+[4.943s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description' for CMake module files
+[4.944s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description' for CMake config files
+[4.955s] Level 1:colcon.colcon_core.shell:create_environment_hook('sentry_description', 'cmake_prefix_path')
+[4.955s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.ps1'
+[4.965s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
+[4.972s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.dsv'
+[4.987s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.sh'
+[5.031s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/bin'
+[5.039s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/lib/pkgconfig/sentry_description.pc'
+[5.045s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/lib/python3.10/site-packages'
+[5.045s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/bin'
+[5.045s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.ps1'
+[5.062s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.dsv'
+[5.090s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.sh'
+[5.125s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.bash'
+[5.150s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.zsh'
+[5.163s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/noah/autonav_ws/install/sentry_description/share/colcon-core/packages/sentry_description)
+[5.166s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sentry_description)
+[5.167s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description' for CMake module files
+[5.178s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description' for CMake config files
+[5.183s] Level 1:colcon.colcon_core.shell:create_environment_hook('sentry_description', 'cmake_prefix_path')
+[5.184s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.ps1'
+[5.200s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.dsv'
+[5.212s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.sh'
+[5.216s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/bin'
+[5.216s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/lib/pkgconfig/sentry_description.pc'
+[5.216s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/lib/python3.10/site-packages'
+[5.216s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/sentry_description/bin'
+[5.219s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.ps1'
+[5.231s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.dsv'
+[5.244s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.sh'
+[5.272s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.bash'
+[5.296s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/sentry_description/share/sentry_description/package.zsh'
+[5.360s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/noah/autonav_ws/install/sentry_description/share/colcon-core/packages/sentry_description)
+[5.488s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(test)
+[5.556s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test' for CMake module files
+[5.654s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test' for CMake config files
+[5.655s] Level 1:colcon.colcon_core.shell:create_environment_hook('test', 'cmake_prefix_path')
+[5.666s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.ps1'
+[5.657s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/noah/autonav_ws/build/test' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/test
+[5.677s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.dsv'
+[5.725s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.sh'
+[5.767s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/bin'
+[5.802s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/lib/pkgconfig/test.pc'
+[5.913s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/lib/python3.10/site-packages'
+[5.914s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/bin'
+[5.924s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.ps1'
+[5.961s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/noah/autonav_ws/install/test/share/test/package.dsv'
+[6.004s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.sh'
+[6.058s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.bash'
+[6.066s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.zsh'
+[6.142s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/noah/autonav_ws/install/test/share/colcon-core/packages/test)
+[6.171s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(test)
+[6.174s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test' for CMake module files
+[6.176s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test' for CMake config files
+[6.177s] Level 1:colcon.colcon_core.shell:create_environment_hook('test', 'cmake_prefix_path')
+[6.179s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.ps1'
+[6.207s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.dsv'
+[6.229s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/noah/autonav_ws/install/test/share/test/hook/cmake_prefix_path.sh'
+[6.244s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/bin'
+[6.248s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/lib/pkgconfig/test.pc'
+[6.249s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/lib/python3.10/site-packages'
+[6.249s] Level 1:colcon.colcon_core.environment:checking '/home/noah/autonav_ws/install/test/bin'
+[6.250s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.ps1'
+[6.278s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/noah/autonav_ws/install/test/share/test/package.dsv'
+[6.306s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.sh'
+[6.317s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.bash'
+[6.328s] INFO:colcon.colcon_core.shell:Creating package script '/home/noah/autonav_ws/install/test/share/test/package.zsh'
+[6.354s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/noah/autonav_ws/install/test/share/colcon-core/packages/test)
+[6.366s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[6.373s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[6.373s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[6.375s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[6.547s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[6.556s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[6.557s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[6.937s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[6.955s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/noah/autonav_ws/install/local_setup.ps1'
+[6.991s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/noah/autonav_ws/install/_local_setup_util_ps1.py'
+[7.051s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/noah/autonav_ws/install/setup.ps1'
+[7.093s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/noah/autonav_ws/install/local_setup.sh'
+[7.140s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/noah/autonav_ws/install/_local_setup_util_sh.py'
+[7.180s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/noah/autonav_ws/install/setup.sh'
+[7.211s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/noah/autonav_ws/install/local_setup.bash'
+[7.273s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/noah/autonav_ws/install/setup.bash'
+[7.341s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/noah/autonav_ws/install/local_setup.zsh'
+[7.388s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/noah/autonav_ws/install/setup.zsh'
