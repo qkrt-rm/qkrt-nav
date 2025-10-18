@@ -14,6 +14,11 @@
   <xacro:property name="gimbal_radius" value="0.05"/>
   <xacro:property name="gimbal_height" value="0.09"/>
 
+  <xacro:property name="lidar_length" value="0.054"/>
+  <xacro:property name="lidar_width" value="0.04629"/>
+  <xacro:property name="lidar_height" value="0.0348"/>
+  
+
   <!-- Define inertial property macros  -->
   <xacro:macro name="box_inertia" params="m w h d">
     <inertial>
@@ -233,6 +238,7 @@
   </sensor>
 </gazebo>
 
+<!-- diff_drive for simplicity, need to convert this to omni-drive somehow-->
 <gazebo>
   <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
     <ros>
@@ -261,6 +267,70 @@
     <odometry_frame>odom</odometry_frame>
     <robot_base_frame>base_link</robot_base_frame>
   </plugin>
+</gazebo>
+
+<!--This is our actual lidar, the Waveshare -->
+<link name="lidar_link">
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.047"/>  <!-- 47 g -->
+    <inertia
+      ixx="0.0000131"
+      ixy="0.0"
+      ixz="0.0"
+      iyy="0.0000197"
+      iyz="0.0"
+      izz="0.0000162"/>
+  </inertial>
+
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <box size="${lidar_length} ${lidar_width} ${lidar_height}"/>
+    </geometry>
+  </visual>
+</link>
+
+<joint name="lidar_joint" type="fixed">
+  <parent link="gimbal_link"/>
+  <child link="lidar_link"/>
+  <origin xyz="0 0 ${gimbal_height/2 +  lidar_height/2}" rpy="0 0 0"/>
+</joint>
+
+<gazebo reference="lidar_link">
+  <sensor name="lidar" type="ray">
+    <always_on>true</always_on>
+    <visualize>true</visualize>
+    <update_rate>10</update_rate>  <!-- 10 Hz typical scan rate -->
+    <ray>
+      <scan>
+        <horizontal>
+          <samples>360</samples>
+          <resolution>1</resolution>
+          <min_angle>0.0</min_angle>
+          <max_angle>6.283185307</max_angle> <!-- 2π rad full 360° -->
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.02</min>   <!-- 2 cm minimum -->
+        <max>12.0</max>   <!-- 12 m maximum -->
+        <resolution>0.015</resolution>  <!-- 1.5 cm resolution -->
+      </range>
+      <noise>
+        <type>gaussian</type>
+        <mean>0.0</mean>
+        <stddev>0.01</stddev>
+      </noise>
+    </ray>
+    <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+      <ros>
+        <remapping>~/out:=scan</remapping> 
+      </ros>
+      <output_type>sensor_msgs/LaserScan</output_type>
+      <frame_name>lidar_link</frame_name>
+      <intensity>true</intensity> <!-- Apparently this doesnt work  - reflective intensities all 0, but this should only be a cosmetic issue -->
+    </plugin>
+  </sensor>
 </gazebo>
 
 </robot>

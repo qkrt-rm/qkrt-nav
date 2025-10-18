@@ -1,0 +1,11 @@
+#for determining the inflated radius of obstacles i think
+#For the inflation layer, we set the exponential decay factor across the inflation radius using the cost_scaling_factor parameter. 
+#The value of the radius to inflate around lethal obstacles is defined using the inflation_radius.
+
+plugin: "nav2_costmap_2d::InflationLayer"
+
+cost_scaling_factor: 3.0
+
+inflation_radius: 0.55
+
+always_send_full_costmap: True

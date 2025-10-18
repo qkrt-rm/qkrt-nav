@@ -10,6 +10,7 @@ def generate_launch_description():
     pkg_share = FindPackageShare(package='sentry_description').find('sentry_description')
     default_model_path = os.path.join(pkg_share, 'src', 'description', 'sentry_description.urdf')
     default_rviz_config_path = os.path.join(pkg_share, 'rviz', 'config.rviz')
+    world_path=os.path.join(pkg_share, 'world/my_world.sdf') # test world for gazebo
 
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -40,7 +41,7 @@ def generate_launch_description():
     )
 
     gazebo = ExecuteProcess(
-        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so'],
+        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', world_path],
         output='screen'
     )
 

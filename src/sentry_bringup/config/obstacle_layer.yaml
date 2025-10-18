@@ -1,0 +1,13 @@
+obstacle_layer:
+  plugin: "nav2_costmap_2d::ObstacleLayer"
+  enabled: True
+  observation_sources: scan pointcloud
+  scan:
+    topic: /scan
+    data_type: "LaserScan"
+## Can add more params here
+#the max_obstacle_height parameter sets the maximum height of the sensor reading to return to the occupancy grid.
+#The minimum height of the sensor reading can also be set using the min_obstacle_height parameter, which defaults to 0 since we did not set it in the configuration.
+#The clearing parameter is used to set whether the obstacle is to be removed from the costmap or not. The clearing operation is done by raytracing through the grid. 
+#The maximum and minimum range to raytrace clear objects from the costmap is set using the raytrace_max_range and raytrace_min_range respectively. 
+#The marking parameter is used to set whether the inserted obstacle is marked into the costmap or not. We also set the maximum and minimum range to mark obstacles in the costmap through the obstacle_max_range and obstacle_min_range respectively.
