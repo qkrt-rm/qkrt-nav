@@ -16,8 +16,9 @@ setup(
         # Launch files
         (os.path.join('share', package_name, 'launch'), glob('launch/*.py')),
 
-        # Config files (YAMLs)
+        # Config files (YAMLs) (and pngs)
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'config'), glob('config/*.png')),
 
         # World files (SDFs)
         (os.path.join('share', package_name, 'worlds'), glob('worlds/*.sdf')),

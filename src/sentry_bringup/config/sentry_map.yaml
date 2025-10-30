@@ -1,0 +1,7 @@
+image: sentry_oc.png
+resolution: 0.02  # 2cm per pixel
+origin: [-9.06, -6.06, 0.0]  # accounts for the 3px border (3 * 0.02 = 0.06m)
+occupied_thresh: 0.65
+free_thresh: 0.25
+negate: 0
+mode: trinary

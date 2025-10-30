@@ -17,6 +17,7 @@ def generate_launch_description():
     world_path = os.path.join(pkg_bringup, 'worlds', 'my_world.sdf')
 
     # Nodes
+
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -55,12 +56,54 @@ def generate_launch_description():
         output='screen'
     )
 
+    tf2_ros_node = Node(
+    package='tf2_ros',
+    executable='static_transform_publisher',
+    name='map_to_base_link',
+    arguments=['0', '0', '0', '0', '0', '0', 'map', 'base_link']
+    )
+
     robot_localization_node = Node(
         package='robot_localization',
         executable='ekf_node',
         name='ekf_node',
         output='screen',
         parameters=[ekf_config_path, {'use_sim_time': LaunchConfiguration('use_sim_time')}]
+    )
+
+    map_server_node = Node(
+        package='nav2_map_server',
+        executable='map_server',
+        name='map_server',
+        output='screen',
+        parameters=[
+            os.path.join(pkg_bringup, 'config', 'map_server.yaml'),
+            {'yaml_filename': os.path.join(pkg_bringup, 'config', 'sentry_map.yaml')},
+            {'use_sim_time': LaunchConfiguration('use_sim_time')}
+        ]
+    )
+
+    amcl_node = Node(
+        package='nav2_amcl',
+        executable='amcl',
+        name='amcl',
+        output='screen',
+        parameters=[
+            os.path.join(pkg_bringup, 'config', 'amcl.yaml'),
+            {'use_sim_time': LaunchConfiguration('use_sim_time')}
+        ]
+    )
+
+    lifecycle_manager_node = Node(
+        package='nav2_lifecycle_manager',
+        executable='lifecycle_manager',
+        name='lifecycle_manager_localization',
+        output='screen',
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+            {'autostart': True},
+            {'node_names': ['map_server', 'amcl']}
+        ]
     )
 
     # Launch description
@@ -80,7 +123,11 @@ def generate_launch_description():
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_entity,
+        tf2_ros_node,
         robot_localization_node,
+        map_server_node,
+        amcl_node,
+        lifecycle_manager_node,
         rviz_node,
         gazebo
     ])
