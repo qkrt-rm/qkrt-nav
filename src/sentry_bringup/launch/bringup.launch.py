@@ -15,6 +15,7 @@ def generate_launch_description():
     default_rviz_config_path = os.path.join(pkg_description, 'rviz', 'config.rviz')
     ekf_config_path = os.path.join(pkg_bringup, 'config', 'ekf.yaml')
     world_path = os.path.join(pkg_bringup, 'worlds', 'my_world.sdf')
+    map_yaml_path = os.path.join(pkg_bringup, 'config', 'sentry_map.yaml')
 
     # Nodes
 
@@ -57,10 +58,10 @@ def generate_launch_description():
     )
 
     tf2_ros_node = Node(
-    package='tf2_ros',
-    executable='static_transform_publisher',
-    name='map_to_base_link',
-    arguments=['0', '0', '0', '0', '0', '0', 'map', 'base_link']
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='map_to_odom',
+        arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom']
     )
 
     robot_localization_node = Node(
@@ -78,7 +79,7 @@ def generate_launch_description():
         output='screen',
         parameters=[
             os.path.join(pkg_bringup, 'config', 'map_server.yaml'),
-            {'yaml_filename': os.path.join(pkg_bringup, 'config', 'sentry_map.yaml')},
+            {'yaml_filename': map_yaml_path},
             {'use_sim_time': LaunchConfiguration('use_sim_time')}
         ]
     )
@@ -120,10 +121,10 @@ def generate_launch_description():
             name='use_sim_time',
             default_value='True',
             description='Flag to enable use_sim_time'),
+        tf2_ros_node,
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_entity,
-        tf2_ros_node,
         robot_localization_node,
         map_server_node,
         amcl_node,
