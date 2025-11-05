@@ -1,0 +1,100 @@
+controller_server:
+  ros__parameters:
+    use_sim_time: true
+    controller_frequency: 30.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.5
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+    odom_topic: /odom
+    
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.3
+      movement_time_allowance: 15.0
+    
+    general_goal_checker:
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.20
+      yaw_goal_tolerance: 0.35
+      stateful: true
+    
+    FollowPath:
+      plugin: "dwb_core::DWBLocalPlanner"
+      debug_trajectory_details: false
+      
+      min_vel_x: -0.5 
+      min_vel_y: -0.5  
+      max_vel_x: 0.5
+      max_vel_y: 0.5  
+      max_vel_theta: 1.8
+      min_speed_xy: 0.0
+      max_speed_xy: 0.7  
+      min_speed_theta: 0.0
+
+      acc_lim_x: 3.0
+      acc_lim_y: 3.0   
+      acc_lim_theta: 4.0
+      decel_lim_x: -3.0
+      decel_lim_y: -3.0  
+      decel_lim_theta: -4.0
+      
+
+      vx_samples: 20
+      vy_samples: 20   
+      vth_samples: 40
+      sim_time: 1.5
+      discretize_by_time: false
+      time_granularity: 0.5
+      linear_granularity: 0.05
+      angular_granularity: 0.025
+      transform_tolerance: 0.2
+      
+      critics: [
+        "RotateToGoal",
+        "Oscillation",
+        "BaseObstacle",
+        "GoalAlign",
+        "PathAlign",
+        "PathDist",
+        "GoalDist"
+      ]
+      
+      BaseObstacle.scale: 0.02
+      BaseObstacle.sum_scores: false
+      
+      PathAlign.scale: 24.0
+      PathAlign.forward_point_distance: 0.1
+      
+      GoalAlign.scale: 20.0
+      GoalAlign.forward_point_distance: 0.1
+      
+      PathDist.scale: 24.0
+      GoalDist.scale: 30.0
+      
+      RotateToGoal.scale: 32.0
+      RotateToGoal.slowing_factor: 5.0
+      RotateToGoal.lookahead_time: -1.0
+      
+      Oscillation.scale: 1.0
+      Oscillation.oscillation_reset_dist: 0.05
+      Oscillation.oscillation_reset_angle: 0.2
+      Oscillation.oscillation_reset_time: -1.0
+      
+      path_distance_bias: 32.0
+      goal_distance_bias: 24.0
+      occdist_scale: 0.02
+      
+      max_scaling_factor: 0.2
+      scaling_speed: 0.25
+      path_prune_distance: 1.5
+      short_circuit_trajectory_evaluation: true
+      
+      stateful: true
+      xy_goal_tolerance: 0.20
+      trans_stopped_velocity: 0.25
+      slowing_factor: 5.0
+      lookahead_time: -1.0
