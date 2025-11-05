@@ -1,0 +1,28 @@
+name: Block direct pushes to main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  block_direct_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check who pushed
+        run: |
+          # Add all allowed usernames here
+          ALLOWED_USERS=("fireball33334" "danielwp22")
+
+          PUSHER="${{ github.actor }}"
+          echo "Pusher: $PUSHER"
+
+          for USER in "${ALLOWED_USERS[@]}"; do
+            if [ "$PUSHER" == "$USER" ]; then
+              echo "✅ $PUSHER is allowed to push directly to main."
+              exit 0
+            fi
+          done
+
+          echo "❌ Direct pushes to main are not allowed. Please open a Pull Request instead."
+          exit 1
