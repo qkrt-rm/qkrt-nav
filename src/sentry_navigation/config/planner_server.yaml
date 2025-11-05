@@ -1,0 +1,86 @@
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 2.0
+    use_sim_time: true
+    planner_plugins: ["GridBased"]
+    
+    GridBased:
+      plugin: "nav2_smac_planner::SmacPlanner2D"
+      tolerance: 0.20
+      downsample_costmap: false
+      downsampling_factor: 1
+      allow_unknown: false
+      max_iterations: 500000
+      max_on_approach_iterations: 500
+      max_planning_time: 1.0
+      
+      motion_model_for_search: "MOORE" 
+      
+      angle_quantization_bins: 72
+      analytic_expansion_ratio: 3.5
+      analytic_expansion_max_length: 3.0
+      
+      reverse_penalty: 1.0 
+      change_penalty: 0.0
+      non_straight_penalty: 1.0
+      cost_penalty: 2.0
+      retrospective_penalty: 0.015
+      
+      lookup_table_size: 20.0
+      cache_obstacle_heuristic: false
+      allow_primitive_interpolation: false
+      use_quadratic_cost_penalty: false
+      downsample_obstacle_heuristic: true
+      smooth_path: true
+      
+      cost_travel_multiplier: 1.5
+      use_final_approach_orientation: false
+      
+      smoother:
+        max_iterations: 200
+        w_smooth: 0.10
+        w_data: 0.40
+        tolerance: 1.0e-6
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_link
+      use_sim_time: true
+      robot_radius: 0.15 #need to change ?
+      resolution: 0.05
+      track_unknown_space: false
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_topic: /map
+        map_subscribe_transient_local: true
+      
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: true
+          marking: true
+          data_type: "LaserScan"
+          raytrace_max_range: 5.0
+          raytrace_min_range: 0.0
+          obstacle_max_range: 4.5
+          obstacle_min_range: 0.0
+          inf_is_valid: false
+          clearing_threshold: 0.48
+          marking_threshold: 0.52
+      
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5
+        inflation_radius: 0.50
+      
+      always_send_full_costmap: true
