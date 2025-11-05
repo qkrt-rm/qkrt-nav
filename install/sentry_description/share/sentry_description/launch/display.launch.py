@@ -1,67 +1,58 @@
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
-from launch.conditions import IfCondition, UnlessCondition
-from launch.substitutions import Command, LaunchConfiguration
-from launch_ros.actions import Node
-from launch_ros.substitutions import FindPackageShare
+#(RVIZ only)
+
 import os
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
+from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    pkg_share = FindPackageShare(package='sentry_description').find('sentry_description')
-    default_model_path = os.path.join(pkg_share, 'src', 'description', 'sentry_description.urdf')
-    default_rviz_config_path = os.path.join(pkg_share, 'rviz', 'config.rviz')
-    world_path=os.path.join(pkg_share, 'world/my_world.sdf') # test world for gazebo
-
+    pkg_description = get_package_share_directory('sentry_description')
+    
+    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
+    rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='false'
+    )
+    
+    with open(urdf_path, 'r') as file:
+        robot_description = file.read()
+    
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        parameters=[{'robot_description': Command(['xacro ', LaunchConfiguration('model')])}]
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{
+            'robot_description': robot_description,
+            'use_sim_time': use_sim_time
+        }]
     )
-
+    
     joint_state_publisher_node = Node(
         package='joint_state_publisher',
         executable='joint_state_publisher',
         name='joint_state_publisher',
-        arguments=[default_model_path]
+        parameters=[{'use_sim_time': use_sim_time}]
     )
-
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        arguments=['-entity', 'sentry', '-topic', 'robot_description'],
-        output='screen'
-    )
-
+    
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', LaunchConfiguration('rvizconfig')],
+        arguments=['-d', rviz_config_path],
+        parameters=[{'use_sim_time': use_sim_time}]
     )
-
-    gazebo = ExecuteProcess(
-        cmd=['gazebo', '--verbose', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', world_path],
-        output='screen'
-    )
-
-    robot_localization_node = Node(
-        package='robot_localization',
-        executable='ekf_node',
-        name='ekf_node',
-        output='screen',
-        parameters=[os.path.join(pkg_share, 'config/ekf.yaml'), {'use_sim_time': LaunchConfiguration('use_sim_time')}]
-    )
-
+    
     return LaunchDescription([
-        DeclareLaunchArgument(name='model', default_value=default_model_path, description='Absolute path to robot model file'),
-        DeclareLaunchArgument(name='rvizconfig', default_value=default_rviz_config_path, description='Absolute path to rviz config file'),
-        DeclareLaunchArgument(name='use_sim_time', default_value='True',
-                                            description='Flag to enable use_sim_time'),
-        joint_state_publisher_node,
+        use_sim_time_arg,
         robot_state_publisher_node,
-        spawn_entity,
-        robot_localization_node,
+        joint_state_publisher_node,
         rviz_node,
-        gazebo
     ])

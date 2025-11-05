@@ -43,12 +43,11 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sentry_description" TYPE DIRECTORY FILES
-    "/home/noah/autonav_ws/src/sentry_description/src"
-    "/home/noah/autonav_ws/src/sentry_description/launch"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/sentry_description/" TYPE DIRECTORY FILES
+    "/home/noah/autonav_ws/src/sentry_description/urdf"
+    "/home/noah/autonav_ws/src/sentry_description/worlds"
     "/home/noah/autonav_ws/src/sentry_description/rviz"
-    "/home/noah/autonav_ws/src/sentry_description/config"
-    "/home/noah/autonav_ws/src/sentry_description/world"
+    "/home/noah/autonav_ws/src/sentry_description/launch"
     )
 endif()
 

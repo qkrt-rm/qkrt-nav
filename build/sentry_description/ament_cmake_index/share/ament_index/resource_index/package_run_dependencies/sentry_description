@@ -1,1 +1,1 @@
-joint_state_publisher;joint_state_publisher_gui;robot_state_publisher;rviz;xacro;robot_localization;ament_lint_auto;ament_lint_common
+robot_state_publisher;joint_state_publisher;rviz2;gazebo_ros;gazebo_plugins;ament_lint_auto;ament_lint_common
