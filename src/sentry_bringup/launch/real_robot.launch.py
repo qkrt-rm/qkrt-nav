@@ -25,18 +25,28 @@ def generate_launch_description():
     #     ),
     # )
     
-    # LiDAR driver tbh
-    # laser_driver = Node(
-    #     package="rplidar_ros",
-    #     executable="rplidar_node",
-    #     name="rplidar_node",
-    #     parameters=[{
-    #         'serial_port': '/dev/ttyUSB0',
-    #         'frame_id': 'laser_frame',
-    #         'angle_compensate': True,
-    #     }],
-    #     output="screen"
-    # )
+
+    # Real LiDAR driver (LDLiDAR LD06 via ldlidar_stl_ros2)
+    lidar_driver = Node(
+    package='ldlidar_stl_ros2',
+    executable='ldlidar_stl_ros2_node',
+    name='ldlidar',
+    output='screen',
+    parameters=[
+        {'product_name': 'LDLiDAR_LD06'},
+        {'topic_name': 'scan'},
+        {'frame_id': 'base_laser'},
+        {'port_name': '/dev/ttyUSB0'},
+        {'port_baudrate': 230400},
+        {'laser_scan_dir': True},
+        {'enable_angle_crop_func': False},
+    ]
+)
+
+
+
+
+
     
     # Local localization (EKF)
     local_localization = IncludeLaunchDescription(
@@ -59,7 +69,7 @@ def generate_launch_description():
     return LaunchDescription([
         display,
         # drivers,
-        # laser_driver,
+        lidar_driver,
         local_localization,
         global_localization,
         navigation,
