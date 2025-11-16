@@ -35,7 +35,7 @@ def generate_launch_description():
     parameters=[
         {'product_name': 'LDLiDAR_LD06'},
         {'topic_name': 'scan'},
-        {'frame_id': 'base_laser'},
+        {'frame_id': 'laser_frame'},
         {'port_name': '/dev/ttyUSB0'},
         {'port_baudrate': 230400},
         {'laser_scan_dir': True},
