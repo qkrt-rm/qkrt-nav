@@ -1,4 +1,0 @@
-Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
-Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/noah/autonav_ws/build/sentry_description -- -j16 -l16
-Invoking command in '/home/noah/autonav_ws/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
-Invoked command in '/home/noah/autonav_ws/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/noah/autonav_ws/build/sentry_description
