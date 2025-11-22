@@ -20,110 +20,110 @@
 
       <!-- North wall, +0.05 offset for wall thickness -->
       <link name="north_wall">
-        <pose>0 4.05 1 0 0 0</pose>
+        <pose>0 4.05 0.25 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>12 0.1 2</size>
+              <size>12 0.1 0.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>12 0.1 2</size>
+              <size>12 0.1 0.5</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <ambient>0.25 0.25 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.25 1</diffuse>
           </material>
         </visual>
       </link>
       
       <!-- South wall,  minus 0.05 offset-->
       <link name="south_wall">
-        <pose>0 -4.05 1 0 0 0</pose>
+        <pose>0 -4.05 0.25 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>12 0.1 2</size>
+              <size>12 0.1 0.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>12 0.1 2</size>
+              <size>12 0.1 0.5</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <ambient>0.25 0.25 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.25 1</diffuse>
           </material>
         </visual>
       </link>
       
       <!-- East wall, plus 0.05 offset -->
       <link name="east_wall">
-        <pose>6.05 0 1 0 0 0</pose>
+        <pose>6.05 0 0.25 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.1 8 2</size>
+              <size>0.1 8 0.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.1 8 2</size>
+              <size>0.1 8 0.5</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <ambient>0.25 0.25 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.25 1</diffuse>
           </material>
         </visual>
       </link>
       
       <!-- West wall, minus 0.05 offset  -->
       <link name="west_wall">
-        <pose>-6.05 0 1 0 0 0</pose>
+        <pose>-6.05 0 0.25 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.1 8 2</size>
+              <size>0.1 8 0.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.1 8 2</size>
+              <size>0.1 8 0.5</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.5 0.5 0.5 1</ambient>
-            <diffuse>0.5 0.5 0.5 1</diffuse>
+            <ambient>0.25 0.25 0.25 1</ambient>
+            <diffuse>0.25 0.25 0.25 1</diffuse>
           </material>
         </visual>
       </link>
 
       <!-- West inner wall -->
-      <link name="west_inner_wall"> <!-- +0.1 to account for width in x dir?? may need to adjust-->
-        <pose>-3.650 -0.317 1 0 0 0</pose>
+      <link name="west_inner_wall_bottom"> <!-- -3.750 + 0.1 to account for width in x dir-->
+        <pose>-3.650 -0.317 0.24 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 3.0254 2</size>
+              <size>0.2 3.0 0.42</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 3.0254 2</size> 
+              <size>0.2 3.0 0.42</size> 
             </box>
           </geometry>
           <material>
@@ -133,19 +133,66 @@
         </visual>
       </link>
 
-      <link name="mid_left_wall"> <!-- +0.1 to account for width in x dir?? may need to adjust-->
-        <pose>-2.450 0.9873 1 0 0 0</pose>
+
+      <link name="west_inner_wall_top"> <!-- +0.1 to account for width in x dir-->
+        <pose>-3.650 -0.317 0.9315 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 2.0254 2</size>
+              <size>0.05 2.7 0.987</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 2.0254 2</size> 
+              <size>0.05 2.7 0.987</size> 
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+
+
+      <link name="mid_left_wall_bottom"> <!-- +0.1 to account for width in x dir?? may need to adjust-->
+        <pose>-2.450 0.9873 0.24 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 2.0254 0.48</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 2.0254 0.48</size> 
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <link name="mid_left_wall_top"> <!-- +0.1 to account for width in x dir?? may need to adjust-->
+        <pose>-2.450 0.9873 0.545 0 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 2.0254 0.25</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 2.0254 0.25</size> 
             </box>
           </geometry>
           <material>
@@ -156,19 +203,19 @@
       </link>
 
       <!-- east inner wall -->
-      <link name="east_inner_wall"> <!-- +0.01 to account for width in x dir?? may need to adjust-->
-        <pose>3.650 -0.317 1 0 0 0</pose>
+      <link name="east_inner_wall_bottom"> 
+        <pose>3.650 -0.317 0.24 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 3.054 2</size>
+              <size>0.2 3.0 0.42</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 3.0254 2</size> 
+              <size>0.2 3.0 0.42</size> 
             </box>
           </geometry>
           <material>
@@ -178,19 +225,64 @@
         </visual>
       </link>
 
-      <link name="mid_right_wall"> <!-- +0.01 to account for width in x dir?? may need to adjust-->
-        <pose>2.450 0.9873 1 0 0 0</pose>
+
+      <link name="east_inner_wall_top"> 
+        <pose>3.650 -0.317 0.9315 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.2 2.0254 2</size>
+              <size>0.05 2.7 0.987</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.2 2.0254 2</size> 
+              <size>0.05 2.7 0.987</size> 
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <link name="mid_right_wall_bottom"> 
+        <pose>2.450 0.9873 0.24 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 2.0254 0.48</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.2 2.0254 0.48</size> 
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+
+      <link name="mid_right_wall_top"> 
+        <pose>2.450 0.9873 0.545 0 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.05 2.0254 0.25</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.05 2.0254 0.25</size> 
             </box>
           </geometry>
           <material>
@@ -288,8 +380,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>1 0 1 1</ambient>   <!--  -->
-            <diffuse>1 0 1 1</diffuse>
+            <ambient>1 1 0 1</ambient>   <!--  -->
+            <diffuse>1 1 0 1</diffuse>
           </material>
         </visual>
       </link>
@@ -322,8 +414,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0 1 1 1</ambient>   <!--  -->
-            <diffuse>0 1 1 1</diffuse>
+            <ambient>1 1 0 1</ambient>   <!--  -->
+            <diffuse>1 1 0 1</diffuse>
           </material>
         </visual>
       </link>
@@ -391,8 +483,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>1 0 1 1</ambient>   <!--  -->
-            <diffuse>1 0 1 1</diffuse>
+            <ambient>1 1 0 1</ambient>   <!--  -->
+            <diffuse>1 1 0 1</diffuse>
           </material>
         </visual>
       </link>
@@ -425,8 +517,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0 1 1 1</ambient>   <!--  -->
-            <diffuse>0 1 1 1</diffuse>
+            <ambient>1 1 0 1</ambient>   <!--  -->
+            <diffuse>1 1 0 1</diffuse>
           </material>
         </visual>
       </link>
