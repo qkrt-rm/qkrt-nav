@@ -11,9 +11,13 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration("use_sim_time")
-    lifecycle_nodes = ["controller_server", "planner_server"]
+    lifecycle_nodes = ["controller_server", "planner_server", "smoother_server", "bt_navigator"]
     # lifecycle_nodes = ["controller_server", "planner_server", "smoother_server", "bt_navigator", "behavior_server"
     sentry_navigation_pkg = get_package_share_directory("sentry_navigation")
+    bt_xml_path = os.path.join(
+                sentry_navigation_pkg,
+                "behavior_tree",
+                "simple_navigation.xml") # This is for testing
 
     use_sim_time_arg = DeclareLaunchArgument(
         "use_sim_time",
@@ -54,26 +58,28 @@ def generate_launch_description():
     #     output="screen",
     #     parameters=[
     #         os.path.join(
-    #             bumperbot_navigation_pkg,
+    #             sentry_navigation_pkg,
     #             "config",
     #             "behavior_server.yaml"),
     #         {"use_sim_time": use_sim_time}
     #     ],
     # )
-    
-    # nav2_bt_navigator = Node(
-    #     package="nav2_bt_navigator",
-    #     executable="bt_navigator",
-    #     name="bt_navigator",
-    #     output="screen",
-    #     parameters=[
-    #         os.path.join(
-    #             bumperbot_navigation_pkg,
-    #             "config",
-    #             "bt_navigator.yaml"),
-    #         {"use_sim_time": use_sim_time}
-    #     ],
-    # )
+    nav2_bt_navigator = Node(
+        package='nav2_bt_navigator',
+        executable='bt_navigator',
+        name='bt_navigator',
+        output='screen',
+        parameters=[
+            os.path.join(
+                sentry_navigation_pkg,
+                "config",
+                "bt_navigator.yaml"
+            ),
+            {'use_sim_time': use_sim_time},
+            {'default_nav_to_pose_bt_xml': bt_xml_path},
+            {'default_nav_through_poses_bt_xml': bt_xml_path}
+        ]
+    )
 
     nav2_smoother_server = Node(
         package="nav2_smoother",
@@ -107,6 +113,6 @@ def generate_launch_description():
         nav2_planner_server,
         nav2_smoother_server,
         # nav2_behaviors,
-        # nav2_bt_navigator,
+        nav2_bt_navigator,
         nav2_lifecycle_manager,
     ])

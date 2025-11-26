@@ -1,3 +1,5 @@
+#Not used, just here for education ig 
+
 costmap:
   ros__parameters:
     update_frequency: 1.0
