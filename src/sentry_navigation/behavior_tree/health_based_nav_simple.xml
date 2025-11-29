@@ -1,0 +1,35 @@
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <ReactiveSequence name="root">
+
+      <Fallback name="HealthDecision">
+
+        <!-- <Sequence name="HealthySequence">
+          <CheckHealth threshold="50" />
+          <NavigateToPose goal="{center}" />
+        </Sequence> -->
+
+        <Sequence name="HealthySequence">
+          <AlwaysSuccess/>
+          <NavigateToPose goal="{center}" />
+        </Sequence>
+
+        <!-- <Sequence name="LowHealthSequence">
+          <Inverter>
+            <CheckHealth threshold="50" />
+          </Inverter>
+          <NavigateToPose goal="{home}" />
+        </Sequence> -->
+
+        <Sequence name="LowHealthSequence">
+          <Inverter>
+            <AlwaysSuccess/>
+          </Inverter>
+          <NavigateToPose goal="{home}" />
+        </Sequence>
+
+      </Fallback>
+      
+    </ReactiveSequence>
+  </BehaviorTree>
+</root>

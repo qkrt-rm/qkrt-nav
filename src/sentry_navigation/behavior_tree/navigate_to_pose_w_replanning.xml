@@ -1,0 +1,27 @@
+<root main_tree_to_execute="NavigateToPose">
+  <BehaviorTree ID="NavigateToPose">
+
+    <Sequence>
+
+      <RateController hz="1.0">
+        <Fallback>
+          <GoalUpdated/>
+          <IsStuck/>
+        </Fallback>
+      </RateController>
+
+      <ComputePathToPose goal="{goal}" path="{path}"/>
+
+      <TruncatePath
+          input_path="{path}"
+          output_path="{path}"
+          distance="0.5"/>
+
+      <FollowPath path="{path}"/>
+
+      <GoalReached/>
+
+    </Sequence>
+
+  </BehaviorTree>
+</root>

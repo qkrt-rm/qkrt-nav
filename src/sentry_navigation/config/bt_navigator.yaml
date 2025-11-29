@@ -1,0 +1,11 @@
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+
+    global_frame: "map"
+    robot_base_frame: "base_link"
+    odom_frame: "odom"
+
+    #  TODO: update these paths - should make them relative or dynamic
+    default_nav_to_pose_bt_xml: "/home/sentry/sentry_ws/qkrt-nav/src/sentry_navigation/behavior_tree/health_based_nav.xml"
+    default_nav_through_poses_bt_xml: "/home/sentry/sentry_ws/qkrt-nav/src/sentry_navigation/behavior_tree/health_based_nav.xml"
