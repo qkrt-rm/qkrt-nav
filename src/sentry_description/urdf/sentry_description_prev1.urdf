@@ -1,63 +1,11 @@
 <?xml version="1.0"?>
-<robot name="sentry_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="sentry_robot">
   
-    <!-- Define robot constants (that we arent using)-->
-  <xacro:property name="base_width" value="0.31"/>
-  <xacro:property name="base_length" value="0.42"/>
-  <xacro:property name="base_height" value="0.18"/>
-
-  <xacro:property name="wheel_radius" value="0.10"/>
-  <xacro:property name="wheel_width" value="0.04"/>
-  <xacro:property name="wheel_ygap" value="0.025"/>
-  <xacro:property name="wheel_zoff" value="0.05"/>
-  <xacro:property name="wheel_xoff" value="0.12"/>
-
-  <xacro:property name="gimbal_radius" value="0.05"/>
-  <xacro:property name="gimbal_height" value="0.09"/>
-
-  <xacro:property name="lidar_length" value="0.054"/>
-  <xacro:property name="lidar_width" value="0.04629"/>
-  <xacro:property name="lidar_height" value="0.0348"/>
-
-  <xacro:property name="mass" value="20"/>
-
-  <!-- Define inertial property macros  -->
-  <xacro:macro name="box_inertia" params="m w h d">
-  <inertial>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="${m}"/>
-    <inertia
-      ixx="${(m/12) * (h*h + d*d)}"
-      ixy="0"
-      ixz="0"
-      iyy="${(m/12) * (w*w + d*d)}"
-      iyz="0"
-      izz="${(m/12) * (w*w + h*h)}"/>
-  </inertial>
-</xacro:macro>
-
-
-  <xacro:macro name="cylinder_inertia" params="m r h">
-  <inertial>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <mass value="${m}"/>
-    <inertia
-      ixx="${(m/12) * (3*r*r + h*h)}"
-      ixy="0"
-      ixz="0"
-      iyy="${(m/12) * (3*r*r + h*h)}"
-      iyz="0"
-      izz="${(m/2) * (r*r)}"/>
-  </inertial>
-</xacro:macro>
-
-
-
   <!-- Base Link -->
   <link name="base_link">
     <visual>
       <geometry>
-        <box size="0.52 0.52 0.2"/>
+        <box size="0.4 0.4 0.2"/>
       </geometry>
       <material name="blue">
         <color rgba="0 0 0.8 1"/>
@@ -68,10 +16,12 @@
         <box size="0.4 0.4 0.2"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="20" w="0.52" d="0.52" h="0.2"/>
-  </link>
-
-
+    <inertial>
+      <mass value="10.0"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.133" ixy="0.0" ixz="0.0" 
+               iyy="0.133" iyz="0.0" izz="0.267"/>
+    </inertial>
   </link>
   
   <!-- Front Left Wheel -->
