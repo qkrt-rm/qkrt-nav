@@ -20,8 +20,8 @@ def generate_launch_description():
         default_value='false'
     )
     
-    with open(urdf_path, 'r') as file:
-        robot_description = file.read()
+     # **Process Xacro to expand all macros and properties**
+    robot_description = os.popen(f'xacro {urdf_path}').read()
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',

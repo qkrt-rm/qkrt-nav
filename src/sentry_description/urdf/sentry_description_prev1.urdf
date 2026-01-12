@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <robot name="sentry_robot">
-  
+
+  <xacro:property name="lidar_height" value="0.0348"/>
+
   <!-- Base Link -->
   <link name="base_link">
     <visual>
