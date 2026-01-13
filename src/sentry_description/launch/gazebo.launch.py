@@ -18,7 +18,7 @@ def generate_launch_description():
     )
     
     # **Process Xacro to expand all macros and properties**
-    robot_description = os.popen(f'xacro {urdf_path}').read()
+    robot_description = Command(['xacro ', urdf_path])
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -59,7 +59,7 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', ""],
+        arguments=['-d', urdf_path],
         parameters=[{'use_sim_time': True}]
     )
     

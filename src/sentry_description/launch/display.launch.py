@@ -11,7 +11,7 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     
     urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
-    rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    rviz_config_path = os.path.join(pkg_description, 'rviz', 'display_config.rviz')
     
     use_sim_time = LaunchConfiguration('use_sim_time')
     
@@ -41,6 +41,13 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}]
     )
     
+    joint_state_publisher_gui_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        parameters=[{'use_sim_time': use_sim_time}]
+    )
+
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -53,6 +60,7 @@ def generate_launch_description():
     return LaunchDescription([
         use_sim_time_arg,
         robot_state_publisher_node,
-        joint_state_publisher_node,
+        #joint_state_publisher_node,
+        joint_state_publisher_gui_node,
         rviz_node,
     ])
