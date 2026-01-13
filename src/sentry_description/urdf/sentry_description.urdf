@@ -375,8 +375,8 @@
       <geometry>
         <cylinder radius="0.03" length="0.04"/>
       </geometry>
-      <material name="red">
-        <color rgba="1 0 0 1"/>
+      <material name="purple">
+        <color rgba="1 0 1 1"/>
       </material>
     </visual>
     <collision>
@@ -393,9 +393,9 @@
   </link>
   
   <joint name="laser_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="left_support_link"/>
     <child link="laser_frame"/>
-    <origin xyz="0 0 0.15" rpy="0 0 0"/>
+    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 0"/>
   </joint>
   
   <!-- IMU -->
@@ -422,6 +422,35 @@
     <origin xyz="0 0 0.1" rpy="0 0 0"/>
   </joint>
   
+  <!-- depth camera-->
+  <link name="depth_camera_link">
+  <visual>
+    <geometry>
+      <box size="0.05 0.05 0.05"/>
+    </geometry>
+  </visual>
+
+  <collision>
+    <geometry>
+      <box size="0.05 0.05 0.05"/>
+    </geometry>
+  </collision>
+
+  <inertial>
+    <mass value="0.05"/>
+    <inertia
+      ixx="1e-5" ixy="0" ixz="0"
+      iyy="1e-5" iyz="0"
+      izz="1e-5"/>
+  </inertial>
+  </link>
+
+  <joint name="depth_camera_joint" type="fixed">
+  <parent link="turret_link"/>
+  <child link="depth_camera_link"/>
+  <origin xyz="0.05 0 ${-1 * (turret_height / 2  + 0.025)}" rpy="0 0 0"/>
+  </joint>
+
 
     <!-- Gazebo-specific properties for base_link -->
     <gazebo reference="base_link">
@@ -543,5 +572,42 @@
       </plugin>
     </sensor>
   </gazebo>
-  
+
+  <!-- Depth camera Plugin -->
+  <gazebo reference="depth_camera_link">
+  <sensor type="depth" name="depth_camera">
+    <update_rate>30</update_rate>
+
+    <camera>
+      <horizontal_fov>1.047</horizontal_fov> <!-- 60 deg -->
+
+      <image>
+        <width>640</width>
+        <height>480</height>
+        <format>R8G8B8</format>
+      </image>
+
+      <clip>
+        <near>0.1</near>
+        <far>10.0</far>
+      </clip>
+    </camera>
+
+    <plugin name="depth_camera_controller" filename="libgazebo_ros_depth_camera.so">
+      <ros>
+        <namespace>/sentry</namespace>
+      </ros>
+
+      <frame_name>depth_camera_link</frame_name>
+
+      <image_topic_name>image_raw</image_topic_name>
+      <depth_image_topic_name>depth/image_raw</depth_image_topic_name>
+      <camera_info_topic_name>camera_info</camera_info_topic_name>
+
+      <point_cloud>true</point_cloud>
+      <point_cloud_topic_name>points</point_cloud_topic_name>
+    </plugin>
+  </sensor>
+</gazebo>
+
 </robot>

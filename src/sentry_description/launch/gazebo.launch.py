@@ -8,17 +8,17 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     
-    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
+    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
     world_path = os.path.join(pkg_description, 'worlds', 'my_world.sdf')
-    #rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
     
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_path
     )
     
-    # **Process Xacro to expand all macros and properties**
-    robot_description = Command(['xacro ', urdf_path])
+    with open(urdf_path, 'r') as file:
+        robot_description = file.read()
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -59,7 +59,7 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', urdf_path],
+        arguments=['-d', rviz_config_path],
         parameters=[{'use_sim_time': True}]
     )
     
