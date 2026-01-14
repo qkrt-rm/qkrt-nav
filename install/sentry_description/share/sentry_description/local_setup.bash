@@ -1,1 +1,0 @@
-/home/hamza/qkrt_ws/qkrt-nav/build/sentry_description/ament_cmake_environment_hooks/local_setup.bash
