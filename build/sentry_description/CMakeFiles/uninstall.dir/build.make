@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/noah/an_ws/src/sentry_description
+CMAKE_SOURCE_DIR = /home/hamza/qkrt_ws/qkrt-nav/src/sentry_description
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/noah/an_ws/build/sentry_description
+CMAKE_BINARY_DIR = /home/hamza/qkrt_ws/qkrt-nav/build/sentry_description
 
 # Utility rule file for uninstall.
 
@@ -78,6 +78,6 @@ CMakeFiles/uninstall.dir/clean:
 .PHONY : CMakeFiles/uninstall.dir/clean
 
 CMakeFiles/uninstall.dir/depend:
-	cd /home/noah/an_ws/build/sentry_description && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/noah/an_ws/src/sentry_description /home/noah/an_ws/src/sentry_description /home/noah/an_ws/build/sentry_description /home/noah/an_ws/build/sentry_description /home/noah/an_ws/build/sentry_description/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/hamza/qkrt_ws/qkrt-nav/build/sentry_description && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/hamza/qkrt_ws/qkrt-nav/src/sentry_description /home/hamza/qkrt_ws/qkrt-nav/src/sentry_description /home/hamza/qkrt_ws/qkrt-nav/build/sentry_description /home/hamza/qkrt_ws/qkrt-nav/build/sentry_description /home/hamza/qkrt_ws/qkrt-nav/build/sentry_description/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/uninstall.dir/depend
 

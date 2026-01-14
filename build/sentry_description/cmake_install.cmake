@@ -1,8 +1,8 @@
-# Install script for directory: /home/noah/an_ws/src/sentry_description
+# Install script for directory: /home/hamza/qkrt_ws/qkrt-nav/src/sentry_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/noah/an_ws/install/sentry_description")
+  set(CMAKE_INSTALL_PREFIX "/home/hamza/qkrt_ws/qkrt-nav/install/sentry_description")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/noah/an_ws/build/sentry_description/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
+  include("/home/hamza/qkrt_ws/qkrt-nav/build/sentry_description/ament_cmake_symlink_install/ament_cmake_symlink_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -54,5 +54,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/noah/an_ws/build/sentry_description/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/hamza/qkrt_ws/qkrt-nav/build/sentry_description/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
