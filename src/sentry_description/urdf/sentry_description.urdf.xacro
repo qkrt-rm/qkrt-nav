@@ -64,7 +64,6 @@
 
   <!-- Base Link -->
   <link name="base_link">
-    <origin xyz="0 0 ${base_height/2 + ground_offset}" rpy="0 0 0"/>
     <visual>
       <origin xyz="0 0 ${base_height/2 + ground_offset}" rpy="0 0 0"/>
       <geometry>
@@ -106,7 +105,7 @@
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="${base_width/2 + wheel_width/2} ${base_length/2 + wheel_width/2} ${wheel_radius}" rpy="0 1.5708 0"/>
+    <origin xyz="${base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -134,7 +133,7 @@
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="${-1 * base_width/2 - wheel_width/2} ${base_length/2 + wheel_width/2} ${wheel_radius}" rpy="0 1.5708 0"/>
+    <origin xyz="${-1 * base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -162,7 +161,7 @@
   <joint name="back_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_left_wheel"/>
-    <origin xyz="${base_width/2 + wheel_width/2} ${-1*base_length/2 - wheel_width/2} ${wheel_radius}" rpy="0 1.5708 0"/>
+    <origin xyz="${base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -190,7 +189,7 @@
   <joint name="back_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_right_wheel"/>
-    <origin xyz="${-1 * base_width/2 - wheel_width/2} ${-1*base_length/2 - wheel_width/2} ${wheel_radius}" rpy="0 1.5708 0"/>
+    <origin xyz="${-1 * base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -311,6 +310,12 @@
         <color rgba="0 1 0 1"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${turret_shaft_radius}" length="${2*(support_width + gimbal_radius)}"/>
+      </geometry>
+    </collision>
     <xacro:cylinder_inertia m="${0.5}" rad="${turret_shaft_radius}" h="${2*(support_width + gimbal_radius)}"/>
   </link>
   
@@ -359,6 +364,13 @@
         <color rgba="0 1 1 1"/>
       </material>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.02" length="0.15"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="0.2" rad="0.02" h="0.15"/>
   </link>
   
   <joint name="gun_shaft_joint" type="fixed">
@@ -428,6 +440,9 @@
     <geometry>
       <box size="0.05 0.05 0.05"/>
     </geometry>
+    <material name="camera_gray">
+      <color rgba="0.5 0.5 0.5 1"/>
+    </material>
   </visual>
 
   <collision>
