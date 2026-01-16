@@ -319,12 +319,12 @@
     <xacro:cylinder_inertia m="${0.5}" rad="${turret_shaft_radius}" h="${2*(support_width + gimbal_radius)}"/>
   </link>
   
-  <joint name="turret_shaft_joint" type="revolute">
+  <joint name="turret_shaft_joint" type="fixed"> <!-- fixed for now-->
     <parent link="bottom_support_link"/>
     <child link="turret_shaft_link"/>
     <origin xyz="0 0 ${0.75 * support_standoff_height}" rpy="0 1.5708 0"/>
-    <axis xyz="0 0 1"/>
-      <limit lower="-0.784" upper="0.784" effort="5" velocity="3.14"/> <!--not sure good values here-->
+    <!--<axis xyz="0 0 1"/> -->
+      <!-- <limit lower="-0.784" upper="0.784" effort="5" velocity="3.14"/>  -->
   </joint>
 
   <!-- Turret box -->
@@ -405,9 +405,9 @@
   </link>
   
   <joint name="laser_joint" type="fixed">
-    <parent link="left_support_link"/>
+    <parent link="turret_link"/>
     <child link="laser_frame"/>
-    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 0"/>
+    <origin xyz="0.02 ${gimbal_radius + support_width * 1.5} ${-(turret_height / 2 + 0.02)}" rpy="0 0 0"/>
   </joint>
   
   <!-- IMU -->
@@ -541,8 +541,6 @@
       <joint_name>back_right_wheel_joint</joint_name>
       <joint_name>gimbal_joint</joint_name>
       <joint_name>turret_shaft_joint</joint_name>
-
-
     </plugin>
   </gazebo>
 
@@ -562,8 +560,8 @@
           </horizontal>
         </scan>
         <range>
-          <min>0.1</min>
-          <max>10.0</max>
+          <min>0.25</min>
+          <max>5</max>
           <resolution>0.01</resolution>
         </range>
       </ray>
