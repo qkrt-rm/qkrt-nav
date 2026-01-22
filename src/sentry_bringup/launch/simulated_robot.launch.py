@@ -41,8 +41,18 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true'}.items()
     )
 
+    laser_merger = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("sentry_bringup"),
+            "launch",
+            "laser_merger.launch.py"
+        ),
+        launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
     return LaunchDescription([
         gazebo,
+        laser_merger,
         global_localization,
         local_localization,
         navigation,

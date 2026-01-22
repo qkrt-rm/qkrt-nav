@@ -17,7 +17,7 @@ controller_server:
     general_goal_checker:
       plugin: "nav2_controller::SimpleGoalChecker"
       xy_goal_tolerance: 0.20
-      yaw_goal_tolerance: 0.35
+      yaw_goal_tolerance: 3.15
       stateful: true
     
     FollowPath:
@@ -47,17 +47,13 @@ controller_server:
       xy_goal_tolerance: 0.25
       trans_stopped_velocity: 0.05
       theta_stopped_velocity: 0.05
-      rotate_to_heading_angular_vel: 1.0
-      rotate_to_heading_min_angle: 0.785
       short_circuit_trajectory_evaluation: true
       stateful: true
-      critics: ["RotateToGoal", "Oscillation", "BaseObstacle", "GoalAlign", "PathAlign", "PathDist", "GoalDist"]
+      critics: ["Oscillation", "BaseObstacle", "PathAlign", "PathDist", "GoalDist"]
       BaseObstacle.scale: 0.02
-      GoalAlign.scale: 24.0
-      PathAlign.scale: 32.0
-      PathDist.scale: 32.0
-      GoalDist.scale: 24.0
-      RotateToGoal.scale: 32.0
+      PathAlign.scale: 10.0
+      PathDist.scale: 10.0
+      GoalDist.scale: 15.0
       Oscillation.scale: 1.0
 
 local_costmap:

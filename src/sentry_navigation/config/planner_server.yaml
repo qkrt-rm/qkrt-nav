@@ -38,7 +38,7 @@ planner_server:
       
       smoother:
         max_iterations: 200
-        w_smooth: 0.10
+        w_smooth: 0.30
         w_data: 0.40
         tolerance: 1.0e-6
 
