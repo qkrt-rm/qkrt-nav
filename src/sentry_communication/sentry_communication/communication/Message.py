@@ -19,8 +19,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import struct
 from abc import ABC, abstractmethod
 
-from util import Point3D
-
 from .CRC import calculateCRC8, calculateCRC16
 
 
@@ -111,12 +109,12 @@ class RobotPositionMessage(DJIMessage):
     The position is encoded as three floats (x, y, z) in little-endian format.
     """
 
-    def __init__(self, position: Point3D):
+    def __init__(self, position: list[float]):
         """
         Initializes the RobotPositionMessage with the given position.
 
         Args:
-            position (Point3D): The 3D coordinates of the robot.
+            position (list[float]): An array of 3 floats representing [x, y, z].
         """
         self.position = position
 
@@ -134,7 +132,9 @@ class RobotPositionMessage(DJIMessage):
         Returns:
             bytes: Encoded position data as 3 floats (x, y, z) in little-endian format.
         """
-        return struct.pack("<fff", self.position.x, self.position.y, self.position.z)
+        # Unpacks the list into the 3 float slots for struct.pack
+        return struct.pack("<fff", *self.position)
+
 
 class NavMessage(DJIMessage):
     """
@@ -142,19 +142,19 @@ class NavMessage(DJIMessage):
     The command is encoded as three floats (Vx, Vy, w) in little-endian format.
     """
 
-    def __init__(self, cmd: Point3D):
+    def __init__(self, cmd: list[float]):
         """
         Initializes the NavMessage with the given commanded velocity.
 
         Args:
-            cmd (Point3D): The linear velocities Vx, Vy, and angular velocity w.
+            cmd (list[float]): An array of 3 floats representing [Vx, Vy, w].
         """
         self.cmd = cmd
 
     def getID(self) -> int:
         """
         Returns the unique message ID for NavMessage.
-        ID: 0x01
+        ID: 0x02
         """
         return 0x02
 
@@ -165,4 +165,5 @@ class NavMessage(DJIMessage):
         Returns:
             bytes: Encoded velocity command data as 3 floats (x, y, z) in little-endian format.
         """
-        return struct.pack("<fff", self.cmd.x, self.cmd.y, self.cmd.z)
+        # Unpacks the list into the 3 float slots for struct.pack
+        return struct.pack("<fff", *self.cmd)
