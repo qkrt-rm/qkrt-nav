@@ -1,6 +1,6 @@
-image: ../maps/OccupancyGrid.png
-resolution: 0.02
-origin: [-9.06, -6.06, 0.0]
+image: ../maps/OccupancyGrid2.png
+resolution: 0.0132
+origin: [-5.89, -3.94, 0.0] 
 occupied_thresh: 0.65
 free_thresh: 0.25
 negate: 0

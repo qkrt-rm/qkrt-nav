@@ -1,14 +1,15 @@
 import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
-    
-    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
+    #old
+    # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
+    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
     world_path = os.path.join(pkg_description, 'worlds', 'my_world.sdf')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
     
@@ -16,9 +17,10 @@ def generate_launch_description():
         'world',
         default_value=world_path
     )
-    
-    with open(urdf_path, 'r') as file:
-        robot_description = file.read()
+    robot_description = Command(['xacro', ' ', urdf_path])
+    # old
+    # with open(urdf_path, 'r') as file:
+    #     robot_description = file.read()
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',

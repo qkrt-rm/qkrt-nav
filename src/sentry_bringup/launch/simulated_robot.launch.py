@@ -31,7 +31,7 @@ def generate_launch_description():
         ),
         launch_arguments={'use_sim_time': 'true'}.items()
     )
-    
+
     navigation = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory("sentry_navigation"),
@@ -40,7 +40,7 @@ def generate_launch_description():
         ),
         launch_arguments={'use_sim_time': 'true'}.items()
     )
-    
+
     return LaunchDescription([
         gazebo,
         global_localization,
