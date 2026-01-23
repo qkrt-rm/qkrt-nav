@@ -1,0 +1,340 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="vex_world"> 
+  <!--gazebo /home/tony/qkrt-nav/src/sentry_description/worlds/vex__test_world.sdf-->
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Competition arena walls (simple 4-wall boundary) -->
+    <model name="arena_boundary">
+      <static>true</static>
+
+      <!-- LEFT WALL: thickness(X)=0.025, length(Y)=1.835, height(Z)=0.3 -->
+      <link name="wall_left">
+        <pose>-1.8225 0 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.025 3.67 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.025 3.67 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.8 0.2 0.1 1</ambient> <!--enlight-->
+            <diffuse>0.8 0.2 0.1 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- RIGHT WALL -->
+      <link name="wall_right">
+        <pose>1.8225 0 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.025 3.67 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.025 3.67 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.8 0.2 0.1 1</ambient> <!--enlight-->
+            <diffuse>0.8 0.2 0.1 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- TOP WALL: length(X)=3.595 to connect left/right walls -->
+      <link name="wall_top">
+        <pose>0 1.8225 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>3.67 0.025 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>3.67 0.025 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.8 0.2 0.1 1</ambient> <!--enlight-->
+            <diffuse>0.8 0.2 0.1 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- BOTTOM WALL -->
+      <link name="wall_bottom">
+        <pose>0 -1.8225 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>3.67 0.025 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>3.67 0.025 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.8 0.2 0.1 1</ambient> <!--enlight-->
+            <diffuse>0.8 0.2 0.1 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+
+      <!-- Center pillar: square cross-section, rotated 45 degrees (yaw = pi/4) -->
+      <link name="pillar_link">
+        <!-- pose: x y z roll pitch yaw -->
+        <!-- yaw=0.785398 rad = 45 degrees -->
+        <pose>0 0 0.3 0 0 0.785398</pose>
+
+        <collision name="col">
+          <geometry>
+            <box>
+              <!-- size_x size_y size_z -->
+              <size>0.41 0.41 0.60</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name="vis">
+          <geometry>
+            <box>
+              <size>0.41 0.41 0.60</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+
+
+
+      <!-- left middle   -->
+      <link name="wall_left_middle">
+        <pose>-1.205 0 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.07 1.25 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.07 1.25 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.7 0.1 0.6</ambient> <!--enlight-->
+            <diffuse>0.2 0.7 0.1 0.6</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- right middle   -->
+      <link name="wall_right_middle">
+        <pose>1.205 0 0.15 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.07 1.25 0.3</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.07 1.25 0.3</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.7 0.1 0.6</ambient> <!--enlight-->
+            <diffuse>0.2 0.7 0.1 0.6</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+
+      <!-- red and blue   -->
+      <link name="bottem_rb">
+        <pose>0 -1.402 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.48 0.05 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.48 0.05 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.2 0.8 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- red and blue   -->
+      <link name="top_rb">
+        <pose>0 1.402 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.48 0.05 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.48 0.05 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.2 0.8 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+
+      <!-- red and blue   -->
+      <link name="bottem_rb_left">
+        <pose>-0.21 -1.62 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.05 0.4 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.05 0.4 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.2 0.8 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- red and blue   -->
+      <link name="bottem_rb_right">
+        <pose>0.21 -1.62 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.05 0.4 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.05 0.4 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.2 0.8 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- red and blue   -->
+      <link name="top_rb_left">
+        <pose>-0.21 1.62 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.05 0.395 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.05 0.395 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.4 0.4 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.4 0.4 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+      <!-- red and blue   -->
+      <link name="top_rb_right">
+        <pose>0.21 1.62 0.03 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.05 0.395 0.03</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.05 0.395 0.03</size></box></geometry>
+
+          <material>
+            <ambient>0.2 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.2 0.2 0.8 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+     <!-- pillars   -->
+      <link name="pillar_top_left">
+        <pose>-0.86 1.75 0.5 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+
+          <material>
+            <ambient>0.1 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.6 0.2 0.2 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+     <!-- pillars   -->
+      <link name="pillar_top_right">
+        <pose>0.86 1.75 0.5 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+
+          <material>
+            <ambient>0.1 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.6 0.2 0.2 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+     <!-- pillars   -->
+      <link name="pillar_bottom_right">
+        <pose>0.86 -1.75 0.5 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+        </collision>
+        <visual name="vis">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+
+          <material>
+            <ambient>0.1 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.6 0.2 0.2 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+
+     <!-- pillars   -->
+      <link name="pillar_bottom_left">
+        <pose>-1.18 -1.75 0.5 0 0 0</pose>
+        <collision name="col">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+        </collision>
+
+        <visual name="vis">
+          <geometry><box><size>0.12 0.12 1</size></box></geometry>
+
+          <material>
+            <ambient>0.1 0.2 0.8 1</ambient> <!--enlight-->
+            <diffuse>0.6 0.2 0.2 1</diffuse> <!--maincolor-->
+            <!-- red green blue A -->
+          </material>
+
+        </visual>
+      </link>
+
+    </model>
+
+  </world>
+</sdf>
