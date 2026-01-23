@@ -1,4 +1,4 @@
-from communication import RobotPositionMessage, Serial
+from sentry_communication.communication import RobotPositionMessage, Serial
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
@@ -17,7 +17,7 @@ class NavSubscriber(Node):
             'cmd_vel',
             self.listener_callback,
             10)
-        self.subscription  # prevent unused variable warning
+        self.subscription
 
     def listener_callback(self, msg):
         cmd = [msg.linear.x, msg.linear.y, msg.angular.z]
