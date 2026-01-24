@@ -105,7 +105,7 @@
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="${base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${base_width/2 - wheel_width/2} ${base_length/2 - wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -133,7 +133,7 @@
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="${-1 * base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-1 * base_width/2 + wheel_width / 2} ${base_length/2 - wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -161,7 +161,7 @@
   <joint name="back_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_left_wheel"/>
-    <origin xyz="${base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${base_width/2 - wheel_width / 2} ${-1*base_length/2 + wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -189,7 +189,7 @@
   <joint name="back_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_right_wheel"/>
-    <origin xyz="${-1 * base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-1 * base_width/2 + wheel_width / 2} ${-1*base_length/2 + wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -248,32 +248,6 @@
   </joint>
 
   <!-- LSL -->
-  <link name="left_support_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
-      </geometry>
-      <material name="red">
-        <color rgba="1 0 0 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
-      </geometry>
-    </collision>
-    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
-  </link>
-
-   <joint name="left_support_joint" type="fixed">
-      <parent link="bottom_support_link"/>
-      <child link="left_support_link"/>
-      <origin xyz="${1.5 * support_width + gimbal_radius} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
-  </joint>
-
-  <!-- RSL -->
   <link name="right_support_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -296,6 +270,32 @@
    <joint name="right_support_joint" type="fixed">
       <parent link="bottom_support_link"/>
       <child link="right_support_link"/>
+      <origin xyz="${1.5 * support_width + gimbal_radius} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- RSL -->
+  <link name="left_support_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+  </link>
+
+   <joint name="left_support_joint" type="fixed">
+      <parent link="bottom_support_link"/>
+      <child link="left_support_link"/>
       <origin xyz="${-(1.5 * support_width + gimbal_radius)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
   </joint>
 
@@ -382,34 +382,6 @@
   
 
   <!-- LiDAR -->
-  <link name="laser_frame_left">
-    <visual>
-      <geometry>
-        <cylinder radius="0.03" length="0.04"/>
-      </geometry>
-      <material name="purple">
-        <color rgba="1 0 1 1"/>
-      </material>
-    </visual>
-    <collision>
-      <geometry>
-        <cylinder radius="0.03" length="0.04"/>
-      </geometry>
-    </collision>
-    <inertial>
-      <mass value="0.1"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" 
-               iyy="0.0001" iyz="0.0" izz="0.0001"/>
-    </inertial>
-  </link>
-
-  <joint name="laser_joint_left" type="fixed">
-    <parent link="left_support_link"/>
-    <child link="laser_frame_left"/>
-    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 3.1415926535"/>
-  </joint>
-
   <link name="laser_frame_right">
     <visual>
       <geometry>
@@ -435,6 +407,34 @@
   <joint name="laser_joint_right" type="fixed">
     <parent link="right_support_link"/>
     <child link="laser_frame_right"/>
+    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 3.1415926535"/>
+  </joint>
+
+  <link name="laser_frame_left">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" 
+               iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="laser_joint_left" type="fixed">
+    <parent link="left_support_link"/>
+    <child link="laser_frame_left"/>
     <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 0"/>
   </joint>
 
@@ -552,7 +552,7 @@
       <update_rate>50</update_rate>
       <publish_rate>50</publish_rate>
       <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
+      <publish_odom_tf>false</publish_odom_tf>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_link</robot_base_frame>
     </plugin>
@@ -596,7 +596,7 @@
       </ray>
       <plugin name="laser_controller_left" filename="libgazebo_ros_ray_sensor.so">
         <ros>
-          <remapping>~/out:=scan_left</remapping>
+          <remapping>~/out:=/scan_left</remapping>
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>
         <frame_name>laser_frame_left</frame_name>
@@ -626,7 +626,7 @@
       </ray>
       <plugin name="laser_controller_right" filename="libgazebo_ros_ray_sensor.so">
         <ros>
-          <remapping>~/out:=scan_right</remapping>
+          <remapping>~/out:=/scan_right</remapping>
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>
         <frame_name>laser_frame_right</frame_name>

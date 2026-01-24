@@ -12,7 +12,7 @@ def generate_launch_description():
 
     # File paths
     default_model_path = os.path.join(pkg_description, 'src', 'description', 'sentry_description.urdf')
-    default_rviz_config_path = os.path.join(pkg_description, 'rviz', 'config.rviz')
+    default_rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
     ekf_config_path = os.path.join(pkg_bringup, 'config', 'ekf.yaml')
     world_path = os.path.join(pkg_bringup, 'worlds', 'my_world.sdf')
     map_yaml_path = os.path.join(pkg_bringup, 'config', 'sentry_map.yaml')
@@ -57,12 +57,6 @@ def generate_launch_description():
         output='screen'
     )
 
-    tf2_ros_node = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        name='map_to_odom',
-        arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom']
-    )
 
     robot_localization_node = Node(
         package='robot_localization',
@@ -107,6 +101,19 @@ def generate_launch_description():
         ]
     )
 
+    laser_merger_node = Node(
+        package='sentry_bringup',
+        executable='laser_merger.py',
+        name='laser_merger',
+        output='screen',
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+            {'destination_frame': 'base_link'},
+            {'scan_destination_topic': '/scan'},
+            {'range_max': 10.0}
+        ]
+    )
+
     # Launch description
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -121,7 +128,6 @@ def generate_launch_description():
             name='use_sim_time',
             default_value='True',
             description='Flag to enable use_sim_time'),
-        tf2_ros_node,
         joint_state_publisher_node,
         robot_state_publisher_node,
         spawn_entity,
@@ -130,5 +136,6 @@ def generate_launch_description():
         amcl_node,
         lifecycle_manager_node,
         rviz_node,
-        gazebo
+        gazebo,
+        laser_merger_node
     ])
