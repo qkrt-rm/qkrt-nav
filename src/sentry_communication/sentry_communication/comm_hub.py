@@ -3,7 +3,8 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 
-serial = Serial("/dev/ttyTHS0", 1_000_000)
+# MCB uses UART1 at 115200 baud (same as sensor_publisher)
+serial = Serial("/dev/ttyTHS1", 115200)
 
 def sendVelocityCommand(command: list[float]):
     message = RobotPositionMessage(command)
