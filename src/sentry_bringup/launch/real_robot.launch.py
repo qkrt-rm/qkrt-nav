@@ -12,8 +12,6 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     pkg_localization = get_package_share_directory('sentry_localization')
     pkg_navigation = get_package_share_directory('sentry_navigation')
-    pkg_drivers = get_package_share_directory('sentry_drivers')
-
     # Launch arguments
     use_slam = LaunchConfiguration("use_slam")
     use_slam_arg = DeclareLaunchArgument(
@@ -36,9 +34,12 @@ def generate_launch_description():
         description="Launch navigation stack"
     )
 
-    # Sensor driver (publishes /odom and /imu)
-    sensor_driver = IncludeLaunchDescription(
-        os.path.join(pkg_drivers, "launch", "drivers.launch.py"),
+    # Comm hub - MCB communication (publishes /mcb_odom, subscribes /cmd_vel)
+    comm_hub = Node(
+        package='sentry_communication',
+        executable='comm_hub',
+        name='comm_hub',
+        output='screen'
     )
 
     # LiDARs
@@ -133,7 +134,7 @@ def generate_launch_description():
         use_keyboard_arg,
         use_nav_arg,
         # Drivers
-        sensor_driver,
+        comm_hub,
         laser_driver_1,
         laser_driver_2,
         laser_merger,

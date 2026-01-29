@@ -21,7 +21,7 @@
   <exec_depend>rviz2</exec_depend>
   <exec_depend>nav2_bringup</exec_depend>
   <exec_depend>teleop_twist_keyboard</exec_depend>
-  <exec_depend>sentry_drivers</exec_depend>
+
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
