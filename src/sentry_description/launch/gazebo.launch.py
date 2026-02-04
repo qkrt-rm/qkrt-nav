@@ -10,7 +10,7 @@ def generate_launch_description():
     #old
     # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
     urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
-    world_path = os.path.join(pkg_description, 'worlds', 'my_world.sdf')
+    world_path = os.path.join(pkg_description, 'worlds', 'comp_map.sdf')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
     
     world_arg = DeclareLaunchArgument(

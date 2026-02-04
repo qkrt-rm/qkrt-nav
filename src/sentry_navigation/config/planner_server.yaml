@@ -81,9 +81,5 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 5.0
-<<<<<<< HEAD
-=======
-        inflation_radius: 0.5
->>>>>>> 445001f (bug fixes, pathing in progress)
       
       always_send_full_costmap: true

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="my_world">
+
+    <!-- Add ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Directional light (like sun but dimmer) -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.6 0.6 0.6 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ambient light so shadows aren't pitch black -->
+    <scene>
+      <ambient>0.3 0.3 0.3 1</ambient>
+    </scene>
+
+    <!-- Your map model -->
+    <model name="my_map">
+      <static>true</static>
+      <!-- pose: X Y Z Roll Pitch Yaw (radians) -->
+      <!-- Rotated -90deg (clockwise) about Z so the 12m side aligns with X -->
+      <pose>0 0 0 0 0 -1.5708</pose>
+
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>file:///home/noah/an_ws/src/sentry_description/meshes/2026_ARC_3v3_simplified.stl</uri>
+              <!--
+                Scaling: <scale>X Y Z</scale>
+                The raw STL mesh is 343.7 x 496.5 x 55.9 units (likely inches from CAD export).
+                The real arena is 12m (length) x 8m (width).
+                The model is rotated -90deg about Z, so the mesh axes swap:
+                  Mesh X (343.7 units) now maps to world Y (8m)
+                  Mesh Y (496.5 units) now maps to world X (12m)
+
+                Per-axis scale = desired_metres / raw_mesh_units
+                  X (now 12m): 12.0 / 496.5 = 0.02417
+                  Y (now 8m):  8.0  / 343.7 = 0.02328
+                  Z (height):  matched to Y  = 0.02328  (keeps vertical proportions correct)
+
+                Common uniform scale factors for reference:
+                  inches to metres: 0.0254  (gives ~8.7m x 12.6m, slightly oversized due to wall thickness)
+                  mm to metres:     0.001   (gives ~0.34m x 0.50m, way too small)
+                  cm to metres:     0.01    (gives ~3.4m x 5.0m, too small)
+
+                If you want uniform scaling (no distortion) instead, use 0.0254 for all axes.
+              -->
+              <scale>0.02417 0.02328 0.02328</scale>
+            </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>file:///home/noah/an_ws/src/sentry_description/meshes/2026_ARC_3v3_simplified.stl</uri>
+              <!-- Keep collision scale identical to visual scale -->
+              <scale>0.02417 0.02328 0.02328</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+  </world>
+</sdf>
