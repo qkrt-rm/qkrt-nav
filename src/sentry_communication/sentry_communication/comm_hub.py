@@ -8,6 +8,7 @@ from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout
+from rclpy.timer import Timer
 
 # MCB uses UART1 at 115200 baud
 serial = Serial("/dev/ttyTHS1", 115200)
@@ -76,6 +77,14 @@ ODOM_LABELS = [
 ODOM_NUM_FLOATS = len(ODOM_LABELS)
 ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 
+class BSPublisher(Node):
+    def __init__(self):
+        super().__init__('bs_publisher')
+        timer_period = 0.001
+        self.timer:Timer = self.create_timer(timer_period,self.timer_callback)
+    def timer_callback(self):
+        byte = serial.port.read(1)
+        self.get_logger().info(f'bytes are being received: {byte}')
 
 class OdomPublisher(Node):
     def __init__(self):
@@ -114,9 +123,11 @@ def main():
     rclpy.init()
     nav_subscriber = NavSubscriber()
     odom_publisher = OdomPublisher()
+    bs_publisher = BSPublisher()
 
     executor = MultiThreadedExecutor()
     executor.add_node(nav_subscriber)
+    executor.add_node(bs_publisher)
     executor.add_node(odom_publisher)
 
     try:
@@ -126,6 +137,7 @@ def main():
     finally:
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
+        bs_publisher.destroy_node()
         rclpy.shutdown()
 
 

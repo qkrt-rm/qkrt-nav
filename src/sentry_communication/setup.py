@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'comm_hub = sentry_communication.comm_hub:main',
+            'threaded_blocking = sentry_communication.threaded_blocking_read:main'
         ],
     },
 )
