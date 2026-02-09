@@ -23,7 +23,7 @@ def generate_launch_description():
     use_keyboard = LaunchConfiguration("use_keyboard")
     use_keyboard_arg = DeclareLaunchArgument(
         "use_keyboard",
-        default_value="false",
+        default_value="true",
         description="Use keyboard teleop instead of joystick"
     )
 

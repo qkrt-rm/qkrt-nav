@@ -4,13 +4,8 @@ Minimal launch file for testing MCB communication.
 - Launches keyboard teleop for control
 
 NOTE: comm_hub uses /dev/ttyTHS1 at 115200 baud.
-
-Usage:
-  ros2 launch sentry_bringup minimal_mcb_test.launch.py
-
-Echo sensor data:
-  ros2 topic echo /mcb_odom
 """
+
 from launch import LaunchDescription
 from launch_ros.actions import Node
 

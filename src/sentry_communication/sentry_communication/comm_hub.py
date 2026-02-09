@@ -3,7 +3,7 @@ import threading
 import math
 import time
 
-from sentry_communication.communication import RobotPositionMessage, Serial
+from sentry_communication.communication import RobotPositionMessage, NavMessage, Serial
 from sentry_communication.communication.Receive import parse_frame
 import rclpy
 from rclpy.node import Node
@@ -55,7 +55,7 @@ def read_frame(ser):
 
 
 def sendVelocityCommand(command: list[float]):
-    message = RobotPositionMessage(command)
+    message = NavMessage(command)
     serial.write(message.createMessage())
 
 
