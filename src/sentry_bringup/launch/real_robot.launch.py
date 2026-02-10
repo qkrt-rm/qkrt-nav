@@ -12,12 +12,13 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     pkg_localization = get_package_share_directory('sentry_localization')
     pkg_navigation = get_package_share_directory('sentry_navigation')
+
     # Launch arguments
-    use_slam = LaunchConfiguration("use_slam")
-    use_slam_arg = DeclareLaunchArgument(
-        "use_slam",
+    slam = LaunchConfiguration("slam")
+    slam_arg = DeclareLaunchArgument(
+        "slam",
         default_value="false",
-        description="Use SLAM instead of localization"
+        description="Use SLAM for mapping. If false, use AMCL with a pre-built map."
     )
 
     use_keyboard = LaunchConfiguration("use_keyboard")
@@ -59,10 +60,16 @@ def generate_launch_description():
         output="screen"
     )
 
-    # Laser merger
-    laser_merger = IncludeLaunchDescription(
-        os.path.join(pkg_bringup, "launch", "laser_merger.launch.py"),
-        launch_arguments={'use_sim_time': 'false'}.items()
+    # Laser merger node (inlined from laser_merger.launch.py)
+    laser_merger = Node(
+        package='sentry_bringup',
+        executable='laser_merger.py',
+        name='laser_merger',
+        output='screen',
+        parameters=[
+            os.path.join(pkg_bringup, 'config', 'laser_merger.yaml'),
+            {'use_sim_time': False}
+        ]
     )
 
     # Controller (for sending commands to the robot)
@@ -100,20 +107,13 @@ def generate_launch_description():
         condition=IfCondition(use_keyboard)
     )
 
-    # SLAM (if use_slam is true)
-    slam = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory("sentry_mapping"),
-            "launch",
-            "slam.launch.py"
-        ),
-        condition=IfCondition(use_slam)
-    )
-
-    # Global localization (if not using SLAM)
+    # Global localization (SLAM or AMCL based on slam argument)
     global_localization = IncludeLaunchDescription(
         os.path.join(pkg_localization, "launch", "global_localization.launch.py"),
-        condition=UnlessCondition(use_slam)
+        launch_arguments={
+            'use_sim_time': 'false',
+            'slam': slam
+        }.items()
     )
 
     # Local localization (EKF)
@@ -130,7 +130,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         # Arguments
-        use_slam_arg,
+        slam_arg,
         use_keyboard_arg,
         use_nav_arg,
         # Drivers
@@ -143,7 +143,6 @@ def generate_launch_description():
         joystick,
         keyboard_teleop,
         # Localization
-        slam,
         global_localization,
         local_localization,
         # Navigation

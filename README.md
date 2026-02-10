@@ -133,6 +133,74 @@ ros2 launch sentry_bringup real_robot.launch.py
 
 ---
 
+## Mapping and Localization
+
+The robot supports two modes controlled by the `slam` argument:
+
+### Mode 1: SLAM Mapping (`slam:=true`)
+
+Use this to create a new map of an environment.
+
+```bash
+# Start the robot with SLAM enabled
+ros2 launch sentry_bringup real_robot.launch.py slam:=true
+
+# Or in simulation
+ros2 launch sentry_bringup simulated_robot.launch.py slam:=true
+```
+
+Drive the robot around to map the environment. Monitor in RViz to see the map being built.
+
+**Saving the map:**
+```bash
+# Save the map (creates my_map.yaml and my_map.pgm)
+ros2 run nav2_map_server map_saver_cli -f ~/qkrt-nav/src/sentry_localization/maps/my_map
+```
+
+### Mode 2: AMCL Localization (`slam:=false`, default)
+
+Use a pre-built map for localization during operation.
+
+```bash
+# Use default map (sentry_map.yaml)
+ros2 launch sentry_bringup real_robot.launch.py
+
+# Or specify a custom map
+ros2 launch sentry_bringup real_robot.launch.py map_yaml:=/path/to/my_map.yaml
+```
+
+Set the robot's initial pose in RViz using "2D Pose Estimate".
+
+### Typical Workflow
+
+1. **Map the arena** (once per venue):
+   ```bash
+   ros2 launch sentry_bringup real_robot.launch.py slam:=true
+   # Drive around, then save:
+   ros2 run nav2_map_server map_saver_cli -f ~/qkrt-nav/src/sentry_localization/maps/arena_map
+   ```
+
+2. **Update config** - edit `sentry_localization/config/sentry_map.yaml`:
+   ```yaml
+   image: ../maps/arena_map.pgm
+   resolution: 0.05
+   origin: [-9.0, -6.0, 0.0]
+   occupied_thresh: 0.65
+   free_thresh: 0.25
+   negate: 0
+   ```
+
+3. **Run with localization**:
+   ```bash
+   ros2 launch sentry_bringup real_robot.launch.py
+   ```
+
+### Future: No-Go Zones
+
+The navigation stack will support a separate prebuilt occupancy grid for no-go zones (obstacles too short for LiDAR detection). The control algorithm will use this for path planning while AMCL uses the SLAM-generated map for localization.
+
+---
+
 ## Dependencies
 
 ### Installed
