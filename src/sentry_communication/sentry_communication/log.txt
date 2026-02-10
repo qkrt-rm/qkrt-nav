@@ -1,0 +1,100 @@
+threaded_blocking-1] [INFO] [1770238912.551351811] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.552334858] [threaded_blocking]:    0x5A ( 90): 111217 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.553150000] [threaded_blocking]:    0x1A ( 26):  2269 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.554330072] [threaded_blocking]:    0x54 ( 84):  2267 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.555168158] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.556036612] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.556891466] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.557990705] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.558775254] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.589492586] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.590606513] [threaded_blocking]:    0x5A ( 90): 111660 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.591379062] [threaded_blocking]:    0x1A ( 26):  2280 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.592124956] [threaded_blocking]:    0x54 ( 84):  2278 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.592884865] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.593713894] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.594525004] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.595315442] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.596111479] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.626795946] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.627920722] [threaded_blocking]:    0x5A ( 90): 112076 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.628648951] [threaded_blocking]:    0x1A ( 26):  2288 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.629673726] [threaded_blocking]:    0x54 ( 84):  2286 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.630943974] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.631889261] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.632824627] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.633774042] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.634728960] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.668710410] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.669992755] [threaded_blocking]:    0x5A ( 90): 112504 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.671020122] [threaded_blocking]:    0x1A ( 26):  2298 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.672028993] [threaded_blocking]:    0x54 ( 84):  2296 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.673017671] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.674029550] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.675023733] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.676032444] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.677011203] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.712268149] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.713789279] [threaded_blocking]:    0x5A ( 90): 112966 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.714885351] [threaded_blocking]:    0x1A ( 26):  2307 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.715934286] [threaded_blocking]:    0x54 ( 84):  2305 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.716992565] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.718128957] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.719192997] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.720276364] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.721364275] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.757372555] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.758647636] [threaded_blocking]:    0x5A ( 90): 113462 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.759745819] [threaded_blocking]:    0x1A ( 26):  2315 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.760788130] [threaded_blocking]:    0x54 ( 84):  2313 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.761903018] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.762986225] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.764068761] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.765177312] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.766233000] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.804180780] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.805570870] [threaded_blocking]:    0x5A ( 90): 113973 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.806677694] [threaded_blocking]:    0x1A ( 26):  2324 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.807767397] [threaded_blocking]:    0x54 ( 84):  2322 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.808833068] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.810029365] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.811113852] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.812111875] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.813099882] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.849889190] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.851291504] [threaded_blocking]:    0x5A ( 90): 114479 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.852460664] [threaded_blocking]:    0x1A ( 26):  2335 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.853674912] [threaded_blocking]:    0x54 ( 84):  2333 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.854863241] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.855944400] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.857051160] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.858129983] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.859150246] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.895525248] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.896996042] [threaded_blocking]:    0x5A ( 90): 114983 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.898191346] [threaded_blocking]:    0x1A ( 26):  2347 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.899342714] [threaded_blocking]:    0x54 ( 84):  2345 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.900463074] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.901628362] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.902721585] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.903766777] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.904744031] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.942249985] [threaded_blocking]: 
+[threaded_blocking-1] 📊 Most common bytes in all received data:
+[threaded_blocking-1] [INFO] [1770238912.943618698] [threaded_blocking]:    0x5A ( 90): 115493 times (96.1%)
+[threaded_blocking-1] [INFO] [1770238912.944786450] [threaded_blocking]:    0x1A ( 26):  2356 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.946023355] [threaded_blocking]:    0x54 ( 84):  2354 times (2.0%)
+[threaded_blocking-1] [INFO] [1770238912.947177091] [threaded_blocking]:    0x00 (  0):     4 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.948271242] [threaded_blocking]:    0x05 (  5):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.949422898] [threaded_blocking]:    0x0B ( 11):     2 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.950478713] [threaded_blocking]:    0x04 (  4):     1 times (0.0%)
+[threaded_blocking-1] [INFO] [1770238912.951545761] [threaded_blocking]:    0x15 ( 21):     1 times (0.0%)
