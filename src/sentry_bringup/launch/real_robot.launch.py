@@ -2,7 +2,7 @@ import os
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, ExecuteProcess
 from launch.conditions import IfCondition, UnlessCondition
-from launch.substitutions import LaunchConfiguration, PythonExpression
+from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
@@ -12,6 +12,9 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     pkg_localization = get_package_share_directory('sentry_localization')
     pkg_navigation = get_package_share_directory('sentry_navigation')
+
+    # URDF path
+    urdf_path = os.path.join(pkg_description, 'src', 'description', 'sentry_description.urdf')
 
     # Launch arguments
     slam = LaunchConfiguration("slam")
@@ -35,7 +38,19 @@ def generate_launch_description():
         description="Launch navigation stack"
     )
 
-    # Comm hub - MCB communication (publishes /mcb_odom, subscribes /cmd_vel)
+    # Robot state publisher (publishes URDF transforms: base_link → laser frames, etc.)
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[{
+            'robot_description': Command(['xacro ', urdf_path]),
+            'use_sim_time': False
+        }]
+    )
+
+    # Comm hub - MCB communication (publishes /odom, /imu, subscribes /cmd_vel)
     comm_hub = Node(
         package='sentry_communication',
         executable='comm_hub',
@@ -133,6 +148,8 @@ def generate_launch_description():
         slam_arg,
         use_keyboard_arg,
         use_nav_arg,
+        # Robot description
+        robot_state_publisher,
         # Drivers
         comm_hub,
         laser_driver_1,

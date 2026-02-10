@@ -4,34 +4,45 @@
 
 ### sentry_bringup
 **Main launch orchestration**
-- `sim.launch.py` - Simulation with Gazebo
+- `simulated_robot.launch.py` - Simulation with Gazebo
 - `real_robot.launch.py` - Real robot hardware
+
+**Launch Arguments:**
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `slam` | `false` | Use SLAM for mapping. If false, use AMCL with pre-built map |
+| `use_keyboard` | `true` | Use keyboard teleop instead of joystick |
+| `use_nav` | `true` | Launch navigation stack |
 
 ### sentry_description
 **Robot model and simulation**
-- URDF: `sentry_description.urdf` (omnidirectional 4-wheel robot)
-- Gazebo world: `my_world.sdf` (18x12m competition arena)
+- URDF: `sentry_description.urdf.xacro` (omnidirectional 4-wheel robot)
+- Gazebo world: `comp_map.sdf` (competition arena)
 - RViz config: `sentry_config.rviz`
-- Plugins: Planar move (omni), LiDAR, IMU
+- Plugins: Planar move (omni), dual LiDAR, IMU
 
 ### sentry_localization
 **Localization stack**
 
-**Global Localization (AMCL)**
-- Laser-based localization using known map
-- Motion model: `OmniMotionModel`
-- Map: 906x606px (18x12m at 2cm resolution)
+**Global Localization** (controlled by `slam` argument)
+- SLAM mode (`slam:=true`): Uses `slam_toolbox` for mapping
+- AMCL mode (`slam:=false`): Uses `nav2_amcl` + `nav2_map_server` for localization
 
 **Local Localization (EKF)**
-- Sensor fusion: wheel odometry + IMU
+- Sensor fusion: wheel odometry
 - Package: `robot_localization`
-- Publishes: `/odometry/filtered` and `odom→base_link` TF
+- Subscribes: `/odom`
+- Publishes: `/odometry/filtered`
 
 ### sentry_communication
 **MCB serial communication**
 - `comm_hub.py` - Bidirectional UART bridge between MCB and ROS2
-  - Receives: 17-float odometry message from MCB (wheel encoders, turret encoders, IMU)
-  - Publishes: `Float32MultiArray` on `/mcb_odom` topic
+  - Receives: 17-float message from MCB (wheel encoders, turret encoders, IMU)
+  - Publishes:
+    - `/odom` (nav_msgs/Odometry) - integrated wheel odometry
+    - `/imu` (sensor_msgs/Imu) - IMU data
+    - `/mcb_odom` (Float32MultiArray) - raw debug data
+    - `odom → base_link` TF transform
   - Subscribes: `/cmd_vel` (Twist) and sends velocity commands to MCB
   - Protocol: DJI Serial over `/dev/ttyTHS1` at 115200 baud
 
@@ -47,75 +58,10 @@
 - Algorithm: DWB (Dynamic Window Approach)
 - Omnidirectional: samples vx, vy, vth
 - Local costmap with obstacle + inflation layers
-- Update rate: 30 Hz
 
 **Smoother Server**
 - Algorithm: SimpleSmoother
-- Purpose: Smooth jagged paths from planner
 - Iterations: 400 with refinement
-
-**Behavior Tree Navigator**
-- TBD: Custom competition behavior tree
-
----
-
-## To Be Implemented
-
-### Priority 1: Robot modelling
-
-#### sentry_description (UPDATE)
-- [ ] Create accurate URDF matching real robot
-  - Actual dimensions and mass properties
-  - Correct wheel positions and sizes
-  - Accurate sensor placements (LiDAR, IMU)
-  - CAD mesh imports (if available)
-  - Proper collision geometry
-  - Inertia tensors for realistic dynamics
-- [ ] Improve Gazebo simulation
-  - Switch from `planar_move` to mecanum controller
-  - Add realistic friction/damping
-  - Tune physics parameters
-- [ ] Update competition world
-  - Add obstacles/markers from real arena
-  - Accurate wall positions
-  - Competition-specific features
-
-### Priority 2: Hardware Integration
-
-#### sentry_communication (UPDATE)
-- [x] Serial comm hub (`comm_hub.py`)
-  - Receives 17-float odom data from MCB (wheel encoders, turret encoders, full IMU)
-  - Publishes `Float32MultiArray` on `/mcb_odom`
-  - Subscribes `/cmd_vel` and sends velocity commands to MCB
-- [ ] Convert raw `/mcb_odom` into standard ROS messages (`/odom`, `/imu`) for EKF integration
-- [ ] LiDAR driver integration (RPLiDAR A1)
-  - Topic: `/scan`
-
-### Priority 3: Competition Logic
-
-#### sentry_core (NEW PACKAGE)
-- [ ] Battery/health monitor node
-  - Publishes: `/battery_low` (Bool)
-- [ ] Competition manager node
-  - Goal selection based on battery
-  - Interfaces with BT Navigator
-
-#### sentry_navigation (UPDATE)
-- [ ] Custom competition behavior tree
-  - Navigate to center (capture point)
-  - Retreat when battery low
-  - Hold position at center
-- [ ] Fine-tune robot parameters
-  - Set accurate `robot_radius` in costmaps
-  - Calibrate velocity limits
-  - Optimize DWB critics for competition
-
-### Priority 3: Testing & Calibration
-- [ ] Test omnidirectional motion (strafe, diagonal)
-- [ ] Calibrate EKF sensor fusion
-- [ ] Test AMCL localization accuracy
-- [ ] Validate Nav2 navigation in competition arena
-- [ ] Multi-robot testing (6 robots)
 
 ---
 
@@ -126,7 +72,7 @@
 ros2 launch sentry_bringup simulated_robot.launch.py
 ```
 
-### Real Robot (when hardware ready)
+### Real Robot
 ```bash
 ros2 launch sentry_bringup real_robot.launch.py
 ```
@@ -142,10 +88,10 @@ The robot supports two modes controlled by the `slam` argument:
 Use this to create a new map of an environment.
 
 ```bash
-# Start the robot with SLAM enabled
+# Real robot
 ros2 launch sentry_bringup real_robot.launch.py slam:=true
 
-# Or in simulation
+# Simulation
 ros2 launch sentry_bringup simulated_robot.launch.py slam:=true
 ```
 
@@ -153,7 +99,6 @@ Drive the robot around to map the environment. Monitor in RViz to see the map be
 
 **Saving the map:**
 ```bash
-# Save the map (creates my_map.yaml and my_map.pgm)
 ros2 run nav2_map_server map_saver_cli -f ~/qkrt-nav/src/sentry_localization/maps/my_map
 ```
 
@@ -165,7 +110,7 @@ Use a pre-built map for localization during operation.
 # Use default map (sentry_map.yaml)
 ros2 launch sentry_bringup real_robot.launch.py
 
-# Or specify a custom map
+# Specify a custom map
 ros2 launch sentry_bringup real_robot.launch.py map_yaml:=/path/to/my_map.yaml
 ```
 
@@ -201,45 +146,99 @@ The navigation stack will support a separate prebuilt occupancy grid for no-go z
 
 ---
 
+## System Architecture
+
+### Data Flow (Real Robot)
+
+```
+                                    ┌─────────────────┐
+                                    │  robot_state_   │
+                                    │   publisher     │
+                                    │ (URDF transforms)│
+                                    └────────┬────────┘
+                                             │ TF: base_link → laser_frames
+                                             ▼
+┌──────────┐     /cmd_vel      ┌─────────────────┐      /odom        ┌─────────┐
+│  Nav2    │ ─────────────────▶│    comm_hub     │ ─────────────────▶│   EKF   │
+│Controller│                   │  (MCB serial)   │                   │ filter  │
+└──────────┘                   └────────┬────────┘                   └─────────┘
+     ▲                                  │
+     │                                  │ TF: odom → base_link
+     │                                  ▼
+     │                         ┌─────────────────┐
+     │          /scan          │  laser_merger   │◀── /scan_left, /scan_right
+     └─────────────────────────│                 │
+                               └─────────────────┘
+                                        │
+                                        ▼
+                               ┌─────────────────┐
+                               │ AMCL or SLAM    │
+                               │ (map → odom TF) │
+                               └─────────────────┘
+```
+
+### TF Tree
+```
+map → odom          (AMCL or SLAM toolbox)
+odom → base_link    (comm_hub from wheel odometry)
+base_link → laser_frame_left   (robot_state_publisher)
+base_link → laser_frame_right  (robot_state_publisher)
+```
+
+### Key Topics
+| Topic | Type | Publisher | Subscriber |
+|-------|------|-----------|------------|
+| `/cmd_vel` | Twist | Nav2 Controller | comm_hub |
+| `/odom` | Odometry | comm_hub | EKF |
+| `/imu` | Imu | comm_hub | (available) |
+| `/scan` | LaserScan | laser_merger | AMCL, Nav2 |
+| `/scan_left` | LaserScan | rplidar_node_1 | laser_merger |
+| `/scan_right` | LaserScan | rplidar_node_2 | laser_merger |
+| `/map` | OccupancyGrid | map_server | Nav2 |
+
+---
+
+## To Be Implemented
+
+### Priority 1: Robot Modelling
+- [ ] Create accurate URDF matching real robot dimensions
+- [ ] Improve Gazebo simulation (mecanum controller)
+- [ ] Update competition world with accurate obstacles
+
+### Priority 2: Competition Logic
+- [ ] Custom competition behavior tree
+- [ ] Battery/health monitor node
+- [ ] Competition manager node (goal selection)
+
+### Priority 3: Testing & Calibration
+- [ ] Test omnidirectional motion
+- [ ] Calibrate EKF sensor fusion
+- [ ] Test AMCL localization accuracy
+- [ ] Fine-tune Nav2 parameters
+
+---
+
 ## Dependencies
 
 ### Installed
 - ROS2 Humble
-- Nav2 stack
+- Nav2 stack (`nav2_amcl`, `nav2_map_server`, `nav2_lifecycle_manager`)
 - `robot_localization` (EKF)
+- `slam_toolbox`
 - Gazebo Classic
-- DWB controller + critics
-- SMAC planner
-
-### Required (TBD)
-- `rplidar_ros` (for LiDAR)
-- `pyserial` (for microcontroller communication)
+- `rplidar_ros`
 
 ---
 
-
-## Robot Specifications (To be updated)
+## Robot Specifications
 
 | Parameter | Value |
 |-----------|-------|
 | **Drive Type** | Omnidirectional (4 mecanum wheels) |
-| **Wheel Radius** | 0.05 m |
-| **Wheelbase** | 0.3 m (X and Y) |
-| **Robot Radius** | 0.15 m (with safety margin) |
+| **Wheel Radius** | 0.1 m |
+| **Wheel Base** | 0.495 m (X and Y) |
 | **Max Velocity** | 0.5 m/s linear, 1.8 rad/s angular |
-| **Sensors** | LiDAR (360°), IMU, Wheel Encoders |
-
----
-
-## Competition Arena
-
-| Parameter | Value |
-|-----------|-------|
-| **Dimensions** | 18m × 12m |
-| **Map Resolution** | 0.02 m/pixel (2cm) |
-| **Map Size** | 906 × 606 pixels (with 3px border) |
-| **Capture Point** | Center (0, 0) |
-| **Starting Position** | TBD |
+| **Sensors** | 2x RPLiDAR A1, IMU, Wheel Encoders |
 
 ---
 
@@ -249,12 +248,13 @@ cd ~/qkrt-nav
 colcon build
 source install/setup.bash
 ```
+
 ---
 
 ## Team
 
 **QKRT Navigation Team**
-- Competition: [ARC Robotics]
+- Competition: ARC Robotics
 - Date: 2025
 
 ---
