@@ -1,18 +1,21 @@
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
-    #old
-    # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
     urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
     world_path = os.path.join(pkg_description, 'worlds', 'my_world.sdf')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
-    
+    models_path = os.path.join(pkg_description, 'models')
+
+    # Ensure Gazebo can find custom models (e.g. AprilTag markers)
+    existing_model_path = os.environ.get('GAZEBO_MODEL_PATH', '')
+    gazebo_model_path = models_path + (':' + existing_model_path if existing_model_path else '')
+
     world_arg = DeclareLaunchArgument(
         'world',
         default_value=world_path
@@ -66,6 +69,7 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
+        SetEnvironmentVariable('GAZEBO_MODEL_PATH', gazebo_model_path),
         world_arg,
         robot_state_publisher_node,
         gazebo_server,
