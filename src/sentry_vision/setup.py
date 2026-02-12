@@ -11,12 +11,17 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=[
+        'setuptools',
+        'pupil-apriltags',
+        'opencv-python',
+        'numpy',
+    ],
     zip_safe=True,
     maintainer='hamza',
     maintainer_email='hamzaighumman@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='AprilTag detection and pose estimation for sentry robot',
+    license='Apache-2.0',
     extras_require={
         'test': [
             'pytest',
