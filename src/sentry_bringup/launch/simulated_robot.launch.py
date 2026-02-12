@@ -41,9 +41,19 @@ def generate_launch_description():
         launch_arguments={'use_sim_time': 'true'}.items()
     )
 
+    vision = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory("sentry_vision"),
+            "launch",
+            "vision.launch.py"
+        ),
+        launch_arguments={'use_sim_time': 'true'}.items()
+    )
+
     return LaunchDescription([
         gazebo,
         global_localization,
         local_localization,
         navigation,
+        vision,
     ])
