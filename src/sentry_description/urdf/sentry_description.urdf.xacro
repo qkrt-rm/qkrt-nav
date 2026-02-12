@@ -592,7 +592,7 @@
 
   <!-- Depth camera Plugin -->
   <gazebo reference="depth_camera_link">
-  <sensor type="depth" name="depth_camera">
+  <sensor type="camera" name="depth_camera">
     <update_rate>30</update_rate>
 
     <camera>
@@ -610,7 +610,7 @@
       </clip>
     </camera>
 
-    <plugin name="depth_camera_controller" filename="libgazebo_ros_depth_camera.so">
+    <plugin name="depth_camera_controller" filename="libgazebo_ros_camera.so">
       <ros>
         <namespace>/sentry</namespace>
       </ros>
