@@ -52,6 +52,9 @@
                   cm to metres:     0.01    (gives ~3.4m x 5.0m, too small)
 
                 If you want uniform scaling (no distortion) instead, use 0.0254 for all axes.
+
+                Note, upon inspection of the stl file in gazebo, it appears that areas outside the outer wall were added
+                This may extend beyond the 8x12 metres and if used with amcl, may need more adjusting. Tune the costmap first, that thing looks wack
               -->
               <scale>0.02417 0.02328 0.02328</scale>
             </mesh>
