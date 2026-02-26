@@ -1,0 +1,719 @@
+<?xml version="1.0"?>
+<robot name="sentry_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Chassis (OnShape chassis_link collision: 0.45 x 0.38 x 0.45, Y-up)
+       Footprint 0.45 x 0.45m kept; height simplified to 0.15m for flat chassis body. -->
+  <xacro:property name="base_width"  value="0.45"/>
+  <xacro:property name="base_length" value="0.45"/>
+  <xacro:property name="base_height" value="0.15"/>
+
+  <!-- Wheel centers are at chassis_link origin height in OnShape (Y ~= 0 offset).
+       So ground_offset = wheel_radius (wheels just touch the ground). -->
+  <xacro:property name="ground_offset" value="0.076"/>
+
+  <!-- Wheel dims from OnShape collision: cylinder radius=0.076, length=0.05 -->
+  <xacro:property name="wheel_radius" value="0.076"/>
+  <xacro:property name="wheel_width"  value="0.05"/>
+  <xacro:property name="wheel_mass"   value="1.2"/>
+
+  <!-- Wheel separation from chassis center.
+       OnShape wheel positions form a 45-deg-rotated square at radius ~0.272m.
+       Symmetric half-separation = 0.272 / sqrt(2) = 0.192m -> rounded to 0.19m. -->
+  <xacro:property name="wheel_sep" value="0.19"/>
+
+  <!-- Gimbal yaw motor (OnShape base_link collision: cylinder r=0.06, L=0.15) -->
+  <xacro:property name="gimbal_radius" value="0.06"/>
+  <xacro:property name="gimbal_height" value="0.15"/>
+
+  <!-- Turret yaw arm (OnShape turret_yaw_link collision: 0.40 x 0.16 x 0.12)
+       turret_arm_width: total lateral span (X) = 0.40m
+       support_standoff_height: vertical height of the arm = 0.16m
+       support_base_height: base cross-bar thickness -->
+  <xacro:property name="turret_arm_width"        value="0.40"/>
+  <xacro:property name="support_width"           value="0.06"/>
+  <xacro:property name="support_length"          value="0.12"/>
+  <xacro:property name="support_base_height"     value="0.08"/>
+  <xacro:property name="support_standoff_height" value="0.19"/>
+
+  <xacro:property name="turret_shaft_radius" value="0.015"/>
+
+  <!-- Turret pitch / gun assembly (OnShape turret_pitch_link collision: 0.20 x 0.12 x 0.30)
+       turret_length: lateral width  (OnShape X = 0.20m)
+       turret_height: vertical height (OnShape Y = 0.12m)
+       gun_length:    forward extent  (OnShape Z = 0.30m) -->
+  <xacro:property name="turret_length" value="0.20"/>
+  <xacro:property name="turret_height" value="0.12"/>
+  <xacro:property name="gun_length"    value="0.30"/>
+
+  <!-- Lidar dims (unchanged from original) -->
+  <xacro:property name="lidar_length" value="0.054"/>
+  <xacro:property name="lidar_width"  value="0.0414"/>
+  <xacro:property name="lidar_height" value="0.0348"/>
+
+  <!-- Robot total mass from OnShape chassis_link inertial: 9.0 kg -->
+  <xacro:property name="mass" value="9.0"/>
+
+
+  <!-- ==================== Inertia macros ==================== -->
+  <xacro:macro name="box_inertia" params="m w h d">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia
+        ixx="${(m/12) * (h*h + d*d)}"
+        ixy="0" ixz="0"
+        iyy="${(m/12) * (w*w + d*d)}"
+        iyz="0"
+        izz="${(m/12) * (w*w + h*h)}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertia" params="m rad h">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${m}"/>
+      <inertia
+        ixx="${(m/12) * (3*rad*rad + h*h)}"
+        ixy="0" ixz="0"
+        iyy="${(m/12) * (3*rad*rad + h*h)}"
+        iyz="0"
+        izz="${(m/2) * (rad*rad)}"/>
+    </inertial>
+  </xacro:macro>
+
+
+  <!-- ==================== base_link (chassis body) ==================== -->
+  <!-- Origin at ground level; chassis body drawn above it. -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${base_height/2 + ground_offset}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_width} ${base_length} ${base_height}"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${base_height/2 + ground_offset}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${base_width} ${base_length} ${base_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${mass}" w="${base_width}" d="${base_length}" h="${base_height}"/>
+  </link>
+
+
+  <!-- ==================== Wheels ==================== -->
+  <!-- All four wheels use symmetric ±wheel_sep positions in X (left/right)
+       and ±wheel_sep in Y (front/back). wheel_sep = 0.19m from OnShape diagonal. -->
+
+  <!-- Front Left Wheel -->
+  <link name="front_left_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+    <xacro:cylinder_inertia m="${wheel_mass}" rad="${wheel_radius}" h="${wheel_width}"/>
+  </link>
+
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel"/>
+    <!-- +X = left side, +Y = front, z = wheel center height -->
+    <origin xyz="${wheel_sep} ${wheel_sep} ${ground_offset}" rpy="0 1.5708 0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Front Right Wheel -->
+  <link name="front_right_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+    <xacro:cylinder_inertia m="${wheel_mass}" rad="${wheel_radius}" h="${wheel_width}"/>
+  </link>
+
+  <joint name="front_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_right_wheel"/>
+    <origin xyz="${-wheel_sep} ${wheel_sep} ${ground_offset}" rpy="0 1.5708 0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Back Left Wheel -->
+  <link name="back_left_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+    <xacro:cylinder_inertia m="${wheel_mass}" rad="${wheel_radius}" h="${wheel_width}"/>
+  </link>
+
+  <joint name="back_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="back_left_wheel"/>
+    <origin xyz="${wheel_sep} ${-wheel_sep} ${ground_offset}" rpy="0 1.5708 0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Back Right Wheel -->
+  <link name="back_right_wheel">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="${wheel_mass}" rad="${wheel_radius}" h="${wheel_width}"/>
+  </link>
+
+  <joint name="back_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="back_right_wheel"/>
+    <origin xyz="${-wheel_sep} ${-wheel_sep} ${ground_offset}" rpy="0 1.5708 0"/>
+    <dynamics damping="0.1" friction="0.1"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+
+  <!-- ==================== Gimbal yaw motor ==================== -->
+  <!-- OnShape: gimbal (base_link in Y-up model) center is 0.151m above chassis_link center.
+       In Z-up: chassis_link center is at wheel height (0.076m), so gimbal is at
+       0.076 + 0.151 = 0.227m ≈ ground_offset + base_height = 0.226m (chassis top). -->
+  <link name="gimbal_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${gimbal_radius}" length="${gimbal_height}"/>
+      </geometry>
+      <material name="Cyan">
+        <color rgba="0 1.0 1.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${gimbal_radius}" length="${gimbal_height}"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="1.5" rad="${gimbal_radius}" h="${gimbal_height}"/>
+  </link>
+
+  <!-- Gimbal sits at the top of the chassis body (embedded at chassis top surface). -->
+  <joint name="gimbal_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gimbal_link"/>
+    <origin xyz="0 0 ${ground_offset + base_height}" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- ==================== Turret yaw arm ==================== -->
+  <!-- Bottom cross-bar of the gimbal arm assembly.
+       Width = turret_arm_width (0.40m) matching OnShape turret_yaw_link X span. -->
+  <link name="bottom_support_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${turret_arm_width} ${support_length} ${support_base_height}"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${turret_arm_width} ${support_length} ${support_base_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.5" w="${turret_arm_width}" d="${support_length}" h="${support_base_height}"/>
+  </link>
+
+  <joint name="bottom_support_joint" type="fixed">
+    <parent link="gimbal_link"/>
+    <child link="bottom_support_link"/>
+    <origin xyz="0 0 ${support_base_height/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Right standoff (positive X end of the arm) -->
+  <link name="right_support_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.3" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+  </link>
+
+  <!-- Standoff X position: arm half-span minus half standoff width -->
+  <joint name="right_support_joint" type="fixed">
+    <parent link="bottom_support_link"/>
+    <child link="right_support_link"/>
+    <origin xyz="${turret_arm_width/2 - support_width/2} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Left standoff (negative X end of the arm) -->
+  <link name="left_support_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="0.3" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+  </link>
+
+  <joint name="left_support_joint" type="fixed">
+    <parent link="bottom_support_link"/>
+    <child link="left_support_link"/>
+    <origin xyz="${-(turret_arm_width/2 - support_width/2)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Turret pivot shaft spanning the two standoffs.
+       Length = turret_arm_width (0.40m) from OnShape. -->
+  <link name="turret_shaft_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${turret_shaft_radius}" length="${turret_arm_width}"/>
+      </geometry>
+      <material name="yellow">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="${turret_shaft_radius}" length="${turret_arm_width}"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="0.3" rad="${turret_shaft_radius}" h="${turret_arm_width}"/>
+  </link>
+
+  <joint name="turret_shaft_joint" type="fixed">
+    <parent link="bottom_support_link"/>
+    <child link="turret_shaft_link"/>
+    <!-- 75% up the standoff height from bottom_support center -->
+    <origin xyz="0 0 ${0.75 * support_standoff_height}" rpy="0 1.5708 0"/>
+  </joint>
+
+  <!-- ==================== Gun assembly (turret_pitch) ==================== -->
+  <!-- From OnShape turret_pitch_link collision: 0.20 x 0.12 x 0.30 (X x Y x Z, Y-up).
+       In Z-up: turret_length=0.20 (width), turret_height=0.12 (vertical), gun_length=0.30 (depth). -->
+  <link name="turret_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${turret_arm_width} ${turret_length} ${turret_height}"/>
+      </geometry>
+      <material name="green">
+        <color rgba="1 1 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${turret_arm_width} ${turret_length} ${turret_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="1.5" w="${turret_arm_width}" d="${turret_length}" h="${turret_height}"/>
+  </link>
+
+  <joint name="turret_joint" type="fixed">
+    <parent link="turret_shaft_link"/>
+    <child link="turret_link"/>
+    <origin xyz="0 -0.02 0" rpy="1.5708 0 1.5708"/>
+  </joint>
+
+  <!-- Gun barrel (forward extent from OnShape: 0.30m depth of turret_pitch) -->
+  <link name="gun_shaft_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.02" length="${gun_length}"/>
+      </geometry>
+      <material name="something">
+        <color rgba="0 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.02" length="${gun_length}"/>
+      </geometry>
+    </collision>
+    <xacro:cylinder_inertia m="0.2" rad="0.02" h="${gun_length}"/>
+  </link>
+
+  <joint name="gun_shaft_joint" type="fixed">
+    <parent link="turret_link"/>
+    <child link="gun_shaft_link"/>
+    <origin xyz="${turret_length/2 + 0.025} 0 0" rpy="0 1.5708 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+
+  <!-- ==================== LiDAR ==================== -->
+  
+  <!-- LiDAR -->
+  <link name="laser_frame_right">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+      <material name="purple">
+        <color rgba="1 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" 
+               iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="laser_joint_right" type="fixed">
+    <parent link="right_support_link"/>
+    <child link="laser_frame_right"/>
+    <origin xyz="0 0 ${support_standoff_height / 2 + lidar_height / 2}" rpy="0 0 3.1415926535"/>
+  </joint>
+
+  <link name="laser_frame_left">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" 
+               iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="laser_joint_left" type="fixed">
+    <parent link="left_support_link"/>
+    <child link="laser_frame_left"/>
+      <origin xyz="0 0 ${support_standoff_height / 2 + lidar_height / 2}" rpy="0 0 0"/>
+  </joint>
+
+  
+  <!-- ==================== IMU ==================== -->
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="0.02 0.02 0.01"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.00001" ixy="0.0" ixz="0.0"
+               iyy="0.00001" iyz="0.0" izz="0.00001"/>
+    </inertial>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="gun_shaft_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+  </joint>
+
+
+  <!-- ==================== Depth camera ==================== -->
+  <link name="depth_camera_link">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="camera_gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="1e-5" ixy="0" ixz="0"
+               iyy="1e-5" iyz="0" izz="1e-5"/>
+    </inertial>
+  </link>
+
+  <joint name="depth_camera_joint" type="fixed">
+    <parent link="turret_link"/>
+    <child link="depth_camera_link"/>
+    <origin xyz="0.05 0 ${-1 * (turret_height/2 + 0.025)}" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- ==================== Gazebo surface props ==================== -->
+  <gazebo reference="base_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+  </gazebo>
+
+  <gazebo reference="front_left_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <minDepth>0.001</minDepth>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="front_right_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <minDepth>0.001</minDepth>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="back_left_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <minDepth>0.001</minDepth>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <gazebo reference="back_right_wheel">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+    <minDepth>0.001</minDepth>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+
+  <!-- ==================== Gazebo plugins ==================== -->
+  <!-- Planar move (omnidirectional) -->
+  <gazebo>
+    <plugin name="planar_move" filename="libgazebo_ros_planar_move.so">
+      <ros>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+      <update_rate>50</update_rate>
+      <publish_rate>50</publish_rate>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>false</publish_odom_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+    </plugin>
+  </gazebo>
+
+  <!-- Joint state publisher -->
+  <gazebo>
+    <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <update_rate>50</update_rate>
+      <joint_name>front_left_wheel_joint</joint_name>
+      <joint_name>front_right_wheel_joint</joint_name>
+      <joint_name>back_left_wheel_joint</joint_name>
+      <joint_name>back_right_wheel_joint</joint_name>
+      <joint_name>gimbal_joint</joint_name>
+      <joint_name>turret_shaft_joint</joint_name>
+    </plugin>
+  </gazebo>
+
+  <!-- LiDAR left -->
+  <gazebo reference="laser_frame_left">
+    <sensor name="laser_left" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>241</samples>
+            <resolution>1</resolution>
+            <min_angle>1.0471975512</min_angle>
+            <max_angle>5.2359877560</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="laser_controller_left" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=/scan_left</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_frame_left</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- LiDAR right -->
+  <gazebo reference="laser_frame_right">
+    <sensor name="laser_right" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>121</samples>
+            <resolution>1</resolution>
+            <min_angle>1.0471975512</min_angle>
+            <max_angle>5.2359877560</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="laser_controller_right" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=/scan_right</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_frame_right</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- IMU -->
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <ros>
+          <remapping>~/out:=imu</remapping>
+        </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- Depth camera -->
+  <gazebo reference="depth_camera_link">
+    <sensor type="depth" name="depth_camera">
+      <update_rate>30</update_rate>
+      <camera>
+        <horizontal_fov>1.047</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>10.0</far>
+        </clip>
+      </camera>
+      <plugin name="depth_camera_controller" filename="libgazebo_ros_depth_camera.so">
+        <ros>
+          <namespace>/sentry</namespace>
+        </ros>
+        <frame_name>depth_camera_link</frame_name>
+        <image_topic_name>image_raw</image_topic_name>
+        <depth_image_topic_name>depth/image_raw</depth_image_topic_name>
+        <camera_info_topic_name>camera_info</camera_info_topic_name>
+        <point_cloud>true</point_cloud>
+        <point_cloud_topic_name>points</point_cloud_topic_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

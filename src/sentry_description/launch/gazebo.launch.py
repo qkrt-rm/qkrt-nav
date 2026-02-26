@@ -4,12 +4,13 @@ from launch.actions import DeclareLaunchArgument, ExecuteProcess
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
+from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     #old
     # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
-    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
+    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description_v2.urdf.xacro')
     world_path = os.path.join(pkg_description, 'worlds', 'comp_map.sdf')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
     
@@ -28,7 +29,7 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='screen',
         parameters=[{
-            'robot_description': robot_description,
+            'robot_description': ParameterValue(robot_description, value_type=str),
             'use_sim_time': True
         }]
     )
@@ -51,7 +52,7 @@ def generate_launch_description():
             '-entity', 'sentry_robot',
             '-x', '0.0',
             '-y', '0.0',
-            '-z', '0.2'
+            '-z', '0.5'
         ],
         output='screen'
     )
