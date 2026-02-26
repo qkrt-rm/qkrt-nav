@@ -590,13 +590,14 @@
       <update_rate>50</update_rate>
       <publish_rate>50</publish_rate>
       <publish_odom>true</publish_odom>
-      <publish_odom_tf>false</publish_odom_tf>
+      <publish_odom_tf>true</publish_odom_tf>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_link</robot_base_frame>
     </plugin>
   </gazebo>
 
-  <!-- Joint state publisher -->
+  <!-- Joint state publisher — only continuous/revolute joints; fixed joints must be omitted
+       or the plugin fails to initialize and publishes nothing at all. -->
   <gazebo>
     <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
       <update_rate>50</update_rate>
@@ -604,8 +605,6 @@
       <joint_name>front_right_wheel_joint</joint_name>
       <joint_name>back_left_wheel_joint</joint_name>
       <joint_name>back_right_wheel_joint</joint_name>
-      <joint_name>gimbal_joint</joint_name>
-      <joint_name>turret_shaft_joint</joint_name>
     </plugin>
   </gazebo>
 
@@ -620,8 +619,8 @@
           <horizontal>
             <samples>241</samples>
             <resolution>1</resolution>
-            <min_angle>1.0471975512</min_angle>
-            <max_angle>5.2359877560</max_angle>
+            <min_angle>1.4471975512</min_angle>
+            <max_angle>4.8359877560</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -651,8 +650,8 @@
           <horizontal>
             <samples>121</samples>
             <resolution>1</resolution>
-            <min_angle>1.0471975512</min_angle>
-            <max_angle>5.2359877560</max_angle>
+            <min_angle>1.4471975512</min_angle>
+            <max_angle>4.8359877560</max_angle>
           </horizontal>
         </scan>
         <range>

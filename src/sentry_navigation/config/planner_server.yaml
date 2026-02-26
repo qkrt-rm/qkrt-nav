@@ -73,13 +73,14 @@ global_costmap:
           raytrace_max_range: 5.0
           raytrace_min_range: 0.0
           obstacle_max_range: 4.5
-          obstacle_min_range: 0.0
+          obstacle_min_range: 0.15
           inf_is_valid: false
           clearing_threshold: 0.48
           marking_threshold: 0.52
-      
+
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 5.0
+        inflation_radius: 0.55
       
       always_send_full_costmap: true
