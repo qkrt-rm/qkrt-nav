@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition, UnlessCondition
 
 
 def generate_launch_description():
@@ -33,7 +34,21 @@ def generate_launch_description():
         parameters=[
             {'yaml_filename': map_yaml_path},
             {'use_sim_time': use_sim_time}
-        ]
+        ],
+        condition=IfCondition(slam)
+    )
+
+    # Map server - used when slam=false to serve a pre-built map
+    map_server_node = Node(
+        package='nav2_map_server',
+        executable='map_server',
+        name='map_server',
+        output='screen',
+        parameters=[
+            {'yaml_filename': map_yaml},
+            {'use_sim_time': use_sim_time}
+        ],
+        condition=UnlessCondition(slam)
     )
 
     # AMCL localizes the robot within the static map using particle filtering

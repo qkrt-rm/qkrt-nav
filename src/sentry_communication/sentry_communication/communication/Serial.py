@@ -39,8 +39,12 @@ class Serial:
             baudrate=baudrate,
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
-            timeout=5,
+            timeout=1,
+            xonxoff=False,
+            rtscts=False,
+            dsrdtr=False,
         )
+        self.port.reset_input_buffer()
 
         if not self.port.isOpen():
             self.port.open()

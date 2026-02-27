@@ -1,8 +1,0 @@
-sensor_publisher:
-  ros__parameters:
-    serial_port: "/dev/ttyTHS1"
-    baud_rate: 115200
-    wheel_radius: 0.1
-    base_width: 0.495
-    base_length: 0.495
-    publish_tf: true
