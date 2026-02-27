@@ -68,7 +68,7 @@ local_costmap:
       width: 3
       height: 3
       resolution: 0.05
-      robot_radius: 0.35
+      robot_radius: 0.32
       plugins: ["obstacle_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
@@ -85,5 +85,8 @@ local_costmap:
           marking: true
           data_type: "LaserScan"
           raytrace_max_range: 3.0
+          raytrace_min_range: 0.0
           obstacle_max_range: 2.5
+          obstacle_min_range: 0.15
       always_send_full_costmap: true
+      footprint_clearing_enabled: true

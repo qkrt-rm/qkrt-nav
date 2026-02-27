@@ -6,29 +6,16 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from launch.conditions import IfCondition, UnlessCondition
 
+
 def generate_launch_description():
     pkg_localization = get_package_share_directory('sentry_localization')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
-    slam = LaunchConfiguration('slam')
-    slam_config = LaunchConfiguration('slam_config')
     amcl_config = LaunchConfiguration('amcl_config')
-    map_yaml = LaunchConfiguration('map_yaml')
 
     use_sim_time_arg = DeclareLaunchArgument(
         'use_sim_time',
         default_value='false'
-    )
-
-    slam_arg = DeclareLaunchArgument(
-        'slam',
-        default_value='false',
-        description='Use SLAM for mapping. If false, use AMCL with a pre-built map.'
-    )
-
-    slam_config_arg = DeclareLaunchArgument(
-        'slam_config',
-        default_value=os.path.join(pkg_localization, 'config', 'slam_toolbox.yaml')
     )
 
     amcl_config_arg = DeclareLaunchArgument(
@@ -36,20 +23,16 @@ def generate_launch_description():
         default_value=os.path.join(pkg_localization, 'config', 'amcl.yaml')
     )
 
-    map_yaml_arg = DeclareLaunchArgument(
-        'map_yaml',
-        default_value=os.path.join(pkg_localization, 'config', 'sentry_map.yaml'),
-        description='Path to the map YAML file for AMCL localization'
-    )
+    map_yaml_path = os.path.join(pkg_localization, 'config', 'sentry_map.yaml')
 
-    # SLAM Toolbox - used when slam=true for mapping
-    slam_toolbox_node = Node(
-        package='slam_toolbox',
-        executable='async_slam_toolbox_node',
-        name='slam_toolbox',
+    # map_server loads the static map saved from a prior SLAM mapping session.
+    map_server_node = Node(
+        package='nav2_map_server',
+        executable='map_server',
+        name='map_server',
         output='screen',
         parameters=[
-            slam_config,
+            {'yaml_filename': map_yaml_path},
             {'use_sim_time': use_sim_time}
         ],
         condition=IfCondition(slam)
@@ -68,7 +51,8 @@ def generate_launch_description():
         condition=UnlessCondition(slam)
     )
 
-    # AMCL - used when slam=false for localization on a pre-built map
+    # AMCL localizes the robot within the static map using particle filtering
+    # against live lidar scans. It publishes the map->odom TF.
     amcl_node = Node(
         package='nav2_amcl',
         executable='amcl',
@@ -77,11 +61,10 @@ def generate_launch_description():
         parameters=[
             amcl_config,
             {'use_sim_time': use_sim_time}
-        ],
-        condition=UnlessCondition(slam)
+        ]
     )
 
-    # Lifecycle manager for map_server and AMCL (only when using AMCL)
+    # Lifecycle manager brings up map_server and amcl in the correct order.
     lifecycle_manager_node = Node(
         package='nav2_lifecycle_manager',
         executable='lifecycle_manager',
@@ -91,17 +74,12 @@ def generate_launch_description():
             {'node_names': ['map_server', 'amcl']},
             {'use_sim_time': use_sim_time},
             {'autostart': True}
-        ],
-        condition=UnlessCondition(slam)
+        ]
     )
 
     return LaunchDescription([
         use_sim_time_arg,
-        slam_arg,
-        slam_config_arg,
         amcl_config_arg,
-        map_yaml_arg,
-        slam_toolbox_node,
         map_server_node,
         amcl_node,
         lifecycle_manager_node,
