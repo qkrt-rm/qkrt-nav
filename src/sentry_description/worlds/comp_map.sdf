@@ -32,7 +32,7 @@
         <visual name="visual">
           <geometry>
             <mesh>
-              <uri>file:///home/noah/an_ws/src/sentry_description/meshes/2026_ARC_3v3_simplified.stl</uri>
+              <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
               <!--
                 Scaling: <scale>X Y Z</scale>
                 The raw STL mesh is 343.7 x 496.5 x 55.9 units (likely inches from CAD export).
@@ -64,7 +64,7 @@
         <collision name="collision">
           <geometry>
             <mesh>
-              <uri>file:///home/noah/an_ws/src/sentry_description/meshes/2026_ARC_3v3_simplified.stl</uri>
+              <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
               <!-- Keep collision scale identical to visual scale -->
               <scale>0.02457200402 0.02385801571 0.02385801571</scale>
             </mesh>

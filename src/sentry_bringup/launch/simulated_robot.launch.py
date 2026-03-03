@@ -1,57 +1,85 @@
 import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
+    pkg_bringup = get_package_share_directory('sentry_bringup')
+    pkg_description = get_package_share_directory('sentry_description')
+    pkg_localization = get_package_share_directory('sentry_localization')
 
-    mapping_mode = LaunchConfiguration('mapping_mode')
+    slam = LaunchConfiguration('slam')
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    map_yaml = LaunchConfiguration('map')
+    robot_model = LaunchConfiguration('robot_model')
+    world = LaunchConfiguration('world')
 
-    mapping_mode_arg = DeclareLaunchArgument(
-        'mapping_mode',
+    slam_arg = DeclareLaunchArgument(
+        'slam',
+        default_value='false',
+        description='Use SLAM for mapping. If false, use AMCL with a pre-built map.'
+    )
+
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
         default_value='true',
-        description='Set true to run SLAM mapping. Set false to run AMCL navigation with a saved map. To save it, run ros2 run nav2_map_server map_saver_cli -f ~/my_map'
+        description='Use simulation clock from /clock.'
+    )
+
+    map_arg = DeclareLaunchArgument(
+        'map',
+        default_value='sentry_map.yaml'
+    )
+
+    robot_model_arg = DeclareLaunchArgument(
+        'robot_model',
+        default_value='sentry_description_v2.urdf.xacro'
+    )
+
+    world_arg = DeclareLaunchArgument(
+        'world',
+        default_value='comp_map.sdf'
     )
 
     gazebo = IncludeLaunchDescription(
         os.path.join(
-            get_package_share_directory('sentry_description'),
+            pkg_description,
             'launch',
             'gazebo.launch.py'
         ),
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'robot_model': robot_model,
+            'world': world
+        }.items()
     )
 
-    # Mapping mode: SLAM toolbox builds the map live.
-    # Drive the robot around, then save with:
-    #   ros2 run nav2_map_server map_saver_cli -f ~/my_map
-    mapping_localization = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory('sentry_localization'),
-            'launch',
-            'mapping.launch.py'
-        ),
-        condition=IfCondition(mapping_mode),
-        launch_arguments={'use_sim_time': 'true'}.items()
-    )
-
-    # Navigation mode: AMCL localizes against the saved static map.
-    amcl_localization = IncludeLaunchDescription(
+    # Global localization (SLAM or AMCL based on slam argument)
+    global_localization = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory('sentry_localization'),
             'launch',
             'global_localization.launch.py'
         ),
-        condition=UnlessCondition(mapping_mode),
-        launch_arguments={'use_sim_time': 'true'}.items()
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'slam': slam,
+            'map': map_yaml
+        }.items()
     )
 
-    # EKF (local_localization) is intentionally excluded from simulation.
-    # The planar_move Gazebo plugin publishes perfect odometry and the
-    # odom->base_link TF directly. Running EKF alongside it would create
-    # a TF conflict. EKF is only needed on the real robot.
+    # Include EKF in simulation to mirror real-robot localization behavior.
+    local_localization = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory('sentry_localization'),
+            'launch',
+            'local_localization.launch.py'
+        ),
+        launch_arguments={'use_sim_time': use_sim_time}.items()
+    )
 
     navigation = IncludeLaunchDescription(
         os.path.join(
@@ -59,23 +87,29 @@ def generate_launch_description():
             'launch',
             'navigation.launch.py'
         ),
-        launch_arguments={'use_sim_time': 'true'}.items()
+        launch_arguments={'use_sim_time': use_sim_time}.items()
     )
 
-    laser_merger = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory('sentry_bringup'),
-            'launch',
-            'laser_merger.launch.py'
-        ),
-        launch_arguments={'use_sim_time': 'true'}.items()
+    laser_merger = Node(
+        package='sentry_bringup',
+        executable='laser_merger.py',
+        name='laser_merger',
+        output='screen',
+        parameters=[
+            os.path.join(pkg_bringup, 'config', 'laser_merger.yaml'),
+            {'use_sim_time': use_sim_time}
+        ]
     )
 
     return LaunchDescription([
-        mapping_mode_arg,
+        slam_arg,
+        use_sim_time_arg,
+        map_arg,
+        robot_model_arg,
+        world_arg,
         gazebo,
         laser_merger,
-        mapping_localization,
-        amcl_localization,
+        global_localization,
+        local_localization,
         navigation,
     ])

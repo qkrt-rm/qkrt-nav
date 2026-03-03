@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import LaserScan
 from tf2_ros import Buffer, TransformListener
 import numpy as np
@@ -37,13 +38,13 @@ class LaserMerger(Node):
 
         # Subscribers
         self.sub_left = self.create_subscription(
-            LaserScan, '/scan_left', self.scan_left_callback, 10)
+            LaserScan, '/scan_left', self.scan_left_callback, qos_profile_sensor_data)
         self.sub_right = self.create_subscription(
-            LaserScan, '/scan_right', self.scan_right_callback, 10)
+            LaserScan, '/scan_right', self.scan_right_callback, qos_profile_sensor_data)
 
         # Publisher
         scan_topic = self.get_parameter('scan_destination_topic').value
-        self.pub_scan = self.create_publisher(LaserScan, scan_topic, 10)
+        self.pub_scan = self.create_publisher(LaserScan, scan_topic, qos_profile_sensor_data)
 
         # Timer to publish merged scan
         self.create_timer(0.05, self.publish_merged_scan)  # 20 Hz

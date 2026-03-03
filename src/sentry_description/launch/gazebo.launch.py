@@ -1,27 +1,34 @@
 import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
-from launch.substitutions import LaunchConfiguration, Command
+from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
-    #old
-    # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
-    urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description_v2.urdf.xacro')
-    world_path = os.path.join(pkg_description, 'worlds', 'comp_map.sdf')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
-    
+    use_sim_time = LaunchConfiguration('use_sim_time')
+
+    robot_model_arg = DeclareLaunchArgument(
+        'robot_model',
+        default_value='sentry_description_v2.urdf.xacro'
+    )
+
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value=world_path
+        default_value='comp_map.sdf'
     )
-    robot_description = Command(['xacro', ' ', urdf_path])
-    # old
-    # with open(urdf_path, 'r') as file:
-    #     robot_description = file.read()
+
+    use_sim_time_arg = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='true'
+    )
+
+    robot_model_path = PathJoinSubstitution([pkg_description, 'urdf', LaunchConfiguration('robot_model')])
+    world_path = PathJoinSubstitution([pkg_description, 'worlds', LaunchConfiguration('world')])
+    robot_description = Command(['xacro ', robot_model_path])
     
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
@@ -30,12 +37,12 @@ def generate_launch_description():
         output='screen',
         parameters=[{
             'robot_description': ParameterValue(robot_description, value_type=str),
-            'use_sim_time': True
+            'use_sim_time': use_sim_time
         }]
     )
     
     gazebo_server = ExecuteProcess(
-        cmd=['gzserver', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', LaunchConfiguration('world')],
+        cmd=['gzserver', '-s', 'libgazebo_ros_init.so', '-s', 'libgazebo_ros_factory.so', world_path],
         output='screen'
     )
     
@@ -63,11 +70,14 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', rviz_config_path],
-        parameters=[{'use_sim_time': True}]
+        ros_arguments=['-p', ['use_sim_time:=', use_sim_time]],
+        parameters=[{'use_sim_time': use_sim_time}]
     )
     
     return LaunchDescription([
+        robot_model_arg,
         world_arg,
+        use_sim_time_arg,
         robot_state_publisher_node,
         gazebo_server,
         gazebo_client,

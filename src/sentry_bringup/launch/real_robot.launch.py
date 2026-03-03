@@ -1,8 +1,8 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, ExecuteProcess
-from launch.conditions import IfCondition, UnlessCondition
-from launch.substitutions import LaunchConfiguration, Command
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.conditions import IfCondition
+from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
@@ -13,9 +13,6 @@ def generate_launch_description():
     pkg_localization = get_package_share_directory('sentry_localization')
     pkg_navigation = get_package_share_directory('sentry_navigation')
 
-    # URDF path
-    urdf_path = os.path.join(pkg_description, 'src', 'description', 'sentry_description.urdf')
-
     # Launch arguments
     slam = LaunchConfiguration("slam")
     slam_arg = DeclareLaunchArgument(
@@ -24,11 +21,19 @@ def generate_launch_description():
         description="Use SLAM for mapping. If false, use AMCL with a pre-built map."
     )
 
-    use_keyboard = LaunchConfiguration("use_keyboard")
-    use_keyboard_arg = DeclareLaunchArgument(
-        "use_keyboard",
-        default_value="true",
-        description="Use keyboard teleop instead of joystick"
+    map_yaml = LaunchConfiguration("map")
+    map_arg = DeclareLaunchArgument(
+        "map",
+        default_value='sentry_map.yaml',
+        description="Map filename in sentry_localization/config."
+    )
+
+    robot_model = LaunchConfiguration("robot_model")
+    robot_model_path = PathJoinSubstitution([pkg_description, 'urdf', robot_model])
+    robot_model_arg = DeclareLaunchArgument(
+        "robot_model",
+        default_value='sentry_description.urdf',
+        description="Robot model filename in sentry_description/urdf."
     )
 
     use_nav = LaunchConfiguration("use_nav")
@@ -45,7 +50,7 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='screen',
         parameters=[{
-            'robot_description': Command(['xacro ', urdf_path]),
+            'robot_description': Command(['xacro ', robot_model_path]),
             'use_sim_time': False
         }]
     )
@@ -75,7 +80,7 @@ def generate_launch_description():
         output="screen"
     )
 
-    # Laser merger node (inlined from laser_merger.launch.py)
+    # Laser merger node 
     laser_merger = Node(
         package='sentry_bringup',
         executable='laser_merger.py',
@@ -100,18 +105,7 @@ def generate_launch_description():
         }.items(),
     )
 
-    # Joystick teleop (when not using keyboard)
-    joystick = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory("sentry_controller"),
-            "launch",
-            "joystick_teleop.launch.py"
-        ),
-        launch_arguments={"use_sim_time": "False"}.items(),
-        condition=UnlessCondition(use_keyboard)
-    )
-
-    # Keyboard teleop (when using keyboard)
+    # Keyboard teleop
     keyboard_teleop = Node(
         package='teleop_twist_keyboard',
         executable='teleop_twist_keyboard',
@@ -119,7 +113,6 @@ def generate_launch_description():
         output='screen',
         prefix='xterm -e',  # Opens in a new terminal window
         remappings=[('cmd_vel', 'cmd_vel')],
-        condition=IfCondition(use_keyboard)
     )
 
     # Global localization (SLAM or AMCL based on slam argument)
@@ -127,7 +120,8 @@ def generate_launch_description():
         os.path.join(pkg_localization, "launch", "global_localization.launch.py"),
         launch_arguments={
             'use_sim_time': 'false',
-            'slam': slam
+            'slam': slam,
+            'map': map_yaml
         }.items()
     )
 
@@ -146,7 +140,8 @@ def generate_launch_description():
     return LaunchDescription([
         # Arguments
         slam_arg,
-        use_keyboard_arg,
+        map_arg,
+        robot_model_arg,
         use_nav_arg,
         # Robot description
         robot_state_publisher,
@@ -157,7 +152,6 @@ def generate_launch_description():
         laser_merger,
         # Control
         controller,
-        joystick,
         keyboard_teleop,
         # Localization
         global_localization,
