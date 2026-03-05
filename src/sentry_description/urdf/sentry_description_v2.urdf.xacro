@@ -497,9 +497,9 @@
   </link>
 
   <joint name="imu_joint" type="fixed">
-    <parent link="gun_shaft_link"/>
+    <parent link="turret_link"/>
     <child link="imu_link"/>
-    <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+    <origin xyz="${-turret_arm_width/2 + 0.01} ${-turret_length/2 + 0.01} ${-turret_height/2 + 0.005}" rpy="0 0 0"/>
   </joint>
 
 

@@ -70,8 +70,7 @@ def generate_launch_description():
             'map': map_yaml
         }.items()
     )
-
-    # Include EKF in simulation to mirror real-robot localization behavior.
+    
     local_localization = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory('sentry_localization'),
