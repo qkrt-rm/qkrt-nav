@@ -15,7 +15,7 @@ def generate_launch_description():
         'robot_model',
         default_value='sentry_description_v2.urdf.xacro'
     )
-
+    
     world_arg = DeclareLaunchArgument(
         'world',
         default_value='comp_map.sdf'
@@ -59,7 +59,7 @@ def generate_launch_description():
             '-entity', 'sentry_robot',
             '-x', '0.0',
             '-y', '0.0',
-            '-z', '0.5'
+            '-z', '0.05'
         ],
         output='screen'
     )

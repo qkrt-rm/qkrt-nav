@@ -212,12 +212,14 @@
       </collision>
       <xacro:cylinder_inertia m="0.5" rad="${gimbal_radius}" h="${gimbal_height}"/>
   </link>
-<!-- changed to fixed -->
-  <joint name="gimbal_joint" type="fixed">
+  <!-- Locked revolute for now: published in /joint_states, but held at 0 rad -->
+  <joint name="gimbal_joint" type="revolute">
       <parent link="base_link"/>
       <child link="gimbal_link"/>
       <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 0"/>
-      <!-- <axis xyz="0 0 1"/> -->
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.0001" upper="0.0001" effort="100.0" velocity="0.01"/>
+      <dynamics damping="500.0" friction="100.0"/>
   </joint>
 
 
@@ -319,12 +321,14 @@
     <xacro:cylinder_inertia m="${0.5}" rad="${turret_shaft_radius}" h="${2*(support_width + gimbal_radius)}"/>
   </link>
   
-  <joint name="turret_shaft_joint" type="fixed">
+  <!-- Locked revolute for now: published in /joint_states, but held at 0 rad -->
+  <joint name="turret_shaft_joint" type="revolute">
     <parent link="bottom_support_link"/>
     <child link="turret_shaft_link"/>
     <origin xyz="0 0 ${0.75 * support_standoff_height}" rpy="0 1.5708 0"/>
-    <!-- <axis xyz="0 0 1"/>
-      <limit lower="-0.784" upper="0.784" effort="5" velocity="3.14"/> not sure good values here -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.0001" upper="0.0001" effort="100.0" velocity="0.01"/>
+    <dynamics damping="500.0" friction="100.0"/>
   </joint>
 
   <!-- Turret box -->
@@ -552,7 +556,7 @@
       <update_rate>50</update_rate>
       <publish_rate>50</publish_rate>
       <publish_odom>true</publish_odom>
-      <publish_odom_tf>false</publish_odom_tf>
+      <publish_odom_tf>true</publish_odom_tf>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_link</robot_base_frame>
     </plugin>
@@ -568,8 +572,6 @@
       <joint_name>back_right_wheel_joint</joint_name>
       <joint_name>gimbal_joint</joint_name>
       <joint_name>turret_shaft_joint</joint_name>
-
-
     </plugin>
   </gazebo>
 
