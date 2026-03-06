@@ -1,0 +1,20 @@
+#include "sentry_mission/health_below.hpp"
+
+HealthBelow::HealthBelow(const std::string& name, const BT::NodeConfiguration& config)
+: BT::ConditionNode(name, config)
+{
+    health = 100;  // TODO: Assuming full health for now, need to get actual health from somewhere
+}
+
+BT::NodeStatus HealthBelow::tick()
+{
+    int threshold;
+    getInput("threshold", threshold);
+
+    if(health < threshold)
+    {
+        return BT::NodeStatus::SUCCESS;
+    }
+
+    return BT::NodeStatus::FAILURE;
+}

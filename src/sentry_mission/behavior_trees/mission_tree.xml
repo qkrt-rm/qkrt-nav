@@ -1,0 +1,19 @@
+<root BTCPP_format="4">
+<BehaviorTree ID="MissionTree">
+
+    <Fallback name="mission_selector">
+
+        <Sequence name="high_health_go_center">
+            <HealthAbove threshold="90"/>
+            <NavigateCenter/>
+        </Sequence>
+
+        <Sequence name="low_health_return_home">
+            <HealthBelow threshold="30"/>
+            <NavigateHome/>
+        </Sequence>
+
+    </Fallback>
+
+</BehaviorTree>
+</root>

@@ -100,6 +100,14 @@ def generate_launch_description():
         ]
     )
 
+    mission = IncludeLaunchDescription(
+        os.path.join(
+            get_package_share_directory('sentry_mission'),
+            'launch',
+            'mission.launch.py'
+        )
+    )
+
     return LaunchDescription([
         slam_arg,
         use_sim_time_arg,
@@ -111,4 +119,5 @@ def generate_launch_description():
         global_localization,
         local_localization,
         navigation,
+        mission,
     ])
