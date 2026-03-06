@@ -2,31 +2,40 @@
 <robot name="sentry_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <!-- Define robot constants (that we arent using)-->
-  <xacro:property name="base_width" value="0.495"/>
-  <xacro:property name="base_length" value="0.495"/>
-  <xacro:property name="base_height" value="0.15"/>
-  <xacro:property name="ground_offset" value="0.05"/>
+  <xacro:property name="base_width" value="0.540"/>
+  <xacro:property name="base_length" value="0.530"/> <!--in direction of turret-->
+  <xacro:property name="base_height" value="0.066"/>
+  <xacro:property name="ground_offset" value="0.093"/>
 
-  <xacro:property name="wheel_radius" value="0.1"/>
-  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.04"/>
   <xacro:property name="wheel_mass" value="0.5"/>
 
-  <xacro:property name="gimbal_radius" value="0.05"/>
-  <xacro:property name="gimbal_height" value="0.1"/>
+  <xacro:property name="wheel_turret_dir_offset" value="0.2048"/>
+  <xacro:property name="wheel_anti_turret_dir_offset" value="0.1986"/>
+
+
+  <xacro:property name="gimbal_radius" value="0.0335"/>
+  <xacro:property name="gimbal_height" value="0.076"/>
 
   <xacro:property name="lidar_length" value="0.054"/>
   <xacro:property name="lidar_width" value="0.04629"/>
   <xacro:property name="lidar_height" value="0.0348"/>
 
-  <xacro:property name="support_width" value="0.05"/>
-  <xacro:property name="support_length" value="0.1"/>
+  <xacro:property name="support_width" value="0.3048"/>
+  <xacro:property name="support_length" value="0.0699"/>
   <xacro:property name="support_base_height" value="0.075"/>
-  <xacro:property name="support_standoff_height" value="0.25"/>
+
+  <xacro:property name="support_standoff_width" value="0.058"/>
+  <xacro:property name="support_standoff_length" value="0.0762"/>
+  <xacro:property name="support_standoff_height" value="0.197"/>
 
   <xacro:property name="turret_shaft_radius" value="0.01"/>
 
-  <xacro:property name="turret_length" value="0.15"/>
-  <xacro:property name="turret_height" value="0.075"/>
+  <xacro:property name="turret_length" value="0.18"/>
+  <xacro:property name="turret_width" value="0.262"/>
+  <xacro:property name="turret_height" value="0.15"/>
+  <xacro:property name="turret_height_offset" value="0.03"/>
 
 
   <xacro:property name="mass" value="20"/>
@@ -105,7 +114,7 @@
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="${base_width/2 - wheel_width/2} ${base_length/2 - wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${wheel_anti_turret_dir_offset} ${wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -133,7 +142,7 @@
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="${-1 * base_width/2 + wheel_width / 2} ${base_length/2 - wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-wheel_anti_turret_dir_offset} ${wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -161,7 +170,7 @@
   <joint name="back_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_left_wheel"/>
-    <origin xyz="${base_width/2 - wheel_width / 2} ${-1*base_length/2 + wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${wheel_anti_turret_dir_offset} ${-wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -189,7 +198,7 @@
   <joint name="back_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_right_wheel"/>
-    <origin xyz="${-1 * base_width/2 + wheel_width / 2} ${-1*base_length/2 + wheel_radius} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-wheel_anti_turret_dir_offset} ${-wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -226,7 +235,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width * 2 + 2 * gimbal_radius} ${support_length} ${support_base_height}"/>
+        <box size="${support_width} ${support_length} ${support_base_height}"/>
       </geometry>
       <material name="red">
         <color rgba="1 0 0 1"/>
@@ -235,7 +244,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width * 2 + 2 * gimbal_radius} ${support_length} ${support_base_height}"/>
+        <box size="${support_width} ${support_length} ${support_base_height}"/>
       </geometry>
     </collision>
     <xacro:box_inertia m="${0.5}" w="${support_width * 2 + 2 * gimbal_radius}" d="${support_length}" h="${support_base_height}"/>
@@ -252,7 +261,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
       <material name="red">
         <color rgba="1 0 0 1"/>
@@ -261,16 +270,16 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+    <xacro:box_inertia m="${0.5}" w="${support_standoff_width}" d="${support_standoff_length}" h="${support_standoff_height}"/>
   </link>
 
    <joint name="right_support_joint" type="fixed">
       <parent link="bottom_support_link"/>
       <child link="right_support_link"/>
-      <origin xyz="${1.5 * support_width + gimbal_radius} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+      <origin xyz="${(support_width/2 - support_standoff_width/2)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
   </joint>
 
   <!-- RSL -->
@@ -278,7 +287,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
       <material name="red">
         <color rgba="1 0 0 1"/>
@@ -287,16 +296,16 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+    <xacro:box_inertia m="${0.5}" w="${support_standoff_width}" d="${support_standoff_length}" h="${support_standoff_height}"/>
   </link>
 
    <joint name="left_support_joint" type="fixed">
       <parent link="bottom_support_link"/>
       <child link="left_support_link"/>
-      <origin xyz="${-(1.5 * support_width + gimbal_radius)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+      <origin xyz="${-(support_width/2 - support_standoff_width/2)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
   </joint>
 
   <!-- Turret shaft -->
@@ -304,7 +313,7 @@
     <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="${turret_shaft_radius}" length="${2*(support_width + gimbal_radius)}"/>
+        <cylinder radius="${turret_shaft_radius}" length="${2*(support_width/2 - support_standoff_width/2)}"/>
       </geometry>
       <material name="yellow">
         <color rgba="0 1 0 1"/>
@@ -332,7 +341,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${2*(support_width + gimbal_radius)} ${turret_length} ${turret_height}"/>
+        <box size="${turret_width} ${turret_length} ${turret_height}"/>
       </geometry>
       <material name="green">
         <color rgba="1 1 0 1"/>
@@ -341,16 +350,16 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${2*(support_width + gimbal_radius)} ${turret_length} ${turret_height}"/>
+        <box size="${turret_width} ${turret_length} ${turret_height}"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="3" w="${2*(support_width + gimbal_radius)}" d="${turret_length}" h="${turret_height}"/>
+    <xacro:box_inertia m="3" w="${turret_width}" d="${turret_length}" h="${turret_height}"/>
   </link>
 
    <joint name="turret_joint" type="fixed">
       <parent link="turret_shaft_link"/>
       <child link="turret_link"/>
-      <origin xyz="0 -0.02 0" rpy="1.5708 0 1.5708"/>
+      <origin xyz="${-(turret_height_offset)} -0.014 0" rpy="1.5708 0 1.5708"/>
   </joint>
 
   <!-- gun barrel shaft -->

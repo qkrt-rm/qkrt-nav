@@ -13,7 +13,7 @@ def generate_launch_description():
 
     robot_model_arg = DeclareLaunchArgument(
         'robot_model',
-        default_value='sentry_description_v2.urdf.xacro'
+        default_value='sentry_description.urdf.xacro'
     )
 
     world_arg = DeclareLaunchArgument(
