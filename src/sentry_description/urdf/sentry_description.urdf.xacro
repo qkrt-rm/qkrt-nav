@@ -472,7 +472,7 @@
   <joint name="imu_joint" type="fixed">
     <parent link="turret_link"/>
     <child link="imu_link"/>
-    <origin xyz="${-(support_width + gimbal_radius) + 0.01} ${-turret_length/2 + 0.01} ${-turret_height/2 + 0.005}" rpy="0 0 0"/>
+    <origin xyz="${-(turret_width - 0.02)/2} 0 0" rpy="0 0 0"/>
   </joint>
   
   <!-- depth camera-->

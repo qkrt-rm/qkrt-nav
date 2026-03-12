@@ -20,7 +20,7 @@ def generate_launch_description():
 
     slam_arg = DeclareLaunchArgument(
         'slam',
-        default_value='false',
+        default_value='true',
         description='Use SLAM for mapping. If false, use AMCL with a pre-built map.'
     )
 

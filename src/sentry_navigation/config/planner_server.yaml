@@ -3,7 +3,7 @@ planner_server:
     expected_planner_frequency: 2.0
     use_sim_time: true
     planner_plugins: ["GridBased"]
-    
+
     GridBased:
       plugin: "nav2_smac_planner/SmacPlanner2D"
       tolerance: 0.20
@@ -13,29 +13,29 @@ planner_server:
       max_iterations: 500000
       max_on_approach_iterations: 500
       max_planning_time: 1.0
-      
-      motion_model_for_search: "MOORE" 
-      
+
+      motion_model_for_search: "MOORE"
+
       angle_quantization_bins: 72
       analytic_expansion_ratio: 3.5
       analytic_expansion_max_length: 3.0
-      
-      reverse_penalty: 1.0 
+
+      reverse_penalty: 1.0
       change_penalty: 0.0
       non_straight_penalty: 1.0
       cost_penalty: 2.0
       retrospective_penalty: 0.015
-      
+
       lookup_table_size: 20.0
       cache_obstacle_heuristic: false
       allow_primitive_interpolation: false
       use_quadratic_cost_penalty: false
       downsample_obstacle_heuristic: true
       smooth_path: true
-      
+
       cost_travel_multiplier: 1.5
       use_final_approach_orientation: false
-      
+
       smoother:
         max_iterations: 200
         w_smooth: 0.30
@@ -60,7 +60,7 @@ global_costmap:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_topic: /map
         map_subscribe_transient_local: true
-      
+
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: true
