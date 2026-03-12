@@ -43,6 +43,13 @@ def generate_launch_description():
         description="Launch navigation stack"
     )
 
+    display = LaunchConfiguration("display")
+    display_arg = DeclareLaunchArgument(
+        "display",
+        default_value="false",
+        description="Launch RViz for visualization"
+    )
+
     # Robot state publisher (publishes URDF transforms: base_link → laser frames, etc.)
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -137,12 +144,25 @@ def generate_launch_description():
         condition=IfCondition(use_nav)
     )
 
+    # RViz (if display is true)
+    rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=['-d', rviz_config_path],
+        parameters=[{'use_sim_time': False}],
+        condition=IfCondition(display)
+    )
+
     return LaunchDescription([
         # Arguments
         slam_arg,
         map_arg,
         robot_model_arg,
         use_nav_arg,
+        display_arg,
         # Robot description
         robot_state_publisher,
         # Drivers
@@ -158,4 +178,6 @@ def generate_launch_description():
         local_localization,
         # Navigation
         navigation,
+        # Visualization
+        rviz,
     ])
