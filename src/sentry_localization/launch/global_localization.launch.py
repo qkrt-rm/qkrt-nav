@@ -12,7 +12,7 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     slam = LaunchConfiguration('slam')
-    map_yaml = PathJoinSubstitution([pkg_localization, 'config', LaunchConfiguration('map')])
+    map_yaml = PathJoinSubstitution([pkg_localization, 'maps', LaunchConfiguration('map')])
     amcl_config = LaunchConfiguration('amcl_config')
     slam_config = LaunchConfiguration('slam_config')
 

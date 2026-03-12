@@ -1,5 +1,6 @@
 import os
 from launch import LaunchDescription
+from launch.actions import TimerAction
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
@@ -36,12 +37,12 @@ def generate_launch_description():
 
     robot_model_arg = DeclareLaunchArgument(
         'robot_model',
-        default_value='sentry_description_v2.urdf.xacro'
+        default_value='sentry_description.urdf.xacro'
     )
 
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value='comp_map.sdf'
+        default_value='my_world.sdf'
     )
 
     gazebo = IncludeLaunchDescription(
@@ -107,8 +108,13 @@ def generate_launch_description():
         robot_model_arg,
         world_arg,
         gazebo,
-        laser_merger,
-        global_localization,
-        local_localization,
-        navigation,
+        TimerAction(
+            period=5.0,
+            actions=[
+                laser_merger,
+                global_localization,
+                local_localization,
+                navigation,
+            ],
+        ),
     ])

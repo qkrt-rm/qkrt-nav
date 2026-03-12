@@ -25,7 +25,7 @@ def generate_launch_description():
     map_arg = DeclareLaunchArgument(
         "map",
         default_value='sentry_map.yaml',
-        description="Map filename in sentry_localization/config."
+        description="Map filename."
     )
 
     robot_model = LaunchConfiguration("robot_model")
