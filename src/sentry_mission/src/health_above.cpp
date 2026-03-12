@@ -3,7 +3,7 @@
 HealthAbove::HealthAbove(const std::string& name, const BT::NodeConfiguration& config)
 : BT::ConditionNode(name, config)
 {
-    health = 100;  // TODO: Assuming full health for now, need to get actual health from somewhere
+    health = 20;  // TODO: Assuming full health for now, need to get actual health from somewhere
 }
 
 BT::NodeStatus HealthAbove::tick()

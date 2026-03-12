@@ -9,6 +9,7 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(behaviortree_cpp_v3 REQUIRED)
 find_package(nav2_msgs REQUIRED)
+find_package(rclcpp_action REQUIRED)
 
 include_directories(include)
 
@@ -22,6 +23,7 @@ add_executable(mission_executor
 
 ament_target_dependencies(mission_executor
   rclcpp
+  rclcpp_action
   behaviortree_cpp_v3
   nav2_msgs
 )
