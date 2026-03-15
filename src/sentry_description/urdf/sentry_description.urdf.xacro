@@ -595,8 +595,8 @@
           <horizontal>
             <samples>241</samples>
             <resolution>1</resolution>
-            <min_angle>1.0471975512</min_angle>
-            <max_angle>5.2359877560</max_angle>
+            <min_angle>1.5</min_angle>
+            <max_angle>4.9</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -625,8 +625,10 @@
           <horizontal>
             <samples>121</samples>
             <resolution>1</resolution>
-            <min_angle>1.0471975512</min_angle>
-            <max_angle>5.2359877560</max_angle>
+            <!-- <min_angle>1.0471975512</min_angle>
+            <max_angle>5.2359877560</max_angle> -->
+            <min_angle>1.5</min_angle>
+            <max_angle>4.9</max_angle>
           </horizontal>
         </scan>
         <range>

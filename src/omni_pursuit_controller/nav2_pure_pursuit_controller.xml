@@ -1,0 +1,9 @@
+<class_libraries>
+    <library path="nav2_pure_pursuit_controller">
+        <class type="nav2_omni_pursuit_controller::OmniPursuitController" base_class_type="nav2_core::Controller">
+            <description>
+                Holonomic pure pursuit controller for omni/mecanum robots
+            </description>
+        </class>
+    </library>
+</class_libraries>

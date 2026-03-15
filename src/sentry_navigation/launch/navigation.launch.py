@@ -36,7 +36,7 @@ def generate_launch_description():
 
     keepout_mask_arg = DeclareLaunchArgument(
         "keepout_mask",
-        default_value="keepout_mask.yaml"
+        default_value="keepout_mask_from_sdf.yaml"
     )
 
     nav2_controller_server = Node(
