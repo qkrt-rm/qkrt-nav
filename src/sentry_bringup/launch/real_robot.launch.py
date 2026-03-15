@@ -32,8 +32,15 @@ def generate_launch_description():
     robot_model_path = PathJoinSubstitution([pkg_description, 'urdf', robot_model])
     robot_model_arg = DeclareLaunchArgument(
         "robot_model",
-        default_value='sentry_description.urdf',
+        default_value='sentry_description.urdf.xacro',
         description="Robot model filename in sentry_description/urdf."
+    )
+
+    use_joint_state_publisher = LaunchConfiguration("use_joint_state_publisher")
+    use_joint_state_publisher_arg = DeclareLaunchArgument(
+        "use_joint_state_publisher",
+        default_value="true",
+        description="Publish default joint states for non-fixed joints when hardware does not.",
     )
 
     use_nav = LaunchConfiguration("use_nav")
@@ -57,9 +64,18 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='screen',
         parameters=[{
-            'robot_description': Command(['xacro ', robot_model_path]),
+            'robot_description': Command(['xacro', ' ', robot_model_path]),
             'use_sim_time': False
         }]
+    )
+
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': False}],
+        condition=IfCondition(use_joint_state_publisher),
     )
 
     # Comm hub - MCB communication (publishes /odom, /imu, subscribes /cmd_vel)
@@ -161,10 +177,12 @@ def generate_launch_description():
         slam_arg,
         map_arg,
         robot_model_arg,
+        use_joint_state_publisher_arg,
         use_nav_arg,
         display_arg,
         # Robot description
         robot_state_publisher,
+        joint_state_publisher,
         # Drivers
         comm_hub,
         laser_driver_1,
