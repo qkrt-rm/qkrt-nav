@@ -34,29 +34,19 @@
             <mesh>
               <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
               <!--
-                Scaling: <scale>X Y Z</scale>
-                The raw STL mesh is 343.7 x 496.5 x 55.9 units (likely inches from CAD export).
-                The real arena is 12m (length) x 8m (width).
-                The model is rotated -90deg about Z, so the mesh axes swap:
-                  Mesh X (343.7 units) now maps to world Y (8m)
-                  Mesh Y (496.5 units) now maps to world X (12m)
+                Scaling: STL units are inches (confirmed from bounding box).
+                Uniform scale = 0.0254 (exact inches-to-metres conversion).
 
-                Per-axis scale = desired_metres / raw_mesh_units
-                  X (now 12m): 12.0 / 496.5 = 0.02417
-                  Y (now 8m):  8.0  / 343.7 = 0.02328
-                  Z (height):  matched to Y  = 0.02328  (keeps vertical proportions correct)
+                STL bounding box (inches) -> world dimensions after -90deg Z rotation:
+                  Mesh X: 343.70 in -> world Y: 8.73m  (8m arena + 0.37m buffer each side)
+                  Mesh Y: 496.46 in -> world X: 12.61m (12m arena + 0.30m buffer each side)
+                  Mesh Z:  55.87 in -> world Z: 1.42m  (highest outer wall)
 
-                Common uniform scale factors for reference:
-                  inches to metres: 0.0254  (gives ~8.7m x 12.6m, slightly oversized due to wall thickness)
-                  mm to metres:     0.001   (gives ~0.34m x 0.50m, way too small)
-                  cm to metres:     0.01    (gives ~3.4m x 5.0m, too small)
-
-                If you want uniform scaling (no distortion) instead, use 0.0254 for all axes.
-
-                Note, upon inspection of the stl file in gazebo, it appears that areas outside the outer wall were added
-                This may extend beyond the 8x12 metres and if used with amcl, may need more adjusting. Tune the costmap first, that thing looks wack
+                The inner playing field is 12m x 8m. The buffer zones are real arena
+                geometry (outer walls/trim) already encoded in the CAD model.
+                Non-uniform scaling was removed as it distorted the geometry.
               -->
-              <scale>0.02457200402 0.02385801571 0.02385801571</scale>
+              <scale>0.0254 0.0254 0.0254</scale>
             </mesh>
           </geometry>
         </visual>
@@ -66,7 +56,7 @@
             <mesh>
               <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
               <!-- Keep collision scale identical to visual scale -->
-              <scale>0.02457200402 0.02385801571 0.02385801571</scale>
+              <scale>0.0254 0.0254 0.0254</scale>
             </mesh>
           </geometry>
         </collision>

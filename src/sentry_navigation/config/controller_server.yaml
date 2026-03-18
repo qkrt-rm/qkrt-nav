@@ -25,7 +25,7 @@ controller_server:
     FollowPath:
       plugin: "nav2_omni_pursuit_controller::OmniPursuitController"
       desired_linear_vel: 0.25
-      lookahead_dist: 0.10
+      lookahead_dist: 0.50
       max_angular_vel: 0.0
       approach_velocity_scaling_dist: 0.35
       min_approach_linear_velocity: 0.08
@@ -51,7 +51,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.5
-        inflation_radius: 0.34
+        inflation_radius: 0.40
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: true
@@ -74,7 +74,7 @@ local_costmap:
         lethal_override_cost: 200.0
       filter_inflation:
         plugin: "nav2_costmap_2d::InflationLayer"
-        inflation_radius: 0.20
+        inflation_radius: 0.25
         cost_scaling_factor: 8.0
       always_send_full_costmap: true
       footprint_clearing_enabled: true

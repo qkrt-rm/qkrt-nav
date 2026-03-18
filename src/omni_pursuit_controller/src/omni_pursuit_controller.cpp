@@ -137,6 +137,7 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
   // Use time 0 to request the latest available transform, avoiding stale-timestamp failures
   // when the path was planned significantly earlier than the current control cycle.
   geometry_msgs::msg::PoseStamped goal_pose_stamped = *goal_it;
+  goal_pose_stamped.header.frame_id = global_plan_.header.frame_id;
   goal_pose_stamped.header.stamp = rclcpp::Time(0);
   geometry_msgs::msg::PoseStamped goal_pose_base;
   try {
