@@ -1,4 +1,4 @@
-image: ../maps/OccupancyGrid2.png
+image: assets/OccupancyGrid2.png
 resolution: 0.0132
 origin: [-5.89, -3.94, 0.0] 
 occupied_thresh: 0.65

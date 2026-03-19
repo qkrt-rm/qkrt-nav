@@ -4,24 +4,39 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
 
     use_sim_time = LaunchConfiguration("use_sim_time")
-    lifecycle_nodes = ["controller_server", "planner_server", "smoother_server", "bt_navigator"]
+    keepout_mask = LaunchConfiguration("keepout_mask")
+    lifecycle_nodes = [
+        "controller_server",
+        "planner_server",
+        "smoother_server",
+        "bt_navigator",
+        "keepout_mask_server",
+        "keepout_filter_info_server",
+    ]
     # lifecycle_nodes = ["controller_server", "planner_server", "smoother_server", "bt_navigator", "behavior_server"
     sentry_navigation_pkg = get_package_share_directory("sentry_navigation")
+    sentry_localization_pkg = get_package_share_directory("sentry_localization")
     bt_xml_path = os.path.join(
                 sentry_navigation_pkg,
                 "behavior_tree",
                 "simple_navigation.xml") # This is for testing
+    keepout_mask_path = PathJoinSubstitution([sentry_localization_pkg, "maps", keepout_mask])
 
     use_sim_time_arg = DeclareLaunchArgument(
         "use_sim_time",
         default_value="false"
+    )
+
+    keepout_mask_arg = DeclareLaunchArgument(
+        "keepout_mask",
+        default_value="keepout_mask.yaml"
     )
 
     nav2_controller_server = Node(
@@ -95,6 +110,34 @@ def generate_launch_description():
         ],
     )
 
+    keepout_mask_server = Node(
+        package="nav2_map_server",
+        executable="map_server",
+        name="keepout_mask_server",
+        output="screen",
+        parameters=[
+            {"yaml_filename": keepout_mask_path},
+            {"topic_name": "keepout_mask"},
+            {"frame_id": "map"},
+            {"use_sim_time": use_sim_time},
+        ],
+    )
+
+    keepout_filter_info_server = Node(
+        package="nav2_map_server",
+        executable="costmap_filter_info_server",
+        name="keepout_filter_info_server",
+        output="screen",
+        parameters=[
+            {"filter_info_topic": "/costmap_filter_info"},
+            {"mask_topic": "/keepout_mask"},
+            {"type": 0},
+            {"base": 0.0},
+            {"multiplier": 1.0},
+            {"use_sim_time": use_sim_time},
+        ],
+    )
+
     nav2_lifecycle_manager = Node(
         package="nav2_lifecycle_manager",
         executable="lifecycle_manager",
@@ -109,9 +152,12 @@ def generate_launch_description():
 
     return LaunchDescription([
         use_sim_time_arg,
+        keepout_mask_arg,
         nav2_controller_server,
         nav2_planner_server,
         nav2_smoother_server,
+        keepout_mask_server,
+        keepout_filter_info_server,
         # nav2_behaviors,
         nav2_bt_navigator,
         nav2_lifecycle_manager,

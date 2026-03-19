@@ -7,6 +7,12 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 
+install(PROGRAMS
+  scripts/sim_comm_hub_bridge.py
+  scripts/imu_turret_compensator.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 install(DIRECTORY
   config
   maps
