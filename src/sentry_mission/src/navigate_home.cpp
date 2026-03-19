@@ -19,7 +19,7 @@ BT::NodeStatus NavigateHome::tick()
     goal_msg.pose.header.frame_id = "map";
     goal_msg.pose.header.stamp = node_->now();
 
-    goal_msg.pose.pose.position.x = -2.0;
+    goal_msg.pose.pose.position.x = -4.0;
     goal_msg.pose.pose.position.y = 0.0;
     goal_msg.pose.pose.orientation.w = 1.0;
 
