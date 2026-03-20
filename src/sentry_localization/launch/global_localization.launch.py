@@ -51,6 +51,7 @@ def generate_launch_description():
             slam_config,
             {'use_sim_time': use_sim_time}
         ],
+        arguments=['--ros-args', '--log-level', 'slam_toolbox:=WARN'],
         condition=IfCondition(slam)
     )
 

@@ -42,7 +42,7 @@ def generate_launch_description():
 
     world_arg = DeclareLaunchArgument(
         'world',
-        default_value='my_world.sdf'
+        default_value='comp_map.sdf'
     )
 
     gazebo = IncludeLaunchDescription(
