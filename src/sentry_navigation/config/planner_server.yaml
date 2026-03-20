@@ -95,7 +95,7 @@ global_costmap:
 
       filter_inflation:
         plugin: "nav2_costmap_2d::InflationLayer"
-        inflation_radius: 0.20
-        cost_scaling_factor: 8.0
+        inflation_radius: 0.15
+        cost_scaling_factor: 9.0
       
       always_send_full_costmap: true
