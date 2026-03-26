@@ -2,31 +2,40 @@
 <robot name="sentry_robot" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <!-- Define robot constants (that we arent using)-->
-  <xacro:property name="base_width" value="0.495"/>
-  <xacro:property name="base_length" value="0.495"/>
-  <xacro:property name="base_height" value="0.15"/>
-  <xacro:property name="ground_offset" value="0.05"/>
+  <xacro:property name="base_width" value="0.540"/>
+  <xacro:property name="base_length" value="0.530"/> <!--in direction of turret-->
+  <xacro:property name="base_height" value="0.066"/>
+  <xacro:property name="ground_offset" value="0.093"/>
 
-  <xacro:property name="wheel_radius" value="0.1"/>
-  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_radius" value="0.075"/>
+  <xacro:property name="wheel_width" value="0.04"/>
   <xacro:property name="wheel_mass" value="0.5"/>
 
-  <xacro:property name="gimbal_radius" value="0.05"/>
-  <xacro:property name="gimbal_height" value="0.1"/>
+  <xacro:property name="wheel_turret_dir_offset" value="0.2048"/>
+  <xacro:property name="wheel_anti_turret_dir_offset" value="0.1986"/>
+
+
+  <xacro:property name="gimbal_radius" value="0.0335"/>
+  <xacro:property name="gimbal_height" value="0.076"/>
 
   <xacro:property name="lidar_length" value="0.054"/>
   <xacro:property name="lidar_width" value="0.04629"/>
   <xacro:property name="lidar_height" value="0.0348"/>
 
-  <xacro:property name="support_width" value="0.05"/>
-  <xacro:property name="support_length" value="0.1"/>
+  <xacro:property name="support_width" value="0.3048"/>
+  <xacro:property name="support_length" value="0.0699"/>
   <xacro:property name="support_base_height" value="0.075"/>
-  <xacro:property name="support_standoff_height" value="0.25"/>
+
+  <xacro:property name="support_standoff_width" value="0.058"/>
+  <xacro:property name="support_standoff_length" value="0.0762"/>
+  <xacro:property name="support_standoff_height" value="0.197"/>
 
   <xacro:property name="turret_shaft_radius" value="0.01"/>
 
-  <xacro:property name="turret_length" value="0.15"/>
-  <xacro:property name="turret_height" value="0.075"/>
+  <xacro:property name="turret_length" value="0.18"/>
+  <xacro:property name="turret_width" value="0.262"/>
+  <xacro:property name="turret_height" value="0.15"/>
+  <xacro:property name="turret_height_offset" value="0.03"/>
 
 
   <xacro:property name="mass" value="20"/>
@@ -105,7 +114,7 @@
   <joint name="front_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_left_wheel"/>
-    <origin xyz="${base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${wheel_anti_turret_dir_offset} ${wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -133,7 +142,7 @@
   <joint name="front_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="front_right_wheel"/>
-    <origin xyz="${-1 * base_width/2} ${base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-wheel_anti_turret_dir_offset} ${wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -161,7 +170,7 @@
   <joint name="back_left_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_left_wheel"/>
-    <origin xyz="${base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${wheel_anti_turret_dir_offset} ${-wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -189,7 +198,7 @@
   <joint name="back_right_wheel_joint" type="continuous">
     <parent link="base_link"/>
     <child link="back_right_wheel"/>
-    <origin xyz="${-1 * base_width/2} ${-1*base_length/2} ${ground_offset}" rpy="0 1.5708 0"/>
+    <origin xyz="${-wheel_anti_turret_dir_offset} ${-wheel_turret_dir_offset} ${wheel_radius}" rpy="0 1.5708 0"/>
     <dynamics damping="0.1" friction="0.1"/>
     <axis xyz="0 0 1"/>
   </joint>
@@ -212,12 +221,14 @@
       </collision>
       <xacro:cylinder_inertia m="0.5" rad="${gimbal_radius}" h="${gimbal_height}"/>
   </link>
-
-  <joint name="gimbal_joint" type="continuous">
+  <!-- Locked revolute for now: published in /joint_states, but held at 0 rad -->
+  <joint name="gimbal_joint" type="revolute">
       <parent link="base_link"/>
       <child link="gimbal_link"/>
       <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 0"/>
-      <axis xyz="0 0 1"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.0001" upper="0.0001" effort="100.0" velocity="0.01"/>
+      <dynamics damping="500.0" friction="100.0"/>
   </joint>
 
 
@@ -226,7 +237,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width * 2 + 2 * gimbal_radius} ${support_length} ${support_base_height}"/>
+        <box size="${support_width} ${support_length} ${support_base_height}"/>
       </geometry>
       <material name="red">
         <color rgba="1 0 0 1"/>
@@ -235,7 +246,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width * 2 + 2 * gimbal_radius} ${support_length} ${support_base_height}"/>
+        <box size="${support_width} ${support_length} ${support_base_height}"/>
       </geometry>
     </collision>
     <xacro:box_inertia m="${0.5}" w="${support_width * 2 + 2 * gimbal_radius}" d="${support_length}" h="${support_base_height}"/>
@@ -248,37 +259,11 @@
   </joint>
 
   <!-- LSL -->
-  <link name="left_support_link">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
-      </geometry>
-      <material name="red">
-        <color rgba="1 0 0 1"/>
-      </material>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
-      </geometry>
-    </collision>
-    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
-  </link>
-
-   <joint name="left_support_joint" type="fixed">
-      <parent link="bottom_support_link"/>
-      <child link="left_support_link"/>
-      <origin xyz="${1.5 * support_width + gimbal_radius} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
-  </joint>
-
-  <!-- RSL -->
   <link name="right_support_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
       <material name="red">
         <color rgba="1 0 0 1"/>
@@ -287,16 +272,42 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${support_width} ${support_length} ${support_standoff_height}"/>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="${0.5}" w="${support_width}" d="${support_length}" h="${support_standoff_height}"/>
+    <xacro:box_inertia m="${0.5}" w="${support_standoff_width}" d="${support_standoff_length}" h="${support_standoff_height}"/>
   </link>
 
    <joint name="right_support_joint" type="fixed">
       <parent link="bottom_support_link"/>
       <child link="right_support_link"/>
-      <origin xyz="${-(1.5 * support_width + gimbal_radius)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+      <origin xyz="${(support_width/2 - support_standoff_width/2)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- RSL -->
+  <link name="left_support_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${support_standoff_width} ${support_standoff_length} ${support_standoff_height}"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertia m="${0.5}" w="${support_standoff_width}" d="${support_standoff_length}" h="${support_standoff_height}"/>
+  </link>
+
+   <joint name="left_support_joint" type="fixed">
+      <parent link="bottom_support_link"/>
+      <child link="left_support_link"/>
+      <origin xyz="${-(support_width/2 - support_standoff_width/2)} 0 ${(support_standoff_height - support_base_height)/2}" rpy="0 0 0"/>
   </joint>
 
   <!-- Turret shaft -->
@@ -304,7 +315,7 @@
     <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="${turret_shaft_radius}" length="${2*(support_width + gimbal_radius)}"/>
+        <cylinder radius="${turret_shaft_radius}" length="${2*(support_width/2 - support_standoff_width/2)}"/>
       </geometry>
       <material name="yellow">
         <color rgba="0 1 0 1"/>
@@ -319,12 +330,14 @@
     <xacro:cylinder_inertia m="${0.5}" rad="${turret_shaft_radius}" h="${2*(support_width + gimbal_radius)}"/>
   </link>
   
-  <joint name="turret_shaft_joint" type="fixed"> <!-- fixed for now-->
+  <!-- Locked revolute for now: published in /joint_states, but held at 0 rad -->
+  <joint name="turret_shaft_joint" type="revolute">
     <parent link="bottom_support_link"/>
     <child link="turret_shaft_link"/>
     <origin xyz="0 0 ${0.75 * support_standoff_height}" rpy="0 1.5708 0"/>
-    <!--<axis xyz="0 0 1"/> -->
-      <!-- <limit lower="-0.784" upper="0.784" effort="5" velocity="3.14"/>  -->
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.0001" upper="0.0001" effort="100.0" velocity="0.01"/>
+    <dynamics damping="500.0" friction="100.0"/>
   </joint>
 
   <!-- Turret box -->
@@ -332,7 +345,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${2*(support_width + gimbal_radius)} ${turret_length} ${turret_height}"/>
+        <box size="${turret_width} ${turret_length} ${turret_height}"/>
       </geometry>
       <material name="green">
         <color rgba="1 1 0 1"/>
@@ -341,16 +354,16 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="${2*(support_width + gimbal_radius)} ${turret_length} ${turret_height}"/>
+        <box size="${turret_width} ${turret_length} ${turret_height}"/>
       </geometry>
     </collision>
-    <xacro:box_inertia m="3" w="${2*(support_width + gimbal_radius)}" d="${turret_length}" h="${turret_height}"/>
+    <xacro:box_inertia m="3" w="${turret_width}" d="${turret_length}" h="${turret_height}"/>
   </link>
 
    <joint name="turret_joint" type="fixed">
       <parent link="turret_shaft_link"/>
       <child link="turret_link"/>
-      <origin xyz="0 -0.02 0" rpy="1.5708 0 1.5708"/>
+      <origin xyz="${-(turret_height_offset)} -0.014 0" rpy="1.5708 0 1.5708"/>
   </joint>
 
   <!-- gun barrel shaft -->
@@ -382,7 +395,7 @@
   
 
   <!-- LiDAR -->
-  <link name="laser_frame">
+  <link name="laser_frame_right">
     <visual>
       <geometry>
         <cylinder radius="0.03" length="0.04"/>
@@ -403,13 +416,41 @@
                iyy="0.0001" iyz="0.0" izz="0.0001"/>
     </inertial>
   </link>
-  
-  <joint name="laser_joint" type="fixed">
-    <parent link="turret_link"/>
-    <child link="laser_frame"/>
-    <origin xyz="0.02 ${gimbal_radius + support_width * 1.5} ${-(turret_height / 2 + 0.02)}" rpy="0 0 0"/>
+
+  <joint name="laser_joint_right" type="fixed">
+    <parent link="right_support_link"/>
+    <child link="laser_frame_right"/>
+    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 3.1415926535"/>
   </joint>
-  
+
+  <link name="laser_frame_left">
+    <visual>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.03" length="0.04"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" 
+               iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="laser_joint_left" type="fixed">
+    <parent link="left_support_link"/>
+    <child link="laser_frame_left"/>
+    <origin xyz="0 0 ${support_standoff_height / 2 + 0.02}" rpy="0 0 0"/>
+  </joint>
+
   <!-- IMU -->
   <link name="imu_link">
     <visual>
@@ -429,9 +470,9 @@
   </link>
   
   <joint name="imu_joint" type="fixed">
-    <parent link="base_link"/>
+    <parent link="turret_link"/>
     <child link="imu_link"/>
-    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <origin xyz="${-(turret_width - 0.02)/2} 0 0" rpy="0 0 0"/>
   </joint>
   
   <!-- depth camera-->
@@ -517,17 +558,16 @@
 <!-- Gazebo Planar Move Plugin (for omnidirectional motion) -->
   <gazebo>
     <plugin name="planar_move" filename="libgazebo_ros_planar_move.so">
+      <ros>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
       <update_rate>50</update_rate>
       <publish_rate>50</publish_rate>
       <publish_odom>true</publish_odom>
       <publish_odom_tf>true</publish_odom_tf>
       <odometry_frame>odom</odometry_frame>
       <robot_base_frame>base_link</robot_base_frame>
-      <cmd_vel_topic>cmd_vel</cmd_vel_topic>
-      <odometry_topic>odom</odometry_topic>
-      <covariance_x>0.0001</covariance_x>
-      <covariance_y>0.0001</covariance_y>
-      <covariance_yaw>0.01</covariance_yaw>
     </plugin>
   </gazebo>
   
@@ -545,18 +585,18 @@
   </gazebo>
 
   <!-- LiDAR Plugin -->
-  <gazebo reference="laser_frame">
-    <sensor name="laser" type="ray">
+  <gazebo reference="laser_frame_left">
+    <sensor name="laser_left" type="ray">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>10</update_rate>
       <ray>
         <scan>
           <horizontal>
-            <samples>360</samples>
+            <samples>241</samples>
             <resolution>1</resolution>
-            <min_angle>-3.14159</min_angle>
-            <max_angle>3.14159</max_angle>
+            <min_angle>1.5</min_angle>
+            <max_angle>4.9</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -565,16 +605,49 @@
           <resolution>0.01</resolution>
         </range>
       </ray>
-      <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
+      <plugin name="laser_controller_left" filename="libgazebo_ros_ray_sensor.so">
         <ros>
-          <remapping>~/out:=scan</remapping>
+          <remapping>~/out:=/scan_left</remapping>
         </ros>
         <output_type>sensor_msgs/LaserScan</output_type>
-        <frame_name>laser_frame</frame_name>
+        <frame_name>laser_frame_left</frame_name>
       </plugin>
     </sensor>
   </gazebo>
-  
+
+  <gazebo reference="laser_frame_right">
+    <sensor name="laser_right" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>121</samples>
+            <resolution>1</resolution>
+            <!-- <min_angle>1.0471975512</min_angle>
+            <max_angle>5.2359877560</max_angle> -->
+            <min_angle>1.5</min_angle>
+            <max_angle>4.9</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="laser_controller_right" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <remapping>~/out:=/scan_right</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_frame_right</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
   <!-- IMU Plugin -->
   <gazebo reference="imu_link">
     <gravity>true</gravity>

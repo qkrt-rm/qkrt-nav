@@ -27,6 +27,14 @@
 - Package: `robot_localization`
 - Publishes: `/odometry/filtered` and `odom→base_link` TF
 
+### sentry_communication
+**MCB serial communication**
+- `comm_hub.py` - Bidirectional UART bridge between MCB and ROS2
+  - Receives: 17-float odometry message from MCB (wheel encoders, turret encoders, IMU)
+  - Publishes: `Float32MultiArray` on `/mcb_odom` topic
+  - Subscribes: `/cmd_vel` (Twist) and sends velocity commands to MCB
+  - Protocol: DJI Serial over `/dev/ttyTHS1` at 115200 baud
+
 ### sentry_navigation
 **Nav2 navigation stack**
 
@@ -47,7 +55,7 @@
 - Iterations: 400 with refinement
 
 **Behavior Tree Navigator**
-- ⚠️ **TBD**: Custom competition behavior tree
+- TBD: Custom competition behavior tree
 
 ---
 
@@ -74,21 +82,14 @@
 
 ### Priority 2: Hardware Integration
 
-#### sentry_drivers (NEW PACKAGE)
-- [ ] Serial driver node (Python)
-  - Reads: IMU + odometry from microcontroller
-  - Publishes: `/imu`, `/odom` topics
-  - Subscribes: `/cmd_vel` → sends to motors
+#### sentry_communication (UPDATE)
+- [x] Serial comm hub (`comm_hub.py`)
+  - Receives 17-float odom data from MCB (wheel encoders, turret encoders, full IMU)
+  - Publishes `Float32MultiArray` on `/mcb_odom`
+  - Subscribes `/cmd_vel` and sends velocity commands to MCB
+- [ ] Convert raw `/mcb_odom` into standard ROS messages (`/odom`, `/imu`) for EKF integration
 - [ ] LiDAR driver integration (RPLiDAR A1)
   - Topic: `/scan`
-
-#### sentry_firmware
-- [ ] Arduino/microcontroller code
-  - Mecanum kinematics (forward + inverse)
-  - Encoder reading (4 wheels)
-  - IMU integration (MPU6050)
-  - Serial communication protocol
-  - Motor control (PID)
 
 ### Priority 3: Competition Logic
 

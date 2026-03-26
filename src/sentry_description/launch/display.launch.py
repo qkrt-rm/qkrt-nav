@@ -13,7 +13,7 @@ def generate_launch_description():
     # urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf')
     urdf_path = os.path.join(pkg_description, 'urdf', 'sentry_description.urdf.xacro')
 
-    rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    rviz_config_path = os.path.join(pkg_description, 'rviz', 'display_config.rviz')
     
     use_sim_time = LaunchConfiguration('use_sim_time')
     

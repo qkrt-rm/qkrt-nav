@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="my_world">
+
+    <!-- Add ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Directional light (like sun but dimmer) -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.6 0.6 0.6 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ambient light so shadows aren't pitch black -->
+    <scene>
+      <ambient>0.3 0.3 0.3 1</ambient>
+    </scene>
+
+    <!-- Your map model -->
+    <model name="my_map">
+      <static>true</static>
+      <!-- pose: X Y Z Roll Pitch Yaw (radians) -->
+      <!-- Rotated -90deg (clockwise) about Z so the 12m side aligns with X -->
+      <pose>0 0 0 0 0 -1.5708</pose>
+
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
+              <!--
+                Scaling: STL units are inches (confirmed from bounding box).
+                Uniform scale = 0.0254 (exact inches-to-metres conversion).
+
+                STL bounding box (inches) -> world dimensions after -90deg Z rotation:
+                  Mesh X: 343.70 in -> world Y: 8.73m  (8m arena + 0.37m buffer each side)
+                  Mesh Y: 496.46 in -> world X: 12.61m (12m arena + 0.30m buffer each side)
+                  Mesh Z:  55.87 in -> world Z: 1.42m  (highest outer wall)
+
+                The inner playing field is 12m x 8m. The buffer zones are real arena
+                geometry (outer walls/trim) already encoded in the CAD model.
+                Non-uniform scaling was removed as it distorted the geometry.
+              -->
+              <scale>0.0254 0.0254 0.0254</scale>
+            </mesh>
+          </geometry>
+        </visual>
+
+        <collision name="collision">
+          <geometry>
+            <mesh>
+              <uri>../meshes/2026_ARC_3v3_simplified.stl</uri>
+              <!-- Keep collision scale identical to visual scale -->
+              <scale>0.0254 0.0254 0.0254</scale>
+            </mesh>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+  </world>
+</sdf>

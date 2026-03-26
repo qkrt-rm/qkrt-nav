@@ -1,0 +1,901 @@
+<?xml version="1.0" ?>
+<!-- Clean xacro for RoboMaster Sentry Robot -->
+<!-- Generated from monolithic OnShape export -->
+<!-- Base link = GM6020 yaw motor center (fixed to world) -->
+<!-- Coordinate system: Y-up, X-lateral, Z-forward/back -->
+<robot name="sentry" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================== Properties ==================== -->
+  <xacro:property name="mesh_prefix" value="package://assets"/>
+
+  <!-- Wheel properties -->
+  <xacro:property name="wheel_mass" value="1.2"/>
+  <xacro:property name="wheel_radius" value="0.076"/>
+  <xacro:property name="wheel_width" value="0.05"/>
+  <xacro:property name="wheel_ixx" value="0.00347"/>
+  <xacro:property name="wheel_iyy" value="0.00198"/>
+  <xacro:property name="wheel_izz" value="0.00198"/>
+  <xacro:property name="wheel_effort" value="10"/>
+  <xacro:property name="wheel_velocity" value="50"/>
+
+  <!-- Chassis properties -->
+  <xacro:property name="chassis_mass" value="9.0"/>
+
+  <!-- Turret properties -->
+  <xacro:property name="turret_yaw_effort" value="5"/>
+  <xacro:property name="turret_yaw_velocity" value="10"/>
+  <xacro:property name="turret_pitch_effort" value="5"/>
+  <xacro:property name="turret_pitch_velocity" value="5"/>
+  <xacro:property name="turret_pitch_limit" value="0.5236"/>
+
+  <!-- Chassis yaw properties -->
+  <xacro:property name="chassis_yaw_effort" value="20"/>
+  <xacro:property name="chassis_yaw_velocity" value="10"/>
+
+  <!-- ==================== Materials ==================== -->
+  <material name="carbon_fiber">
+    <color rgba="0.15 0.15 0.15 1"/>
+  </material>
+  <material name="hard_plastic">
+    <color rgba="0.30 0.30 0.30 1"/>
+  </material>
+  <material name="aluminum">
+    <color rgba="0.75 0.75 0.75 1"/>
+  </material>
+  <material name="steel">
+    <color rgba="0.40 0.40 0.45 1"/>
+  </material>
+  <material name="rubber">
+    <color rgba="0.10 0.10 0.10 1"/>
+  </material>
+  <material name="orange_plastic">
+    <color rgba="0.90 0.50 0.10 1"/>
+  </material>
+  <material name="light_blue">
+    <color rgba="0.62 0.81 0.93 1"/>
+  </material>
+
+  <!-- ==================== Macros ==================== -->
+
+
+  <xacro:macro name="roller" params="file roller_rpy">
+    <visual>
+      <origin xyz="0 0 0" rpy="${roller_rpy}"/>
+      <geometry>
+        <mesh filename="${mesh_prefix}/${file}.stl"/>
+      </geometry>
+      <material name="rubber"/>
+    </visual>
+  </xacro:macro>
+
+  <xacro:macro name="wheel_rollers" params="index roller_rpy">
+
+  <xacro:if value="${index &lt;= 16}">   
+
+      <xacro:roller 
+          file="${'%03d' % index}" 
+          roller_rpy="${roller_rpy}"/>
+
+      <xacro:wheel_rollers 
+          index="${index + 1}" 
+          roller_rpy="${roller_rpy}"/>
+
+    </xacro:if>
+
+  </xacro:macro>
+
+  <!-- Macro: single shock absorber (3 sub-meshes at same origin) -->
+  <xacro:macro name="shock_absorber" params="xyz rpy">
+    <visual>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <mesh filename="${mesh_prefix}/孔距85mm单筒式避震_step_1______0_step_1_solid1.stl"/>
+      </geometry>
+      <material name="steel"/>
+    </visual>
+    <visual>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <mesh filename="${mesh_prefix}/孔距85mm单筒式避震_step_1_53_______step_1_solid1.stl"/>
+      </geometry>
+      <material name="steel"/>
+    </visual>
+    <visual>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <mesh filename="${mesh_prefix}/孔距85mm单筒式避震_step_1______step_1_solid1.stl"/>
+      </geometry>
+      <material name="steel"/>
+    </visual>
+  </xacro:macro>
+
+  <!-- Macro: standard inertial block -->
+  <xacro:macro name="inertial_block" params="mass ixx iyy izz">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${ixx}" ixy="0" ixz="0" iyy="${iyy}" iyz="0" izz="${izz}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- ==================== World ==================== -->
+  <link name="world"/>
+
+  <!-- ==================== base_link ==================== -->
+  <!-- GM6020 yaw motor + sentry gimbal mount structure -->
+  <link name="base_link">
+    <xacro:inertial_block mass="1.5" ixx="0.00274" iyy="0.00188" izz="0.00274"/>
+
+    <visual>
+      <origin xyz="0.04 -0.089548 0" rpy="0 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_bearing_deck_supportor.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.022367 0" rpy="-3.14159 -1.0472 0"/>
+      <geometry><mesh filename="${mesh_prefix}/360_rotate_ring_12_signals_2_a.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.059048 0" rpy="-0 0.458625 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_mock_bearing.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.056548 0" rpy="3.14159 0.807199 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_rotate_shaft_ring_housing.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.117048 0" rpy="0 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_mount_plate.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.075048 0" rpy="3.14159 1.00828 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_6020_shaft_adapter.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.062048 0" rpy="-3.14159 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_bearing_plate.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.05 -0.089548 0" rpy="0 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/sentry_gimbal_bearing_deck_supportor.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0.967525 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/top_robomaster_gm6020.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.06" length="0.15"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== chassis_link ==================== -->
+  <!-- Armor plates, structural frame, shock absorbers -->
+  <link name="chassis_link">
+    <xacro:inertial_block mass="${chassis_mass}" ixx="0.259" iyy="0.304" izz="0.259"/>
+
+    <!-- Composite structural parts -->
+    <visual>
+      <origin xyz="0.006878 0.375486 0.050016" rpy="-3.14159 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.036 0.383605 -0.017955" rpy="-1.5708 -1.36061 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.041 0.33465 -0.0638" rpy="-3.14159 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.041 0.33465 -0.0638" rpy="-3.14159 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.0626 0.34925 -0.0313" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.036 0.383605 -0.017955" rpy="-1.5708 -1.36061 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.086 0.29525 0.1175" rpy="-1.5708 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_2.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.024192 0.094376 -0.017014" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__2.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.024192 0.152376 -0.017014" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__2.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.024192 0.374524 -0.017014" rpy="1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__2.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.024192 0.432524 -0.017014" rpy="1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__2.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.032877 0.237055 0.058293" rpy="1.5708 -0.261799 0"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__3.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.051144 0.237055 0.089933" rpy="-1.5708 -0.785398 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__3.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.34825 -0.14055" rpy="3.14159 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__4.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0246 0.34985 -0.03118" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/composite_part_1__5.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+
+    <!-- Brackets -->
+    <visual>
+      <origin xyz="0.058 0.29525 -0.103" rpy="1.5708 -0 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/middle_to_top_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.058 0.29525 0.012" rpy="1.5708 -0 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/middle_to_top_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.068 0.32525 -0.103" rpy="-1.5708 0 -1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/middle_to_top_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.068 0.29525 0.012" rpy="1.5708 -0 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/middle_to_top_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.068 0.26875 -0.103" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/bottom_to_middle_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.058 0.26875 -0.103" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/bottom_to_middle_bracket.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.068 0.32925 -0.0055" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/top_plate_tall_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.058 0.32925 -0.0055" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/top_plate_tall_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.058 0.32925 -0.1205" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/top_plate_short_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.068 0.32925 -0.1205" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/top_plate_short_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.058 0.26875 -0.06" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/bottom_plate_special_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.068 0.26875 -0.054" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/bottom_plate_special_bracket.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Hex shaft connectors -->
+    <visual>
+      <origin xyz="0.058 0.26875 0" rpy="-1.5708 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hex_shaft_connector.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.058 0.26875 0" rpy="-1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hex_shaft_connector.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+
+    <!-- Armor plates -->
+    <visual>
+      <origin xyz="0 0.32525 -0.0455" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/top_plate.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.29125 -0.0225" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/middle_plate.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.24225 -0.0055" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/bottom_plate.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Panels -->
+    <visual>
+      <origin xyz="0 0.30475 -0.1205" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/front_panel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.072 0.28575 -0.0455" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/side_panel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.068 0.28575 -0.0455" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/side_panel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.38415 -0.041283" rpy="0.210183 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/top_panel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Gimbal tube bottom (vertical tube to yaw motor) -->
+    <visual>
+      <origin xyz="0 0.1354 0" rpy="1.5708 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_tube_bottom.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+
+    <!-- Aluminium beams -->
+    <visual>
+      <origin xyz="0.0625 0 0" rpy="-3.14159 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/aluminium_beam_60x25_360.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0625 0 0" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/aluminium_beam_60x25_360.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.188 0 0" rpy="-0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/aluminium_beam_60x25_170.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.188 0 0" rpy="-0 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/aluminium_beam_60x25_170.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+
+    <!-- Infantry armor plates -->
+    <visual>
+      <origin xyz="0 -0.033 0.03" rpy="-3.14159 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/infantry_lower_platever2.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.03 0.1" rpy="-3.14159 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/infantry_upper_plate_ver2.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.033 -0.03" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/infantry_lower_front_platever2.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.03 -0.1" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/infantry_upper_front_plate_ver2.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Plate connectors -->
+    <visual>
+      <origin xyz="0.194 0.034082 0.184431" rpy="0.707927 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter_dumperset.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.194 0.034082 -0.184431" rpy="-2.43367 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter_dumperset.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.194 0.034082 -0.184431" rpy="-2.43367 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter_dumperset.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.194 0.034082 0.184431" rpy="0.707927 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter_dumperset.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.194 -0.035309 0.117457" rpy="2.68986 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.194 -0.035309 -0.117457" rpy="-0.451732 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.194 -0.035309 -0.117457" rpy="-0.451732 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.194 -0.035309 0.117457" rpy="2.68986 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/plates_connecter.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+
+    <!-- Shock absorbers (visual only, 8 units) -->
+    <xacro:shock_absorber xyz="-0.219758 0.105883 0.141021"  rpy="-3.14159 -1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="0.219758 0.000947 0.124876"   rpy="-0 -1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="0.167758 0.105883 -0.141021"  rpy="-0 1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="-0.167758 0.105883 0.141021"  rpy="-3.14159 -1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="0.219758 0.105883 -0.141021"  rpy="-0 1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="-0.219758 0.000947 -0.124876" rpy="3.14159 1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="-0.167758 0.000947 -0.124876" rpy="3.14159 1.41814 -1.5708"/>
+    <xacro:shock_absorber xyz="0.167758 0.000947 0.124876"   rpy="-0 -1.41814 -1.5708"/>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.45 0.38 0.45"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== Wheel Links ==================== -->
+
+  <!-- front_left_wheel_link -->
+  <link name="front_left_wheel_link">
+    <xacro:inertial_block mass="${wheel_mass}" ixx="${wheel_ixx}" iyy="${wheel_iyy}" izz="${wheel_izz}"/>
+
+    <visual>
+      <origin xyz="0.109996 -0.04853 0.064179" rpy="-2.68986 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_motor_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.036996 -0.024592 0.05697" rpy="3.14159 -0.292535 -1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/3508_protector.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.167896 -0.04853 0.064179" rpy="-2.19706 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.190808 -0.04853 0.064179" rpy="-2.68986 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.139296 -0.04853 0.064179" rpy="-3.03893 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127004 -0.072468 0.071389" rpy="-3.14159 0.292535 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/3508_protector.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.020555 -0.0316 0.057086" rpy="1.5708 -1.0764 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/robomaster_m3508_p19_brushless_dc_gear_motor_non_cable.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.110563 -0.052023 0.0822" rpy="-1.5708 -0.289064 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/robomaster_m3508_p19_brushless_dc_gear_motor_non_cable.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+    <xacro:wheel_rollers index="1" roller_rpy="1.5708 1.309 1.5708"/>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- front_right_wheel_link -->
+  <link name="front_right_wheel_link">
+    <xacro:inertial_block mass="${wheel_mass}" ixx="${wheel_ixx}" iyy="${wheel_iyy}" izz="${wheel_izz}"/>
+
+    <visual>
+      <origin xyz="0.056123 -0.04853 -0.15984" rpy="-1.46813 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.084723 -0.04853 -0.15984" rpy="-1.67346 0 -0"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.117023 -0.04853 -0.15984" rpy="-2.68986 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_motor_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.036211 -0.04853 -0.15984" rpy="-2.68986 -0 3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <xacro:wheel_rollers index="1" roller_rpy="-3.14159 -0 2.87979"/>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- rear_left_wheel_link -->
+  <link name="rear_left_wheel_link">
+    <xacro:inertial_block mass="${wheel_mass}" ixx="${wheel_ixx}" iyy="${wheel_iyy}" izz="${wheel_izz}"/>
+
+    <visual>
+      <origin xyz="-0.056123 -0.04853 0.15984" rpy="1.67346 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.084723 -0.04853 0.15984" rpy="1.46813 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.117023 -0.04853 0.15984" rpy="0.451732 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_motor_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.036211 -0.04853 0.15984" rpy="0.451732 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <xacro:wheel_rollers index="1" roller_rpy="0 -0 0.261799"/>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- rear_right_wheel_link -->
+  <link name="rear_right_wheel_link">
+    <xacro:inertial_block mass="${wheel_mass}" ixx="${wheel_ixx}" iyy="${wheel_iyy}" izz="${wheel_izz}"/>
+
+    <visual>
+      <origin xyz="0.127004 -0.072468 -0.071216" rpy="0 -0.292535 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/3508_protector.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.109996 -0.04853 -0.064006" rpy="0.451732 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_motor_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.036996 -0.024592 -0.056797" rpy="-0 0.292535 -1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/3508_protector.stl"/></geometry>
+      <material name="rubber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.167896 -0.04853 -0.064006" rpy="0.944531 -0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.190808 -0.04853 -0.064006" rpy="0.451732 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/wheel_bearing_fixplate4.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.139296 -0.04853 -0.064006" rpy="0.102666 0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/m3508_flang.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="0.110563 -0.052023 -0.082027" rpy="1.5708 0.289064 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/robomaster_m3508_p19_brushless_dc_gear_motor_non_cable.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+    <xacro:wheel_rollers index="1" roller_rpy="-1.5708 -1.309 1.5708"/>
+    <visual>
+      <origin xyz="-0.020555 -0.0316 -0.056913" rpy="-1.5708 1.0764 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/robomaster_m3508_p19_brushless_dc_gear_motor_non_cable.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 1.5708"/>
+      <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== turret_yaw_link ==================== -->
+  <!-- Gimbal vertical structure + pitch motor -->
+  <link name="turret_yaw_link">
+    <xacro:inertial_block mass="1.5" ixx="0.00461" iyy="0.0218" izz="0.02281"/>
+
+    <visual>
+      <origin xyz="0.1947 0 0" rpy="1.5708 1.0472 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/part_1.stl"/></geometry>
+      <material name="aluminum"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.1574 0 0" rpy="-1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_shaft_simple.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.15875 0.040481" rpy="-1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_jetson_side_carbon.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.127 0 0" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_tube_top_shaft.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.081329 -0.082709 0" rpy="0.756835 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_tube_reinforce.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.081329 -0.082709 0" rpy="2.38476 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_tube_reinforce.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.15875 -0.040481" rpy="1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_side_carbon.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.127 0 0" rpy="0 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/gimbal_tube_top_motor.stl"/></geometry>
+      <material name="carbon_fiber"/>
+    </visual>
+    <visual>
+      <origin xyz="0.269448 0 0" rpy="1.5708 0.967525 1.5708"/>
+      <geometry><mesh filename="${mesh_prefix}/top_robomaster_gm6020.stl"/></geometry>
+      <material name="steel"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.40 0.16 0.12"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== turret_pitch_link ==================== -->
+  <!-- Barrels, flywheels, hoppers, sensors -->
+  <link name="turret_pitch_link">
+    <xacro:inertial_block mass="2.5" ixx="0.02175" iyy="0.02708" izz="0.01133"/>
+
+    <!-- Barrels -->
+    <visual>
+      <origin xyz="0.0385 -0.0053 -0.0555" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hiti_tech_barrel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0385 -0.0053 -0.0555" rpy="-3.14159 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hiti_tech_barrel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0065 -0.0053 -0.0555" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hiti_extended_barrel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.0385 -0.0053 -0.0555" rpy="0 -1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/hiti_extended_barrel.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.0225 -0.0225 0.0045" rpy="-1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/barrel_extender.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0225 -0.0225 0.0045" rpy="-1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/barrel_extender.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Flywheels -->
+    <visual>
+      <origin xyz="0.0045 -0.0053 -0.04292" rpy="-1.5708 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/flywheel_support.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0045 -0.0053 -0.04292" rpy="1.5708 1.5708 0"/>
+      <geometry><mesh filename="${mesh_prefix}/flywheel_support.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Hoppers and ammo -->
+    <visual>
+      <origin xyz="0.05 -0.0225 0.0695" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/lefthopper.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.05 -0.0225 0.0695" rpy="1.5708 0 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/right_hopper.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.05 -0.0098 0.0695" rpy="-1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/indexer.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.05 -0.0098 0.0695" rpy="1.5708 -0.785398 -3.14159"/>
+      <geometry><mesh filename="${mesh_prefix}/indexer.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.001204 -0.059567 -0.255729" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/ammo_charger.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.043796 -0.059567 -0.255729" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/ammo_charger.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+
+    <!-- Sensors -->
+    <visual>
+      <origin xyz="0 0.0305 -0.1325" rpy="0 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/camera.stl"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="0.0225 0.0655 -0.1055" rpy="1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/real_sense_mount.stl"/></geometry>
+      <material name="orange_plastic"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.0225 0.0655 -0.1055" rpy="1.5708 -0 0"/>
+      <geometry><mesh filename="${mesh_prefix}/real_sense_mount.stl"/></geometry>
+      <material name="orange_plastic"/>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.20 0.12 0.30"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== jetson_link ==================== -->
+  <!-- Virtual box approximation for Nvidia Jetson -->
+  <link name="jetson_link">
+    <xacro:inertial_block mass="0.5" ixx="0.000304" iyy="0.000684" izz="0.000454"/>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.10 0.03 0.08"/></geometry>
+      <material name="hard_plastic"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.10 0.03 0.08"/></geometry>
+    </collision>
+  </link>
+
+  <!-- ==================== Joints ==================== -->
+
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="chassis_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="chassis_link"/>
+    <origin xyz="0 -0.151048 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-${pi}" upper="${pi}" effort="${chassis_yaw_effort}" velocity="${chassis_yaw_velocity}"/>
+  </joint>
+
+  <joint name="turret_yaw_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="turret_yaw_link"/>
+    <origin xyz="0 0.117702 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-${pi}" upper="${pi}" effort="${turret_yaw_effort}" velocity="${turret_yaw_velocity}"/>
+  </joint>
+
+  <joint name="turret_pitch_joint" type="revolute">
+    <parent link="turret_yaw_link"/>
+    <child link="turret_pitch_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-${turret_pitch_limit}" upper="${turret_pitch_limit}" effort="${turret_pitch_effort}" velocity="${turret_pitch_velocity}"/>
+  </joint>
+
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="front_left_wheel_link"/>
+    <origin xyz="0.045004 -0.001392 -0.269023" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+  </joint>
+
+  <joint name="front_right_wheel_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="front_right_wheel_link"/>
+    <origin xyz="-0.269023 -0.001392 -0.045004" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+  </joint>
+
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="rear_left_wheel_link"/>
+    <origin xyz="0.269023 -0.001392 0.045004" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+  </joint>
+
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="chassis_link"/>
+    <child link="rear_right_wheel_link"/>
+    <origin xyz="-0.045004 -0.001392 0.268850" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="${wheel_effort}" velocity="${wheel_velocity}"/>
+  </joint>
+
+  <joint name="jetson_joint" type="fixed">
+    <parent link="turret_yaw_link"/>
+    <child link="jetson_link"/>
+    <origin xyz="0 -0.159 0.041" rpy="0 0 0"/>
+  </joint>
+
+</robot>

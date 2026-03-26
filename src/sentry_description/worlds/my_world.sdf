@@ -20,18 +20,18 @@
 
       <!-- North wall, +0.05 offset for wall thickness -->
       <link name="north_wall">
-        <pose>0 4.05 0.25 0 0 0</pose>
+        <pose>0 4.05 0.75 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>12 0.1 0.5</size>
+              <size>12 0.1 1.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>12 0.1 0.5</size>
+              <size>12 0.1 1.5</size>
             </box>
           </geometry>
           <material>
@@ -43,18 +43,18 @@
       
       <!-- South wall,  minus 0.05 offset-->
       <link name="south_wall">
-        <pose>0 -4.05 0.25 0 0 0</pose>
+        <pose>0 -4.05 0.75 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>12 0.1 0.5</size>
+              <size>12 0.1 1.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>12 0.1 0.5</size>
+              <size>12 0.1 1.5</size>
             </box>
           </geometry>
           <material>
@@ -66,18 +66,18 @@
       
       <!-- East wall, plus 0.05 offset -->
       <link name="east_wall">
-        <pose>6.05 0 0.25 0 0 0</pose>
+        <pose>6.05 0 0.75 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.1 8 0.5</size>
+              <size>0.1 8 1.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.1 8 0.5</size>
+              <size>0.1 8 1.5</size>
             </box>
           </geometry>
           <material>
@@ -89,18 +89,18 @@
       
       <!-- West wall, minus 0.05 offset  -->
       <link name="west_wall">
-        <pose>-6.05 0 0.25 0 0 0</pose>
+        <pose>-6.05 0 0.75 0 0 0</pose>
         <collision name="collision">
           <geometry>
             <box>
-              <size>0.1 8 0.5</size>
+              <size>0.1 8 1.5</size>
             </box>
           </geometry>
         </collision>
         <visual name="visual">
           <geometry>
             <box>
-              <size>0.1 8 0.5</size>
+              <size>0.1 8 1.5</size>
             </box>
           </geometry>
           <material>

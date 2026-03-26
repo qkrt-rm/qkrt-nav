@@ -1,0 +1,10 @@
+rplidar_node_2:
+  ros__parameters:
+    channel_type: serial
+    serial_port: /dev/rplidar2
+    serial_baudrate: 115200
+    frame_id: laser_frame_right
+    inverted: false
+    angle_compensate: true
+    scan_mode: Sensitivity
+    topic_name: scan_right

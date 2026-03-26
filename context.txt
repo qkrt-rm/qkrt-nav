@@ -1,0 +1,406 @@
+Jetson
+● Based on my exploration, this codebase already has an excellent pattern for   
+  Jetson communication. Here are the best approaches:                           
+                                                                                
+  Recommended Approach: Extend the Existing VisionCoprocessor                   
+                                                                                
+  The codebase already has a VisionCoprocessor class                            
+  (src/communication/vision_coprocessor.hpp) that communicates with a Jetson    
+  over UART1 (pins A9/B7). You can extend this to send sensor data.             
+                                                                                
+  Option 1: Add sensor data to VisionCoprocessor                                
+                                                                                
+  Create a new message type to send encoder + IMU data periodically:            
+                                                                                
+  // In a new header like sensor_message.hpp                                    
+  struct SensorData {                                                           
+      // Wheel encoders (4 wheels) - velocities in rad/s                        
+      float wheelVelocities[4];                                                 
+                                                                                
+      // IMU data                                                               
+      float gx, gy, gz;  // Gyro (rad/s)                                        
+      float ax, ay, az;  // Accel (m/s^2)                                       
+      float yaw, pitch, roll;  // Orientation                                   
+  } modm_packed;                                                                
+                                                                                
+  Then in the main loop, periodically send this data using the DJISerial        
+  protocol (which has CRC checksums for reliability).                           
+                                                                                
+  Option 2: Create a Dedicated SensorPublisher Class                            
+                                                                                
+  Similar to VisionCoprocessor, create a new class that:                        
+  1. Extends tap::communication::serial::DJISerial                              
+  2. Sends sensor data at a configurable rate (e.g., 100 Hz)                    
+                                                                                
+  Key Data Access Points                                                        
+                                                                                
+  IMU readings (via drivers->bmi088):                                           
+  drivers->bmi088.getGx()   // Gyro X (rad/s)                                   
+  drivers->bmi088.getGy()   // Gyro Y (rad/s)                                   
+  drivers->bmi088.getGz()   // Gyro Z (rad/s)                                   
+  drivers->bmi088.getAx()   // Accel X (m/s^2)                                  
+  drivers->bmi088.getYaw()  // Computed yaw angle                               
+                                                                                
+  Wheel encoder readings (via motor objects):                                   
+  motor.getEncoder()->getVelocity()   // rad/s                                  
+  motor.getEncoder()->getPosition()   // position                               
+  motor.getShaftRPM()                 // RPM                                    
+                                                                                
+  Hardware Setup                                                                
+  ┌───────┬─────────────────┬───────────────────┬─────────────────────┐         
+  │ UART  │      Pins       │    Current Use    │     Recommended     │         
+  ├───────┼─────────────────┼───────────────────┼─────────────────────┤         
+  │ Uart1 │ A9(Tx), B7(Rx)  │ VisionCoprocessor │ Use this for Jetson │         
+  ├───────┼─────────────────┼───────────────────┼─────────────────────┤         
+  │ Uart6 │ G14(Tx), G9(Rx) │ Terminal/Debug    │ Keep for debugging  │         
+  └───────┴─────────────────┴───────────────────┴─────────────────────┘         
+  On the Jetson Side                                                            
+                                                                                
+  Read the serial data using Python:                                            
+  import serial                                                                 
+  # Parse the DJISerial frame format (0xA5 header, CRC8/CRC16)                  
+  ser = serial.Serial('/dev/ttyTHS1', 115200)                                   
+                                                                                
+  Would you like me to create a concrete implementation of a SensorPublisher    
+  class that sends this data to the Jetson? 
+
+“do option 1”
+I've implemented Option 1. Here's a summary of all the changes:               
+                                                                                
+  Summary of Changes                                                            
+                                                                                
+  1. src/communication/aim_message.hpp                                          
+                                                                                
+  Added SensorData struct and MessageType enum:                                 
+  - SensorData: Contains wheel velocities (4 floats), IMU gyro (gx, gy, gz), IMU
+   accel (ax, ay, az), orientation (yaw, pitch, roll), and timestamp            
+  - MessageType: Enum to identify message types (TURRET_DATA=0x0001,            
+  SENSOR_DATA=0x0002)                                                           
+                                                                                
+  2. src/control/chassis/holonomic_chassis_subsystem.hpp/.cpp                   
+                                                                                
+  Added getWheelVelocities(float[4]) method to read encoder velocities from all 
+  4 motors.                                                                     
+                                                                                
+  3. src/communication/vision_coprocessor.hpp/.cpp                              
+                                                                                
+  Added sendSensorData(const float wheelVelocities[4]) method that:             
+  - Rate-limits to 100Hz (configurable via SENSOR_SEND_INTERVAL_MS)             
+  - Reads IMU data directly from drivers->bmi088                                
+  - Sends data using the DJISerial protocol with CRC checksums                  
+                                                                                
+  4. src/control/sentry.hpp                                                     
+                                                                                
+  Added getChassis() getter to expose the chassis subsystem for reading wheel   
+  velocities.                                                                   
+                                                                                
+  5. src/main.cpp                                                               
+                                                                                
+  Added call to sendSensorData() in updateIo() to transmit sensor data every    
+  loop iteration (rate-limited internally to 100Hz).                            
+                                                                                
+  ---                                                                           
+  Jetson Nano Python Receiver Example                                           
+                                                                                
+  Here's sample code for reading the sensor data on the Jetson:                 
+                                                                                
+  import serial                                                                 
+  import struct                                                                 
+                                                                                
+  # DJISerial frame format                                                      
+  FRAME_HEADER = 0xA5                                                           
+  SENSOR_DATA_MSG_TYPE = 0x0002                                                 
+                                                                                
+  # SensorData struct: 4 floats + 9 floats + 1 uint32 = 56 bytes                
+  SENSOR_DATA_SIZE = 56                                                         
+  SENSOR_DATA_FORMAT = '<4f 3f 3f 3f I'  # little-endian                        
+                                                                                
+  def crc8(data):                                                               
+      """CRC8 calculation (same as Taproot)"""                                  
+      crc = 0xFF                                                                
+      for byte in data:                                                         
+          crc ^= byte                                                           
+          for _ in range(8):                                                    
+              if crc & 0x80:                                                    
+                  crc = (crc << 1) ^ 0x31                                       
+              else:                                                             
+                  crc <<= 1                                                     
+              crc &= 0xFF                                                       
+      return crc                                                                
+                                                                                
+  def parse_sensor_data(data):                                                  
+      values = struct.unpack(SENSOR_DATA_FORMAT, data)                          
+      return {                                                                  
+          'wheel_velocities': values[0:4],  # LF, LB, RB, RF in rad/s           
+          'gyro': {'x': values[4], 'y': values[5], 'z': values[6]},  # rad/s    
+          'accel': {'x': values[7], 'y': values[8], 'z': values[9]},  # m/s^2   
+          'orientation': {'yaw': values[10], 'pitch': values[11], 'roll':       
+  values[12]},                                                                  
+          'timestamp_ms': values[13]                                            
+      }                                                                         
+                                                                                
+  def main():                                                                   
+      ser = serial.Serial('/dev/ttyTHS1', 115200, timeout=0.1)                  
+      buffer = bytearray()                                                      
+                                                                                
+      while True:                                                               
+          buffer.extend(ser.read(256))                                          
+                                                                                
+          # Find frame header                                                   
+          while len(buffer) > 0 and buffer[0] != FRAME_HEADER:                  
+              buffer.pop(0)                                                     
+                                                                                
+          # Need at least header (5 bytes) + msg_type (2) + data + crc16 (2)    
+          if len(buffer) < 9:                                                   
+              continue                                                          
+                                                                                
+          data_length = buffer[1] | (buffer[2] << 8)                            
+          frame_size = 5 + 2 + data_length + 2  # header + msg_type + data +    
+  crc16                                                                         
+                                                                                
+          if len(buffer) < frame_size:                                          
+              continue                                                          
+                                                                                
+          msg_type = buffer[5] | (buffer[6] << 8)                               
+                                                                                
+          if msg_type == SENSOR_DATA_MSG_TYPE and data_length ==                
+  SENSOR_DATA_SIZE:                                                             
+              sensor_data =                                                     
+  parse_sensor_data(bytes(buffer[7:7+SENSOR_DATA_SIZE]))                        
+              print(f"Wheels: {sensor_data['wheel_velocities']}")               
+              print(f"Gyro: {sensor_data['gyro']}")                             
+              print(f"Accel: {sensor_data['accel']}")                           
+                                                                                
+          buffer = buffer[frame_size:]                                          
+                                                                                
+  if __name__ == '__main__':                                                    
+      main()                                                                    
+                                                                                
+  ---                                                                           
+  Hardware Connection                                                           
+                                                                                
+  Connect UART1 from the MCB to the Jetson Nano:                                
+  - MCB A9 (Tx) → Jetson Rx (Pin 10 / GPIO 15 on J41 header)                    
+  - MCB B7 (Rx) → Jetson Tx (Pin 8 / GPIO 14 on J41 header)                     
+  - GND → GND                                                                   
+                                                                                
+  Build and flash to test: pipenv run scons build && pipenv run scons program 
+
+teleop
+  # Build                                                                       
+  cd ~/Projects/qkrt-nav && colcon build                                        
+                                                                                
+  # Run with joystick (default)                                                 
+  ros2 launch sentry_bringup real_robot.launch.py                               
+                                                                                
+  # Run with keyboard teleop                                                    
+  ros2 launch sentry_bringup real_robot.launch.py use_keyboard:=true            
+                                                                                
+  # Run with keyboard, no navigation (just teleop)                              
+  ros2 launch sentry_bringup real_robot.launch.py use_keyboard:=true            
+  use_nav:=false                                                                
+                                                                                
+  Install teleop_twist_keyboard if needed:                                      
+  sudo apt install ros-${ROS_DISTRO}-teleop-twist-keyboard    
+
+
+
+
+  The communication uses a DJISerial-based protocol over UART1 at 115200 baud.                                            
+                                                                                                                          
+  Message Frame Structure                                                                                                 
+                                                                                                                          
+  ┌─────────────────────────────────────────────────────────────────────┐                                                 
+  │  Frame Header (5 bytes)  │ Type (2) │ Data (variable) │ CRC16 (2)  │                                                  
+  └─────────────────────────────────────────────────────────────────────┘                                                 
+                                                                                                                          
+  Frame Header:                                                                                                           
+    [0]     0xA5 (start byte)                                                                                             
+    [1-2]   Data length (16-bit, LSB first)                                                                               
+    [3]     Sequence number                                                                                               
+    [4]     CRC8 of header bytes 0-3                                                                                      
+                                                                                                                          
+  Message Type:                                                                                                           
+    [5-6]   Message type ID (16-bit, LSB first)                                                                           
+                                                                                                                          
+  Payload:                                                                                                                
+    [7...]  Data bytes                                                                                                    
+                                                                                                                          
+  CRC16:                                                                                                                  
+    [end]   CRC16 of entire message (excluding itself)                                                                    
+                                                                                                                          
+  Data Structure (Jetson → MCB)                                                                                           
+                                                                                                                          
+  Currently, the only implemented message type is TurretData defined in src/communication/aim_message.hpp:8:              
+                                                                                                                          
+  struct TurretData                                                                                                       
+  {                                                                                                                       
+      float xPos;    // 4 bytes                                                                                           
+      float yPos;    // 4 bytes                                                                                           
+      float zPos;    // 4 bytes                                                                                           
+  } modm_packed;     // Total: 12 bytes                                                                                   
+                                                                                                                          
+  Reception State Machine                                                                                                 
+                                                                                                                          
+  The protocol uses a 3-state machine in taproot/src/tap/communication/serial/dji_serial.cpp:                             
+                                                                                                                          
+  1. SERIAL_HEADER_SEARCH - Scans for 0xA5 start byte                                                                     
+  2. PROCESS_FRAME_HEADER - Collects header bytes, verifies CRC8                                                          
+  3. PROCESS_FRAME_DATA - Collects payload, verifies CRC16, triggers callback                                             
+                                                                                                                          
+  Key Files                                                                                                               
+  ┌─────────────────────────────────────────────────────┬───────────────────────────────────────┐                         
+  │                        File                         │                Purpose                │                         
+  ├─────────────────────────────────────────────────────┼───────────────────────────────────────┤                         
+  │ src/communication/vision_coprocessor.hpp            │ Jetson interface (Uart1, 115200 baud) │                         
+  ├─────────────────────────────────────────────────────┼───────────────────────────────────────┤                         
+  │ src/communication/aim_message.hpp                   │ TurretData struct definition          │                         
+  ├─────────────────────────────────────────────────────┼───────────────────────────────────────┤                         
+  │ taproot/src/tap/communication/serial/dji_serial.hpp │ Base protocol implementation          │                         
+  ├─────────────────────────────────────────────────────┼───────────────────────────────────────┤                         
+  │ taproot/src/tap/algorithms/crc.cpp                  │ CRC8/CRC16 algorithms                 │                         
+  └─────────────────────────────────────────────────────┴───────────────────────────────────────┘                         
+  Usage                                                                                                                   
+                                                                                                                          
+  // Initialization (main.cpp:123)                                                                                        
+  drivers->visionCoprocessor.initialize();                                                                                
+                                                                                                                          
+  // Polling loop (main.cpp:136)                                                                                          
+  drivers->visionCoprocessor.updateSerial();                                                                              
+                                                                                                                          
+  // Get data                                                                                                             
+  volatile TurretData data = m_visionCoprocessor.getTurretData();                                                         
+                                                                                                                          
+  Connection Monitoring                                                                                                   
+                                                                                                                          
+  - 2000ms timeout - If no message received, isOnline() returns false                                                     
+  - CRC failures are logged and trigger return to header search state                                                     
+                                                                                                                          
+  There's a TODO in vision_coprocessor.cpp:13 indicating future support for multiple message types via a switch statement 
+  on the messageType field.                                                                                               
+                                                                                                                          
+✻ Crunched for 1m 25s                                                                                                     
+                                                                                                                          
+❯ Ok I switched branches to one that I used claude code to generate methods to send more information, such as wheel       
+  encoder and imu data, to the mcb. Can you explain these and verify them?                                                
+                                                                                                                          
+● I'll check the current branch and explore the new communication code.                                                   
+                                                                                                                          
+● Bash(git branch --show-current)                                                                                         
+  ⎿  feature/auto-nav-comm-2                                                                                              
+                                                                                                                          
+● Bash(git diff main --name-only)                                                                                         
+  ⎿  qkrt-mcb-project/src/communication/aim_message.hpp                                                                   
+     qkrt-mcb-project/src/communication/vision_coprocessor.cpp                                                            
+     qkrt-mcb-project/src/communication/vision_coprocessor.hpp                                                            
+     … +5 lines (ctrl+o to expand)                                                                                        
+                                                                                                                          
+● Let me read the modified communication files to understand the new message types.                                       
+                                                                                                                          
+● Read(qkrt-mcb-project/src/communication/aim_message.hpp)                                                                
+  ⎿  Read 48 lines                                                                                                        
+                                                                                                                          
+● Read(qkrt-mcb-project/src/communication/vision_coprocessor.hpp)                                                         
+  ⎿  Read 65 lines                                                                                                        
+                                                                                                                          
+● Read(qkrt-mcb-project/src/communication/vision_coprocessor.cpp)                                                         
+  ⎿  Read 87 lines                                                                                                        
+                                                                                                                          
+● Let me also check how this is integrated and called.                                                                    
+                                                                                                                          
+● Read(qkrt-mcb-project/src/control/chassis/holonomic_chassis_subsystem.hpp)                                              
+  ⎿  Read 97 lines                                                                                                        
+                                                                                                                          
+● Read(qkrt-mcb-project/src/control/chassis/holonomic_chassis_subsystem.cpp)                                              
+  ⎿  Read 95 lines                                                                                                        
+                                                                                                                          
+● Search(pattern: "sendSensorData", path: "qkrt-mcb-project/src", output_mode: "content")                                 
+  ⎿  Found 3 lines (ctrl+o to expand)                                                                                     
+                                                                                                                          
+● Let me check main.cpp to see the integration context.                                                                   
+                                                                                                                          
+● Read(qkrt-mcb-project/src/main.cpp)                                                                                     
+  ⎿  Read 14 lines                                                                                                        
+                                                                                                                          
+● Read(qkrt-mcb-project/taproot/src/tap/communication/serial/dji_serial.hpp)                                              
+  ⎿  Read 150 lines                                                                                                       
+                                                                                                                          
+● Now I have the full picture. Here's my explanation and verification.                                                    
+                                                                                                                          
+  ---                                                                                                                     
+  New MCB → Jetson Communication Code                                                                                     
+                                                                                                                          
+  Overview                                                                                                                
+                                                                                                                          
+  The new code adds the ability to send sensor data from MCB to Jetson, complementing the existing Jetson → MCB turret    
+  data path.                                                                                                              
+                                                                                                                          
+  New Data Structure                                                                                                      
+                                                                                                                          
+  SensorData in aim_message.hpp:17-40:                                                                                    
+                                                                                                                          
+  struct SensorData {                                                                                                     
+      float wheelVelocities[4];  // LF, LB, RB, RF in rad/s (motor shaft)                                                 
+      float gx, gy, gz;          // Gyroscope (rad/s)                                                                     
+      float ax, ay, az;          // Accelerometer (m/s²)                                                                  
+      float yaw, pitch, roll;    // Mahony filter orientation (radians)                                                   
+      uint32_t timestampMs;      // Timestamp                                                                             
+  } modm_packed;                 // Total: 56 bytes                                                                       
+                                                                                                                          
+  Message Type Enum in aim_message.hpp:43-47:                                                                             
+  enum MessageType : uint16_t {                                                                                           
+      TURRET_DATA = 0x0001,  // Jetson → MCB                                                                              
+      SENSOR_DATA = 0x0002,  // MCB → Jetson (new)                                                                        
+  };                                                                                                                      
+                                                                                                                          
+  Transmission Method                                                                                                     
+                                                                                                                          
+  sendSensorData() in vision_coprocessor.cpp:39-85:                                                                       
+                                                                                                                          
+  1. Rate limiting - Only sends every 10ms (100Hz) via sensorSendTimeout                                                  
+  2. Constructs DJISerial message with proper header, CRC8, sequence number                                               
+  3. Populates sensor data from wheel encoders and BMI088 IMU                                                             
+  4. Calculates CRC16 and writes to UART                                                                                  
+                                                                                                                          
+  Integration                                                                                                             
+                                                                                                                          
+  In main.cpp:138-141 (called in updateIo()):                                                                             
+  float wheelVelocities[4];                                                                                               
+  robot.getChassis().getWheelVelocities(wheelVelocities);                                                                 
+  drivers->visionCoprocessor.sendSensorData(wheelVelocities);                                                             
+                                                                                                                          
+  ---                                                                                                                     
+  Verification & Issues Found                                                                                             
+                                                                                                                          
+  ✅ Correct                                                                                                              
+                                                                                                                          
+  1. Message structure follows DJISerial protocol correctly                                                               
+  2. CRC handling - Uses setCRC16() properly after populating data                                                        
+  3. Rate limiting - Prevents serial flooding at 100Hz                                                                    
+  4. Sequence numbering - txSequenceNumber++ increments correctly                                                         
+  5. Wheel velocity order - Consistent (LF, LB, RB, RF) between chassis and message                                       
+  6. modm_packed attribute ensures no padding in the struct                                                               
+                                                                                                                          
+  ⚠️ Potential Issues                                                                                                     
+                                                                                                                          
+  1. getWheelVelocities() returns motor shaft velocity, not wheel velocity                                                
+    - holonomic_chassis_subsystem.cpp:90 returns getEncoder()->getVelocity() which is motor shaft rad/s                   
+    - Comment says "motor shaft speed" which is accurate, but if the Jetson expects wheel speed, you'd need to divide by  
+  gear ratio (19:1)                                                                                                       
+  2. No initialization of sensorSendTimeout                                                                               
+    - sensorSendTimeout is uninitialized in the constructor                                                               
+    - First call to isExpired() on an uninitialized MilliTimeout may behave unpredictably                                 
+    - Recommendation: Initialize it in the constructor or in initialize()                                                 
+  3. IMU units assumption                                                                                                 
+    - Code assumes bmi088.getAx/Ay/Az() returns m/s² and getGx/Gy/Gz() returns rad/s                                      
+    - Should verify these match the BMI088 driver's actual output units                                                   
+  4. Blocking UART write                                                                                                  
+    - drivers->uart.write() may block if the TX buffer is full                                                            
+    - At 115200 baud, 65 bytes (9 header + 56 data) takes ~5.6ms to transmit                                              
+    - With 10ms interval, this should be fine, but close to the limit                                                     
+                                                                                                                          
+  🔍 Missing Features                                                                                                     
+                                                                                                                          
+  The messageReceiveCallback() still has a TODO and only handles TurretData by size matching, not by messageType. If you  
+  add more incoming message types of the same size, it will fail.                                                         
+                                                                                                                          
