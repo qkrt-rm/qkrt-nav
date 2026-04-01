@@ -5,7 +5,7 @@ from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
-
+from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     pkg_bringup = get_package_share_directory('sentry_bringup')
@@ -53,7 +53,7 @@ def generate_launch_description():
     display = LaunchConfiguration("display")
     display_arg = DeclareLaunchArgument(
         "display",
-        default_value="false",
+        default_value="true",
         description="Launch RViz for visualization"
     )
 
@@ -64,7 +64,13 @@ def generate_launch_description():
         name='robot_state_publisher',
         output='screen',
         parameters=[{
-            'robot_description': Command(['xacro', ' ', robot_model_path]),
+            'robot_description': ParameterValue(
+                Command([
+                    'xacro ',
+                    robot_model_path
+                ]),
+                value_type=str
+            ),
             'use_sim_time': False
         }]
     )
@@ -113,19 +119,6 @@ def generate_launch_description():
             os.path.join(pkg_bringup, 'config', 'laser_merger.yaml'),
             {'use_sim_time': False}
         ]
-    )
-
-    # Controller (for sending commands to the robot)
-    controller = IncludeLaunchDescription(
-        os.path.join(
-            get_package_share_directory("sentry_controller"),
-            "launch",
-            "controller.launch.py"
-        ),
-        launch_arguments={
-            "use_sentry_controller": "False",
-            "use_python": "False"
-        }.items(),
     )
 
     # Keyboard teleop
@@ -189,7 +182,6 @@ def generate_launch_description():
         laser_driver_2,
         laser_merger,
         # Control
-        controller,
         keyboard_teleop,
         # Localization
         global_localization,
