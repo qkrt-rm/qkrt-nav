@@ -12,6 +12,8 @@ def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     pkg_localization = get_package_share_directory('sentry_localization')
     pkg_navigation = get_package_share_directory('sentry_navigation')
+    pkg_vision = get_package_share_directory('sentry_vision')
+    pkg_realsense = get_package_share_directory('realsense2_camera')
 
     # Launch arguments
     slam = LaunchConfiguration("slam")
@@ -115,6 +117,28 @@ def generate_launch_description():
         ]
     )
 
+    # RealSense Camera Driver
+    realsense_driver = IncludeLaunchDescription(
+        os.path.join(pkg_realsense, "launch", "rs_launch.py"),
+        launch_arguments={
+            'enable_color': 'true',
+            'enable_depth': 'false',  
+            'camera_name': 'camera',
+            'publish_tf': 'false'     # Assume URDF handles depth_camera_link
+        }.items()
+    )
+
+    # AprilTag Pipeline
+    vision_pipeline = IncludeLaunchDescription(
+        os.path.join(pkg_vision, "launch", "vision.launch.py"),
+        launch_arguments={
+            'use_sim_time': 'false',
+            'image_topic': '/camera/color/image_raw',
+            'camera_info_topic': '/camera/color/camera_info',
+            'tag_size': '0.2'
+        }.items()
+    )
+
     # Controller (for sending commands to the robot)
     controller = IncludeLaunchDescription(
         os.path.join(
@@ -188,6 +212,8 @@ def generate_launch_description():
         laser_driver_1,
         laser_driver_2,
         laser_merger,
+        realsense_driver,
+        vision_pipeline,
         # Control
         controller,
         keyboard_teleop,
