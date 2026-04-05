@@ -1,5 +1,5 @@
 """
-AprilTag Localizer Node
+AprilTag Localizer Node.
 
 Converts AprilTag detections into robot global pose estimates.
 
@@ -39,14 +39,17 @@ class AprilTagLocalizer(Node):
         self.base_frame = self.get_parameter('base_frame').get_parameter_value().string_value
         self.camera_frame = self.get_parameter('camera_frame').get_parameter_value().string_value
         self.map_frame = self.get_parameter('map_frame').get_parameter_value().string_value
-        self.rate_limit = self.get_parameter('publish_rate_limit').get_parameter_value().double_value
+        self.rate_limit = (
+            self.get_parameter('publish_rate_limit').get_parameter_value().double_value
+        )
 
         # Load known tag poses
         self.known_tags = {}
         if tag_poses_file:
             self._load_tag_poses(tag_poses_file)
         else:
-            self.get_logger().warn('No tag_poses_file specified. Localizer will not compute global poses.')
+            self.get_logger().warn(
+                'No tag_poses_file specified. Localizer will not compute global poses.')
 
         # TF
         self.tf_buffer = tf2_ros.Buffer()
@@ -151,12 +154,14 @@ class AprilTagLocalizer(Node):
 
     def _compute_robot_pose(self, tag_id, cam_to_tag, base_to_cam):
         """
-        Compute robot pose in map frame using:
+        Compute robot pose in map frame.
+
+        Using:
           robot_in_map = tag_in_map × inverse(tag_in_camera) × inverse(camera_in_base)
 
         Which simplifies to:
           robot_in_map = tag_in_map × inverse(cam_to_tag) × inverse(base_to_cam)
-        
+
         More intuitively:
           - We know where the tag is in the world (tag_in_map)
           - We know where the tag is relative to camera (cam_to_tag)
@@ -169,7 +174,9 @@ class AprilTagLocalizer(Node):
             base_to_cam_mat = self._transform_to_matrix(base_to_cam.transform)
 
             # robot_in_map = tag_in_map × inv(cam_to_tag) × inv(base_to_cam)
-            robot_in_map = tag_in_map @ np.linalg.inv(cam_to_tag_mat) @ np.linalg.inv(base_to_cam_mat)
+            robot_in_map = (
+                tag_in_map @ np.linalg.inv(cam_to_tag_mat) @ np.linalg.inv(base_to_cam_mat)
+            )
 
             # Extract position and orientation
             position = robot_in_map[:3, 3]
@@ -221,7 +228,7 @@ class AprilTagLocalizer(Node):
         R = np.array([
             [cy*cp, cy*sp*sr - sy*cr, cy*sp*cr + sy*sr],
             [sy*cp, sy*sp*sr + cy*cr, sy*sp*cr - cy*sr],
-            [-sp,   cp*sr,            cp*cr            ],
+            [-sp,   cp*sr,            cp*cr],
         ])
 
         T = np.eye(4)

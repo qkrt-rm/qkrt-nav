@@ -27,7 +27,9 @@ class AprilTagDetector(Node):
         self.declare_parameter('tag_poses_file', '')
 
         image_topic = self.get_parameter('image_topic').get_parameter_value().string_value
-        camera_info_topic = self.get_parameter('camera_info_topic').get_parameter_value().string_value
+        camera_info_topic = (
+            self.get_parameter('camera_info_topic').get_parameter_value().string_value
+        )
         self.tag_size = self.get_parameter('tag_size').get_parameter_value().double_value
 
         self.get_logger().info(f'Subscribing to: {image_topic}')
@@ -49,7 +51,8 @@ class AprilTagDetector(Node):
 
         # Publishers
         self.debug_publisher = self.create_publisher(Image, '/sentry_vision/debug_image', 10)
-        self.detections_publisher = self.create_publisher(PoseArray, '/sentry_vision/tag_detections', 10)
+        self.detections_publisher = self.create_publisher(
+            PoseArray, '/sentry_vision/tag_detections', 10)
 
         # TF broadcaster for tag poses
         self.tf_broadcaster = TransformBroadcaster(self)
