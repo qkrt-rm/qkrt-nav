@@ -1,3 +1,7 @@
+
+
+
+
 import os
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
@@ -133,8 +137,8 @@ def generate_launch_description():
         os.path.join(pkg_vision, "launch", "vision.launch.py"),
         launch_arguments={
             'use_sim_time': 'false',
-            'image_topic': '/camera/color/image_raw',
-            'camera_info_topic': '/camera/color/camera_info',
+            'image_topic': '/camera/camera/color/image_raw',
+            'camera_info_topic': '/camera/camera/color/camera_info',
             'tag_size': '0.2'
         }.items()
     )
