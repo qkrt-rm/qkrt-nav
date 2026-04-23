@@ -236,8 +236,8 @@ class OdomPublisher(Node):
         vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
-        # Use IMU yaw directly for orientation (more accurate than integrated omega)
-        self.odom_theta = imu_yaw
+        # Integrate yaw from wheel odometry (avoids IMU gyro bias drift)
+        self.odom_theta += omega * dt
 
         # Integrate position in world frame
         cos_theta = math.cos(self.odom_theta)

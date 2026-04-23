@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy, HistoryPolicy
 from sensor_msgs.msg import LaserScan
 from tf2_ros import Buffer, TransformListener
 import numpy as np
@@ -42,9 +42,14 @@ class LaserMerger(Node):
         self.sub_right = self.create_subscription(
             LaserScan, '/scan_right', self.scan_right_callback, qos_profile_sensor_data)
 
-        # Publisher
+        # Publisher - use RELIABLE so SLAM toolbox can subscribe
         scan_topic = self.get_parameter('scan_destination_topic').value
-        self.pub_scan = self.create_publisher(LaserScan, scan_topic, qos_profile_sensor_data)
+        reliable_qos = QoSProfile(
+            reliability=ReliabilityPolicy.RELIABLE,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=10
+        )
+        self.pub_scan = self.create_publisher(LaserScan, scan_topic, reliable_qos)
 
         # Timer to publish merged scan
         self.create_timer(0.05, self.publish_merged_scan)  # 20 Hz

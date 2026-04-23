@@ -66,9 +66,10 @@ local_costmap:
           raytrace_min_range: 0.0
           obstacle_max_range: 2.5
           obstacle_min_range: 0.0
+          observation_keep_time: 0.25
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
-        enabled: true
+        enabled: false  # Set true only when running in the arena with use_keepout:=true
         filter_info_topic: "/costmap_filter_info"
         override_lethal_cost: true
         lethal_override_cost: 200.0

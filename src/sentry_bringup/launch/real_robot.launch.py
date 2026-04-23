@@ -43,6 +43,20 @@ def generate_launch_description():
         description="Publish default joint states for non-fixed joints when hardware does not.",
     )
 
+    use_localization = LaunchConfiguration("use_localization")
+    use_localization_arg = DeclareLaunchArgument(
+        "use_localization",
+        default_value="true",
+        description="Launch global localization (SLAM or AMCL). Set false to skip map entirely."
+    )
+
+    use_keepout = LaunchConfiguration("use_keepout")
+    use_keepout_arg = DeclareLaunchArgument(
+        "use_keepout",
+        default_value="true",
+        description="Load arena keepout mask. Set false when not in the arena."
+    )
+
     use_nav = LaunchConfiguration("use_nav")
     use_nav_arg = DeclareLaunchArgument(
         "use_nav",
@@ -174,7 +188,8 @@ def generate_launch_description():
             'use_sim_time': 'false',
             'slam': slam,
             'map': map_yaml
-        }.items()
+        }.items(),
+        condition=IfCondition(use_localization)
     )
 
     # Local localization (EKF)
@@ -186,6 +201,7 @@ def generate_launch_description():
     # Navigation (if use_nav is true)
     navigation = IncludeLaunchDescription(
         os.path.join(pkg_navigation, "launch", "navigation.launch.py"),
+        launch_arguments={'use_keepout': use_keepout}.items(),
         condition=IfCondition(use_nav)
     )
 
@@ -207,6 +223,8 @@ def generate_launch_description():
         map_arg,
         robot_model_arg,
         use_joint_state_publisher_arg,
+        use_localization_arg,
+        use_keepout_arg,
         use_nav_arg,
         display_arg,
         # Robot description

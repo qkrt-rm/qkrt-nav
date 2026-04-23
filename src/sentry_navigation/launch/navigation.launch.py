@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 
@@ -12,14 +13,18 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration("use_sim_time")
     keepout_mask = LaunchConfiguration("keepout_mask")
-    lifecycle_nodes = [
+    use_keepout = LaunchConfiguration("use_keepout")
+    lifecycle_nodes_base = [
         "controller_server",
         "planner_server",
         "smoother_server",
         "bt_navigator",
+    ]
+    lifecycle_nodes_keepout = [
         "keepout_mask_server",
         "keepout_filter_info_server",
     ]
+    lifecycle_nodes = lifecycle_nodes_base + lifecycle_nodes_keepout
     # lifecycle_nodes = ["controller_server", "planner_server", "smoother_server", "bt_navigator", "behavior_server"
     sentry_navigation_pkg = get_package_share_directory("sentry_navigation")
     sentry_localization_pkg = get_package_share_directory("sentry_localization")
@@ -37,6 +42,12 @@ def generate_launch_description():
     keepout_mask_arg = DeclareLaunchArgument(
         "keepout_mask",
         default_value="keepout_mask_from_sdf.yaml"
+    )
+
+    use_keepout_arg = DeclareLaunchArgument(
+        "use_keepout",
+        default_value="true",
+        description="Load arena keepout mask. Set false when not in the arena."
     )
 
     nav2_controller_server = Node(
@@ -121,6 +132,7 @@ def generate_launch_description():
             {"frame_id": "map"},
             {"use_sim_time": use_sim_time},
         ],
+        condition=IfCondition(use_keepout),
     )
 
     keepout_filter_info_server = Node(
@@ -136,6 +148,7 @@ def generate_launch_description():
             {"multiplier": 1.0},
             {"use_sim_time": use_sim_time},
         ],
+        condition=IfCondition(use_keepout),
     )
 
     nav2_lifecycle_manager = Node(
@@ -149,11 +162,27 @@ def generate_launch_description():
             {"autostart": True},
             {"bond_timeout": 30.0}
         ],
+        condition=IfCondition(use_keepout),
+    )
+
+    nav2_lifecycle_manager_no_keepout = Node(
+        package="nav2_lifecycle_manager",
+        executable="lifecycle_manager",
+        name="lifecycle_manager_navigation",
+        output="screen",
+        parameters=[
+            {"node_names": lifecycle_nodes_base},
+            {"use_sim_time": use_sim_time},
+            {"autostart": True},
+            {"bond_timeout": 30.0}
+        ],
+        condition=UnlessCondition(use_keepout),
     )
 
     return LaunchDescription([
         use_sim_time_arg,
         keepout_mask_arg,
+        use_keepout_arg,
         nav2_controller_server,
         nav2_planner_server,
         nav2_smoother_server,
@@ -162,4 +191,5 @@ def generate_launch_description():
         # nav2_behaviors,
         nav2_bt_navigator,
         nav2_lifecycle_manager,
+        nav2_lifecycle_manager_no_keepout,
     ])
