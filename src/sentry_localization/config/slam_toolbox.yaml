@@ -38,3 +38,13 @@ slam_toolbox:
 
     # Interactive
     enable_interactive_mode: true
+
+    # Rolling window / bounded pose graph
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1                   
+    link_scan_maximum_distance: 5.0
+    minimum_laser_range: 0.1
+    maximum_laser_range: 10.0
+
+

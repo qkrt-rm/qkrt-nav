@@ -84,11 +84,20 @@ def generate_launch_description():
         ],
         condition=UnlessCondition(use_sim_time)
     )
+
+    turret_joint_state_publisher = Node(
+        package='sentry_localization',
+        executable='turret_joint_state_publisher.py',
+        name='turret_joint_state_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': False}]
+    )
     
     return LaunchDescription([
         use_sim_time_arg,
         sim_comm_hub_bridge,
         imu_compensator_real,
+        turret_joint_state_publisher,
         ekf_node,
         ekf_node_real,
     ])

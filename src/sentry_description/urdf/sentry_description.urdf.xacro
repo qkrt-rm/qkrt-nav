@@ -225,10 +225,9 @@
   <joint name="gimbal_joint" type="revolute">
       <parent link="base_link"/>
       <child link="gimbal_link"/>
-      <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 0"/>
-      <axis xyz="0 1 0"/>
-      <limit lower="-0.0001" upper="0.0001" effort="100.0" velocity="0.01"/>
-      <dynamics damping="500.0" friction="100.0"/>
+      <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 -1.5708"/>
+      <axis xyz="0 0 1"/>
+      <dynamics damping="0.1" friction="0.1"/>
   </joint>
 
 

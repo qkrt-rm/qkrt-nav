@@ -67,7 +67,7 @@ def generate_launch_description():
     display = LaunchConfiguration("display")
     display_arg = DeclareLaunchArgument(
         "display",
-        default_value="true",
+        default_value="false",
         description="Launch RViz for visualization"
     )
 
