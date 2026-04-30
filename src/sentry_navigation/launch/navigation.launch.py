@@ -168,7 +168,7 @@ def generate_launch_description():
     nav2_lifecycle_manager_no_keepout = Node(
         package="nav2_lifecycle_manager",
         executable="lifecycle_manager",
-        name="lifecycle_manager_navigation",
+        name="lifecycle_manager_navigation_base",
         output="screen",
         parameters=[
             {"node_names": lifecycle_nodes_base},

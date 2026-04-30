@@ -39,7 +39,7 @@ class Serial:
             baudrate=baudrate,
             parity=serial.PARITY_NONE,
             stopbits=serial.STOPBITS_ONE,
-            timeout=1,
+            timeout=0.1,
             xonxoff=False,
             rtscts=False,
             dsrdtr=False,

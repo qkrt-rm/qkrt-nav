@@ -72,7 +72,7 @@ class LaserMerger(Node):
                 timeout=rclpy.duration.Duration(seconds=0.1)
             )
         except Exception as e:
-            self.get_logger().warn(f'Could not transform from {scan.header.frame_id} to {target_frame}: {e}')
+            self.get_logger().warning(f'Could not transform from {scan.header.frame_id} to {target_frame}: {e}')
             return []
 
         # Extract translation and rotation
@@ -132,7 +132,7 @@ class LaserMerger(Node):
         # Fill in ranges (keep minimum range for each angle bin)
         for angle, r in all_points:
             if self.angle_min <= angle <= self.angle_max:
-                idx = int((angle - self.angle_min) / self.angle_increment)
+                idx = int((angle - self.angle_min) / self.angle_increment + 0.5)
                 if 0 <= idx < num_readings:
                     ranges[idx] = min(ranges[idx], r)
 

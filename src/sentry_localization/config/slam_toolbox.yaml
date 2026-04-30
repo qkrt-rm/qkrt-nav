@@ -17,7 +17,7 @@ slam_toolbox:
 
     # Map
     resolution: 0.05
-    map_update_interval: 2.0
+    map_update_interval: 0.5
 
     # Motion thresholds
     minimum_travel_distance: 0.2

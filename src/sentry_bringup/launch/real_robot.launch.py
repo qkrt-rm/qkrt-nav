@@ -159,7 +159,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Laser merger node 
+    # Laser merger node
     laser_merger = Node(
         package='sentry_bringup',
         executable='laser_merger.py',
