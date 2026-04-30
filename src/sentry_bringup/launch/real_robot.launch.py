@@ -229,7 +229,7 @@ def generate_launch_description():
         display_arg,
         # Robot description
         robot_state_publisher,
-        joint_state_publisher,
+        #joint_state_publisher,
         # Drivers
         comm_hub,
         laser_driver_1,

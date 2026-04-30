@@ -8,11 +8,10 @@ from sentry_communication.communication.Receive import parse_frame
 import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
-from geometry_msgs.msg import Twist, TransformStamped
+from geometry_msgs.msg import Twist
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
-from tf2_ros import TransformBroadcaster
 
 # MCB uses UART1 at 115200 baud
 serial = Serial("/dev/ttyTHS1", 115200)
@@ -99,9 +98,7 @@ class OdomPublisher(Node):
         self.wheel_publisher_ = self.create_publisher(Float32MultiArray, 'wheel_speeds', 10)
         self.turret_publisher_ = self.create_publisher(Float32MultiArray, 'turret', 10)
 
-        # Odometry publisher and TF broadcaster
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
-        self.tf_broadcaster_ = TransformBroadcaster(self)
 
         # Odometry state (integrated position)
         self.odom_x = 0.0
@@ -283,17 +280,6 @@ class OdomPublisher(Node):
         odom_msg.twist.covariance[35] = 0.01  # omega
 
         self.odom_publisher_.publish(odom_msg)
-
-        # Broadcast TF: odom → base_link
-        tf_msg = TransformStamped()
-        tf_msg.header.stamp = now
-        tf_msg.header.frame_id = 'odom'
-        tf_msg.child_frame_id = 'base_link'
-        tf_msg.transform.translation.x = self.odom_x
-        tf_msg.transform.translation.y = self.odom_y
-        tf_msg.transform.translation.z = 0.0
-        tf_msg.transform.rotation = odom_msg.pose.pose.orientation
-        self.tf_broadcaster_.sendTransform(tf_msg)
 
 
 def main():

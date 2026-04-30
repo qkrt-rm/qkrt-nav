@@ -30,7 +30,7 @@ class TurretJointStatePublisher(Node):
 
         # to fill in later
         js_msg.position = [
-            ((-1 * turret_data[0]) + 1.57079633), #90 degree offset to align with the physical turret orientation
+            (turret_data[0]), 
             0.0, 
             0.0,
             0.0, 
