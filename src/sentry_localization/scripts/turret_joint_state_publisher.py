@@ -48,7 +48,7 @@ class TurretJointStatePublisher(Node):
             0.0
         ]
         js_msg.velocity = [
-            (turret_data[1] * -1),
+            self.gyro_z,
             turret_data[3],
             0.0,
             0.0,
