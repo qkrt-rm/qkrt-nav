@@ -180,6 +180,7 @@ class OdomPublisher(Node):
                     imu_msg.angular_velocity.x = values[11]  # imuGx
                     imu_msg.angular_velocity.y = values[12]  # imuGy
                     imu_msg.angular_velocity.z = values[13]  # imuGz
+                    imu_msg.angular_velocity_covariance[8] = 0.01  # gyro z variance (rad/s)^2
                     # Orientation from euler angles (indices 14-16: yaw, pitch, roll)
                     yaw, pitch, roll = values[14], values[15], values[16]
                     # Convert euler to quaternion (ZYX convention)

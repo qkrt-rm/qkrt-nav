@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "/home/noah/autonav_ws/src/sentry_description"
+    "cmake.sourceDirectory": "/home/noah/autonav_ws/src/sentry_description",
+    "cmake.ignoreCMakeListsMissing": true
 }

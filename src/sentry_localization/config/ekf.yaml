@@ -18,6 +18,7 @@ ekf_filter_node:
     odom0_differential: false
     odom0_relative: false
     
+
     imu0: /imu_base_compensated
     imu0_config: [false, false, false,
                   false, false, false,
