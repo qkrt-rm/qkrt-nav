@@ -2,7 +2,7 @@
 import rclpy
 from rclpy.node import Node
 
-from sensor_msgs.msg import JointState
+from sensor_msgs.msg import JointState, Imu
 from std_msgs.msg import Float32MultiArray
 
 
@@ -16,6 +16,8 @@ class TurretJointStatePublisher(Node):
 
         self.js_publisher_ = self.create_publisher(JointState, '/joint_states', 10)
         self.turret_subsciber_ = self.create_subscription(Float32MultiArray, '/turret', self.turret_cb, 10)
+        self.imu_subscriber_ = self.create_subscription(Imu, '/imu', self.imu_cb, 10)
+        self.gyro_z = 0.0
         self._last_turret_data = None
         self._last_mcb_time = None
         self.create_timer(1.0 / PUBLISH_RATE, self._timer_cb)
@@ -34,7 +36,7 @@ class TurretJointStatePublisher(Node):
 
         js_msg.position = [
             (-turret_data[0]),
-            0.0,
+            -turret_data[2],
             0.0,
             0.0,
             0.0,
@@ -43,7 +45,7 @@ class TurretJointStatePublisher(Node):
 
         js_msg.velocity = [
             (turret_data[1] * -1),
-            0.0,
+            turret_data[3],
             0.0,
             0.0,
             0.0,
@@ -57,8 +59,11 @@ class TurretJointStatePublisher(Node):
             return
         dt = min((self.get_clock().now() - self._last_mcb_time).nanoseconds / 1e9, 0.5)
         extrapolated = list(self._last_turret_data)
-        extrapolated[0] = self._last_turret_data[0] + self._last_turret_data[1] * dt
+        extrapolated[0] = self._last_turret_data[0] + self.gyro_z * dt
         self.publish_turret_js(extrapolated)
+
+    def imu_cb(self, msg: Imu):
+        self.gyro_z = msg.angular_velocity.z
 
     def turret_cb(self, msg: Float32MultiArray):
         self._last_turret_data = msg.data
