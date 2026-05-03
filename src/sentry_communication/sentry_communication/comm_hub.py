@@ -228,12 +228,14 @@ class OdomPublisher(Node):
         # Order: wheelLF, wheelLB, wheelRB, wheelRF
         w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
 
-        # Mecanum forward kinematics (O-type, 45° rollers):
+        # Mecanum forward kinematics (O-type, 45° rollers).
+        # base_link +Y = turret direction (forward); base_link +X = lateral (left strafe).
+        # All-wheels-forward motion lands in base_link +Y, so that formula gives vy_bl.
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0
-        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
+        vx = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # base_link +X (lateral)
+        vy = (w_lf + w_rf + w_lb + w_rb) * r / 4.0   # base_link +Y (forward)
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
         # Integrate yaw from wheel odometry (avoids IMU gyro bias drift)
