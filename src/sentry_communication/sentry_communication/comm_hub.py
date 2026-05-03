@@ -267,7 +267,7 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
         # Velocity in robot frame
-        odom_msg.twist.twist.linear.x = vx
+        odom_msg.twist.twist.linear.x = -vx # base_link +X is lateral, so invert for forward
         odom_msg.twist.twist.linear.y = vy
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
