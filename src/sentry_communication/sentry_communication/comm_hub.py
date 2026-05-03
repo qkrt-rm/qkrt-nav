@@ -80,8 +80,11 @@ ODOM_LABELS = [
 ODOM_NUM_FLOATS = len(ODOM_LABELS)
 ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 
-# Robot geometry for mecanum wheel odometry (from URDF)
-WHEEL_RADIUS = 0.1  # meters
+# Robot geometry for mecanum wheel odometry
+# WHEEL_RADIUS is the contact radius from MCB holonomic_chassis_subsystem.hpp (WHEEL_DIAMETER_M = 0.076)
+WHEEL_RADIUS = 0.038  # meters
+# MCB getVelocity() returns motor shaft rad/s; divide by gear ratio to get wheel rad/s
+GEAR_RATIO = 19.0
 WHEEL_BASE_X = 0.2475  # half of base_width (distance from center to wheel along x)
 WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel along y)
 
@@ -100,11 +103,12 @@ class OdomPublisher(Node):
 
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
 
-        # Odometry state (integrated position)
+        # Odometry state — integrated in turret (base_link) frame
         self.odom_x = 0.0
         self.odom_y = 0.0
-        self.odom_theta = 0.0
+        self.odom_theta = 0.0  # turret world heading
         self.last_odom_time = None
+        self.prev_turret_angle = None
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
@@ -193,8 +197,8 @@ class OdomPublisher(Node):
                     imu_msg.orientation.z = cr * cp * sy - sr * sp * cy
                     self.imu_publisher_.publish(imu_msg)
 
-                    # Compute and publish wheel odometry
-                    self._publish_odometry(values[0:4], yaw)
+                    # Compute and publish wheel odometry (values[4] = turretYawPos)
+                    self._publish_odometry(values[0:4], yaw, values[4])
 
                     self.get_logger().debug(
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
@@ -202,48 +206,62 @@ class OdomPublisher(Node):
                 else:
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
-    def _publish_odometry(self, wheel_speeds, imu_yaw):
-        """Compute odometry from mecanum wheel speeds and publish."""
+    def _publish_odometry(self, wheel_speeds, imu_yaw, turret_angle):
+        """Compute odometry in turret (base_link) frame.
+
+        base_link is now the turret frame. The chassis rotates underneath it via
+        chassis_joint. Wheel velocities are in the chassis frame and must be
+        rotated into the turret frame before integration.
+
+        Turret world heading = chassis_world_heading + gimbal_joint
+                             = chassis_world_heading - turret_angle
+        so:  d(turret_heading) = omega*dt - d(turret_angle)
+        """
         current_time = time.time()
 
-        # Initialize time on first call
         if self.last_odom_time is None:
             self.last_odom_time = current_time
+            self.prev_turret_angle = turret_angle
             return
 
         dt = current_time - self.last_odom_time
         self.last_odom_time = current_time
 
-        # Skip if dt is too small or too large (missed messages)
         if dt <= 0.0 or dt > 1.0:
             return
 
-        # Extract wheel speeds (assumed to be angular velocities in rad/s)
-        # Order: wheelLF, wheelLB, wheelRB, wheelRF
-        w_lf, w_lb, w_rb, w_rf = wheel_speeds
-
-        # Mecanum inverse kinematics: wheel speeds → robot velocity
-        # For standard mecanum wheel configuration with 45° rollers:
-        # vx = (w_lf + w_rf + w_lb + w_rb) * R / 4
-        # vy = (-w_lf + w_rf + w_lb - w_rb) * R / 4
-        # omega = (-w_lf + w_rf - w_lb + w_rb) * R / (4 * (lx + ly))
+        # Negate and scale: MCB sends motor shaft rad/s with sign inverted relative to our convention.
+        # Negation empirically required; divide by gear ratio to get wheel angular velocity.
+        w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0
-        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
+        vx_c = (w_lf + w_rf + w_lb + w_rb) * r / 4.0
+        vy_c = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
-        # Integrate yaw from wheel odometry (avoids IMU gyro bias drift)
-        self.odom_theta += omega * dt
+        # Rotate chassis velocities into turret frame.
+        # gimbal_joint = -turret_angle, so the chassis is rotated by turret_angle
+        # relative to the turret. Applying R(turret_angle) converts chassis → turret.
+        T = turret_angle
+        cos_T, sin_T = math.cos(T), math.sin(T)
+        vx = cos_T * vx_c - sin_T * vy_c
+        vy = sin_T * vx_c + cos_T * vy_c
 
-        # Integrate position in world frame
+        # Turret heading update: wheel odometry gives chassis rotation (omega*dt),
+        # encoder gives turret-chassis angle change (delta_enc).
+        delta_enc = turret_angle - self.prev_turret_angle
+        # Normalize to [-pi, pi] to handle wrap-around at full rotation
+        delta_enc = (delta_enc + math.pi) % (2.0 * math.pi) - math.pi
+        self.odom_theta += omega * dt - delta_enc
+        self.prev_turret_angle = turret_angle
+
+        # Integrate turret position in world frame
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
         self.odom_x += (vx * cos_theta - vy * sin_theta) * dt
         self.odom_y += (vx * sin_theta + vy * cos_theta) * dt
 
-        # Create odometry message
         now = self.get_clock().now().to_msg()
 
         odom_msg = Odometry()
@@ -251,31 +269,26 @@ class OdomPublisher(Node):
         odom_msg.header.frame_id = 'odom'
         odom_msg.child_frame_id = 'base_link'
 
-        # Position
         odom_msg.pose.pose.position.x = self.odom_x
         odom_msg.pose.pose.position.y = self.odom_y
         odom_msg.pose.pose.position.z = 0.0
-
-        # Orientation (quaternion from yaw)
         odom_msg.pose.pose.orientation.x = 0.0
         odom_msg.pose.pose.orientation.y = 0.0
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
-        # Velocity in robot frame
+        # Velocity expressed in turret (base_link) frame
+        omega_turret = omega - delta_enc / dt
         odom_msg.twist.twist.linear.x = vx
         odom_msg.twist.twist.linear.y = vy
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
-        odom_msg.twist.twist.angular.z = omega
+        odom_msg.twist.twist.angular.z = omega_turret
 
-        # Covariance (diagonal, rough estimates)
-        # Pose covariance [x, y, z, roll, pitch, yaw]
-        odom_msg.pose.covariance[0] = 0.01  # x
-        odom_msg.pose.covariance[7] = 0.01  # y
+        odom_msg.pose.covariance[0] = 0.01   # x
+        odom_msg.pose.covariance[7] = 0.01   # y
         odom_msg.pose.covariance[35] = 0.01  # yaw
-        # Twist covariance
         odom_msg.twist.covariance[0] = 0.01  # vx
         odom_msg.twist.covariance[7] = 0.01  # vy
         odom_msg.twist.covariance[35] = 0.01  # omega
