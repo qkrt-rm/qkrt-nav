@@ -78,7 +78,7 @@ def generate_launch_description():
             {'base_frame': 'base_link'},
             {'yaw_joint_name': 'gimbal_joint'},
             {'pitch_joint_name': 'turret_shaft_joint'},
-            {'yaw_axis_base': [0.0, 0.0, 1.0]},
+            {'yaw_axis_base': [0.0, 0.0, -1.0]},
             {'pitch_axis_yaw_frame': [0.0, 1.0, 0.0]},
             {'use_sim_time': use_sim_time},
         ],

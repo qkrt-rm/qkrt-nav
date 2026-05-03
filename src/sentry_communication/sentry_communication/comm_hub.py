@@ -261,7 +261,7 @@ class OdomPublisher(Node):
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
-        odom_msg.twist.twist.angular.z = omega
+        odom_msg.twist.twist.angular.z = -omega #inverted bc of sign convention of the gimbal yaw encoder
 
         odom_msg.pose.covariance[0] = 0.01   # x
         odom_msg.pose.covariance[7] = 0.01   # y
