@@ -19,15 +19,15 @@ ekf_filter_node:
     odom0_relative: false
     
 
-    imu0: /imu_base_compensated
-    imu0_config: [false, false, false,
-                  false, false, false,
-                  false, false, false,
-                  false, false, true,
-                  false, false, false]
-    imu0_differential: false
-    imu0_relative: false
-    imu0_remove_gravitational_acceleration: false
+    # imu0: /imu_base_compensated
+    # imu0_config: [false, false, false,
+    #               false, false, false,
+    #               false, false, false,
+    #               false, false, true,
+    #               false, false, false]
+    # imu0_differential: false
+    # imu0_relative: false
+    # imu0_remove_gravitational_acceleration: false
     
     process_noise_covariance: [0.05,  0.0,   0.0,   0.0,   0.0,   0.0,   0.0,    0.0,    0.0,   0.0,   0.0,   0.0,   0.0,   0.0,   0.0,
                                0.0,   0.05,  0.0,   0.0,   0.0,   0.0,   0.0,    0.0,    0.0,   0.0,   0.0,   0.0,   0.0,   0.0,   0.0,

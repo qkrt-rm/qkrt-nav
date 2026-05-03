@@ -7,7 +7,6 @@ from std_msgs.msg import Float32MultiArray
 import math
 
 
-PUBLISH_RATE = 50.0  # Hz
 class TurretJointStatePublisher(Node):
 
     def __init__(self):
@@ -21,8 +20,6 @@ class TurretJointStatePublisher(Node):
         self.base_heading = None
         self._last_turret_data = None
         self._last_mcb_time = None
-
-        self.create_timer(1.0 / PUBLISH_RATE, self._timer_cb)
 
     def publish_turret_js(self, turret_data):
 
@@ -57,15 +54,6 @@ class TurretJointStatePublisher(Node):
         ]
         self.js_publisher_.publish(js_msg)
 
-    def _timer_cb(self):
-        if self._last_turret_data is None or self._last_mcb_time is None:
-            return
-        dt = (self.get_clock().now() - self._last_mcb_time).nanoseconds / 1e9
-        dt = min(dt, 0.5)
-        extrapolated = list(self._last_turret_data)
-        extrapolated[0] = self._last_turret_data[0] + self.gyro_z * dt
-        self.publish_turret_js(extrapolated)
-
     def imu_cb(self, msg: Imu):
         self.gyro_z = msg.angular_velocity.z
 
@@ -87,7 +75,7 @@ class TurretJointStatePublisher(Node):
         # positive for ccw, negative for cw
         turret_data = list(msg.data)
         self.publish_turret_js(turret_data)
-        self.get_logger().info(f"Current: {turret_heading:.3f}, "f"Base: {self.base_heading:.3f}, "f"Joint: {joint_angle:.3f}")
+        #self.get_logger().info(f"Current: {turret_heading:.3f}, "f"Base: {self.base_heading:.3f}, "f"Joint: {joint_angle:.3f}")
 
 
 def main(args=None):
