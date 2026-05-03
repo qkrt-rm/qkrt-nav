@@ -4,7 +4,6 @@ from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy, HistoryPolicy
 from sensor_msgs.msg import LaserScan
 from tf2_ros import Buffer, TransformListener
-import numpy as np
 import math
 
 
@@ -62,48 +61,105 @@ class LaserMerger(Node):
     def scan_right_callback(self, msg):
         self.scan_right = msg
 
-    def transform_scan_to_frame(self, scan, target_frame):
-        """Transform a laser scan to the target frame and return points as (angle, range) in target frame."""
-        try:
-            transform = self.tf_buffer.lookup_transform(
-                target_frame,
-                scan.header.frame_id,
-                rclpy.time.Time(),
-                timeout=rclpy.duration.Duration(seconds=0.1)
-            )
-        except Exception as e:
-            self.get_logger().warning(f'Could not transform from {scan.header.frame_id} to {target_frame}: {e}')
-            return []
-
-        # Extract translation and rotation
-        tx = transform.transform.translation.x
-        ty = transform.transform.translation.y
-        q = transform.transform.rotation
-        # Convert quaternion to yaw (assuming 2D)
+    def _extract_2d_transform(self, tf_stamped):
+        """Extract (tx, ty, yaw) from a TransformStamped."""
+        tx = tf_stamped.transform.translation.x
+        ty = tf_stamped.transform.translation.y
+        q = tf_stamped.transform.rotation
         siny_cosp = 2.0 * (q.w * q.z + q.x * q.y)
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
-        yaw = math.atan2(siny_cosp, cosy_cosp)
+        return tx, ty, math.atan2(siny_cosp, cosy_cosp)
+
+    def transform_scan_to_frame(self, scan, target_frame):
+        """Transform a laser scan to the target frame with per-ray motion compensation."""
+        # The ldlidar_ros2 driver stamps each scan at publication time (after all rays
+        # are collected), so header.stamp is the END of the scan. The first ray was
+        # captured at stamp - (n-1)*time_increment.
+        n = len(scan.ranges)
+        scan_duration = (n - 1) * scan.time_increment if scan.time_increment > 0.0 and n > 1 else 0.0
+        t_end = rclpy.time.Time.from_msg(scan.header.stamp)
+        t_start = t_end - rclpy.duration.Duration(seconds=scan_duration)
+
+        using_exact_time = True
+        try:
+            tf_start = self.tf_buffer.lookup_transform(
+                target_frame,
+                scan.header.frame_id,
+                t_start,
+                timeout=rclpy.duration.Duration(seconds=0)
+            )
+        except Exception:
+            # TF at scan time unavailable — fall back to latest available transform.
+            using_exact_time = False
+            try:
+                tf_start = self.tf_buffer.lookup_transform(
+                    target_frame,
+                    scan.header.frame_id,
+                    rclpy.time.Time(),
+                    timeout=rclpy.duration.Duration(seconds=0)
+                )
+            except Exception as e:
+                self.get_logger().warning(
+                    f'Could not transform from {scan.header.frame_id} to {target_frame}: {e}',
+                    throttle_duration_sec=2.0)
+                return []
+
+        tx_s, ty_s, yaw_s = self._extract_2d_transform(tf_start)
+
+        # Motion compensation: interpolate TF across scan duration using time_increment.
+        # The LD19 takes ~167ms per scan; with a rotating turret this causes significant
+        # smearing if all rays are transformed with the same turret angle.
+        tx_e, ty_e, yaw_e = tx_s, ty_s, yaw_s
+        do_interp = False
+        if using_exact_time and scan_duration > 0.0:
+            try:
+                tf_end = self.tf_buffer.lookup_transform(
+                    target_frame,
+                    scan.header.frame_id,
+                    t_end,
+                    timeout=rclpy.duration.Duration(seconds=0)
+                )
+                tx_e, ty_e, yaw_e = self._extract_2d_transform(tf_end)
+                # Normalize yaw delta to [-pi, pi] to handle wrap-around
+                dyaw = yaw_e - yaw_s
+                if dyaw > math.pi:
+                    dyaw -= 2.0 * math.pi
+                elif dyaw < -math.pi:
+                    dyaw += 2.0 * math.pi
+                yaw_e = yaw_s + dyaw
+                do_interp = True
+            except Exception:
+                pass  # fall back to single transform at scan start
 
         points = []
-        angle = scan.angle_min
-        for r in scan.ranges:
-            if self.range_min <= r <= self.range_max:
-                # Point in scan frame
-                x_scan = r * math.cos(angle)
-                y_scan = r * math.sin(angle)
+        inv_n1 = 1.0 / (n - 1) if n > 1 else 0.0
+        for i, r in enumerate(scan.ranges):
+            if not (self.range_min <= r <= self.range_max):
+                continue
 
-                # Transform to target frame
-                x_target = math.cos(yaw) * x_scan - math.sin(yaw) * y_scan + tx
-                y_target = math.sin(yaw) * x_scan + math.cos(yaw) * y_scan + ty
+            angle = scan.angle_min + i * scan.angle_increment
 
-                # Convert back to polar
-                r_target = math.sqrt(x_target**2 + y_target**2)
-                angle_target = math.atan2(y_target, x_target)
+            if do_interp:
+                # LD19 scans CCW; with laser_scan_dir=True the driver mirrors the
+                # array, so index 0 = physical 359° (captured last, at t_end) and
+                # index n-1 = physical 0° (captured first, at t_start).
+                alpha = 1.0 - i * inv_n1
+                tx = tx_s + alpha * (tx_e - tx_s)
+                ty = ty_s + alpha * (ty_e - ty_s)
+                yaw = yaw_s + alpha * (yaw_e - yaw_s)
+            else:
+                tx, ty, yaw = tx_s, ty_s, yaw_s
 
-                if self.range_min <= r_target <= self.range_max:
-                    points.append((angle_target, r_target))
+            cos_yaw = math.cos(yaw)
+            sin_yaw = math.sin(yaw)
+            x_scan = r * math.cos(angle)
+            y_scan = r * math.sin(angle)
+            x_target = cos_yaw * x_scan - sin_yaw * y_scan + tx
+            y_target = sin_yaw * x_scan + cos_yaw * y_scan + ty
 
-            angle += scan.angle_increment
+            r_target = math.sqrt(x_target ** 2 + y_target ** 2)
+            if self.range_min <= r_target <= self.range_max:
+                points.append((math.atan2(y_target, x_target), r_target))
 
         return points
 

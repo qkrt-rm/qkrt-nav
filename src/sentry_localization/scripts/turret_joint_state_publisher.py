@@ -24,6 +24,14 @@ class TurretJointStatePublisher(Node):
         self._last_turret_data = None
         self._last_mcb_time = None
 
+        # Heartbeat: republish last known joint states so TF never goes stale
+        # even if the MCB serial hiccups briefly.
+        self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
+
+    def _heartbeat_cb(self):
+        if self._last_turret_data is not None:
+            self.publish_turret_js(self._last_turret_data)
+
     def publish_turret_js(self, turret_data):
 
         js_msg = JointState()
@@ -40,7 +48,7 @@ class TurretJointStatePublisher(Node):
 
 
         js_msg.position = [
-            -turret_data[0],
+            self.integrated_turret_position,
             -turret_data[2],
             0.0,
             0.0,
@@ -48,7 +56,7 @@ class TurretJointStatePublisher(Node):
             0.0
         ]
         js_msg.velocity = [
-            self.gyro_z,
+            -turret_data[1],
             turret_data[3],
             0.0,
             0.0,
@@ -63,6 +71,12 @@ class TurretJointStatePublisher(Node):
         if self.prev_imu_time is not None:
             dt = current_time - self.prev_imu_time
             self.integrated_turret_position += self.gyro_z * dt
+
+            if self.integrated_turret_position < 0:
+                self.integrated_turret_position += 2 * math.pi
+            elif self.integrated_turret_position >= 2 * math.pi:
+                self.integrated_turret_position -= 2 * math.pi
+
         self.prev_imu_time = current_time
         self.get_logger().info(f"itp: {self.integrated_turret_position}", throttle_duration_sec=1.0)
 
