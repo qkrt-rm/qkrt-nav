@@ -1,0 +1,50 @@
+[0.072s] Invoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_navigation -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_navigation
+[1.294s] -- The C compiler identification is GNU 11.4.0
+[1.294s] -- The CXX compiler identification is GNU 11.4.0
+[1.294s] -- Detecting C compiler ABI info
+[1.449s] -- Detecting C compiler ABI info - done
+[1.501s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.501s] -- Detecting C compile features
+[1.504s] -- Detecting C compile features - done
+[1.536s] -- Detecting CXX compiler ABI info
+[1.862s] -- Detecting CXX compiler ABI info - done
+[1.881s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.894s] -- Detecting CXX compile features
+[1.895s] -- Detecting CXX compile features - done
+[1.899s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.406s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[2.826s] -- Configuring done
+[2.831s] -- Generating done
+[2.835s] -- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_navigation
+[2.850s] Invoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_navigation -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_navigation
+[2.850s] Invoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_navigation -- -j6 -l6
+[2.969s] Invoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_navigation -- -j6 -l6
+[2.978s] Invoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_navigation
+[3.001s] -- Install configuration: ""
+[3.001s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config
+[3.002s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/smoother_server.yaml
+[3.002s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/controller_server.yaml
+[3.002s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/planner_server.yaml
+[3.002s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/behavior_server.yaml
+[3.003s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/bt_navigator.yaml
+[3.003s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/launch
+[3.003s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/launch/navigation.launch.py
+[3.003s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree
+[3.003s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree/replanning_navigation.xml
+[3.007s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree/simple_navigation.xml
+[3.024s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/package_run_dependencies/sentry_navigation
+[3.024s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/parent_prefix_path/sentry_navigation
+[3.024s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/ament_prefix_path.sh
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/ament_prefix_path.dsv
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/path.sh
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/path.dsv
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.bash
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.sh
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.zsh
+[3.025s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.dsv
+[3.026s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.dsv
+[3.026s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/packages/sentry_navigation
+[3.028s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/cmake/sentry_navigationConfig.cmake
+[3.033s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/cmake/sentry_navigationConfig-version.cmake
+[3.033s] -- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.xml
+[3.068s] Invoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_navigation

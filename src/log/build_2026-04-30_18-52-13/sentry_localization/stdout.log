@@ -1,0 +1,59 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_localization
+-- Install configuration: ""
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/sim_comm_hub_bridge.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/imu_turret_compensator.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/generate_keepout_from_sdf.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/turret_joint_state_publisher.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/slam_toolbox.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/ekf.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/amcl.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map_2.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map_2.pgm
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/ramp_cost_mask.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/ramp_cost_mask.pgm
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/OccupancyGrid2.png
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/OccupancyGrid.png
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/keepout_mask_from_sdf.pgm
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/keepout_mask.png
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/keepout_mask_from_sdf.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map.pgm
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/keepout_mask.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sentry_map.yaml
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch/global_localization.launch.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch/local_localization.launch.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/package_run_dependencies/sentry_localization
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/parent_prefix_path/sentry_localization
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/ament_prefix_path.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/ament_prefix_path.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/path.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/path.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.bash
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.zsh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/packages/sentry_localization
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/cmake/sentry_localizationConfig.cmake
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/cmake/sentry_localizationConfig-version.cmake
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.xml

@@ -1,0 +1,551 @@
+[0.267s] [34mcolcon[0m [1;30mDEBUG[0m [32mCommand line arguments: ['/usr/bin/colcon', 'build'][0m
+[0.268s] [34mcolcon[0m [1;30mDEBUG[0m [32mParsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=6, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffff8f92d810>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff8f92d2a0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff8f92d2a0>>)[0m
+[0.648s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(colcon_meta) check parameters
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(recursive) check parameters
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(ignore) check parameters
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(path) check parameters
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(colcon_meta) discover
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(recursive) discover
+[0.649s] [34mcolcon.colcon_core.package_discovery[0m [1;30mINFO[0m Crawling recursively for packages in '/home/qkrt/qkrt-nav/src'
+[0.650s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.650s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'ignore'
+[0.650s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'ignore_ament_install'
+[0.650s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['colcon_pkg']
+[0.651s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'colcon_pkg'
+[0.651s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['colcon_meta']
+[0.651s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'colcon_meta'
+[0.651s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['ros']
+[0.651s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'ros'
+[0.681s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['cmake', 'python']
+[0.681s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'cmake'
+[0.681s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'python'
+[0.682s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extensions ['python_setup_py']
+[0.682s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(.) by extension 'python_setup_py'
+[0.682s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.682s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(build) by extension 'ignore'
+[0.682s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(build) ignored
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(install) by extension 'ignore'
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(install) ignored
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extension 'ignore'
+[0.683s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extension 'ignore_ament_install'
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extensions ['colcon_pkg']
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extension 'colcon_pkg'
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extensions ['colcon_meta']
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extension 'colcon_meta'
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extensions ['ros']
+[0.684s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(ldlidar_ros2) by extension 'ros'
+[0.690s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'ldlidar_ros2' with type 'ros.ament_cmake' and name 'ldlidar_ros2'[0m
+[0.690s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(log) by extension 'ignore'
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(log) ignored
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extensions ['ignore', 'ignore_ament_install']
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extension 'ignore'
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extension 'ignore_ament_install'
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extensions ['colcon_pkg']
+[0.691s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extension 'colcon_pkg'
+[0.692s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extensions ['colcon_meta']
+[0.692s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extension 'colcon_meta'
+[0.692s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extensions ['ros']
+[0.692s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(omni_pursuit_controller) by extension 'ros'
+[0.695s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'omni_pursuit_controller' with type 'ros.ament_cmake' and name 'nav2_pure_pursuit_controller'[0m
+[0.695s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extension 'ignore'
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extension 'ignore_ament_install'
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extensions ['colcon_pkg']
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extension 'colcon_pkg'
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extensions ['colcon_meta']
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extension 'colcon_meta'
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extensions ['ros']
+[0.696s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_bringup) by extension 'ros'
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'sentry_bringup' with type 'ros.ament_cmake' and name 'sentry_bringup'[0m
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extensions ['ignore', 'ignore_ament_install']
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extension 'ignore'
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extension 'ignore_ament_install'
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extensions ['colcon_pkg']
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extension 'colcon_pkg'
+[0.698s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extensions ['colcon_meta']
+[0.699s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extension 'colcon_meta'
+[0.699s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extensions ['ros']
+[0.699s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_communication) by extension 'ros'
+[0.700s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'sentry_communication' with type 'ros.ament_python' and name 'sentry_communication'[0m
+[0.700s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extensions ['ignore', 'ignore_ament_install']
+[0.700s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extension 'ignore'
+[0.700s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extension 'ignore_ament_install'
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extensions ['colcon_pkg']
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extension 'colcon_pkg'
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extensions ['colcon_meta']
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extension 'colcon_meta'
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extensions ['ros']
+[0.701s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_description) by extension 'ros'
+[0.702s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'sentry_description' with type 'ros.ament_cmake' and name 'sentry_description'[0m
+[0.702s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extensions ['ignore', 'ignore_ament_install']
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extension 'ignore'
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extension 'ignore_ament_install'
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extensions ['colcon_pkg']
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extension 'colcon_pkg'
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extensions ['colcon_meta']
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extension 'colcon_meta'
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extensions ['ros']
+[0.703s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_localization) by extension 'ros'
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'sentry_localization' with type 'ros.ament_cmake' and name 'sentry_localization'[0m
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extensions ['ignore', 'ignore_ament_install']
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extension 'ignore'
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extension 'ignore_ament_install'
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extensions ['colcon_pkg']
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extension 'colcon_pkg'
+[0.705s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extensions ['colcon_meta']
+[0.706s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extension 'colcon_meta'
+[0.706s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extensions ['ros']
+[0.706s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_navigation) by extension 'ros'
+[0.707s] [34mcolcon.colcon_core.package_identification[0m [1;30mDEBUG[0m [32mPackage 'sentry_navigation' with type 'ros.ament_cmake' and name 'sentry_navigation'[0m
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['ignore', 'ignore_ament_install']
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'ignore'
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'ignore_ament_install'
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['colcon_pkg']
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'colcon_pkg'
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['colcon_meta']
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'colcon_meta'
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['ros']
+[0.708s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'ros'
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['cmake', 'python']
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'cmake'
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'python'
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extensions ['python_setup_py']
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision) by extension 'python_setup_py'
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['ignore', 'ignore_ament_install']
+[0.709s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'ignore'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'ignore_ament_install'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['colcon_pkg']
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'colcon_pkg'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['colcon_meta']
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'colcon_meta'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['ros']
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'ros'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['cmake', 'python']
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'cmake'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'python'
+[0.710s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extensions ['python_setup_py']
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision) by extension 'python_setup_py'
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'ignore'
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'ignore_ament_install'
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['colcon_pkg']
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'colcon_pkg'
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['colcon_meta']
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'colcon_meta'
+[0.711s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['ros']
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'ros'
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['cmake', 'python']
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'cmake'
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'python'
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extensions ['python_setup_py']
+[0.712s] [34mcolcon.colcon_core.package_identification[0m [1;30mLevel 1[0m _identify(sentry_vision/sentry_vision/__pycache__) by extension 'python_setup_py'
+[0.712s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(recursive) using defaults
+[0.712s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(ignore) discover
+[0.712s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(ignore) using defaults
+[0.712s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(path) discover
+[0.712s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(path) using defaults
+[0.785s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(prefix_path) check parameters
+[0.785s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(prefix_path) discover
+[0.792s] [34mcolcon.colcon_installed_package_information.package_discovery[0m [1;30mDEBUG[0m [32mFound 325 installed packages in /opt/ros/humble[0m
+[0.796s] [34mcolcon.colcon_core.package_discovery[0m [1;30mLevel 1[0m discover_packages(prefix_path) using defaults
+[0.886s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_args' from command line to 'None'
+[0.886s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_target' from command line to 'None'
+[0.886s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.886s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_clean_cache' from command line to 'False'
+[0.886s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_clean_first' from command line to 'False'
+[0.887s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'cmake_force_configure' from command line to 'False'
+[0.887s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'ament_cmake_args' from command line to 'None'
+[0.887s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'catkin_cmake_args' from command line to 'None'
+[0.887s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'ldlidar_ros2' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.887s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'ldlidar_ros2' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/ldlidar_ros2', 'symlink_install': False, 'test_result_base': None}[0m
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_args' from command line to 'None'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_target' from command line to 'None'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_clean_cache' from command line to 'False'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_clean_first' from command line to 'False'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'cmake_force_configure' from command line to 'False'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'ament_cmake_args' from command line to 'None'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'catkin_cmake_args' from command line to 'None'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'nav2_pure_pursuit_controller' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.888s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'nav2_pure_pursuit_controller' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/omni_pursuit_controller', 'symlink_install': False, 'test_result_base': None}[0m
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_args' from command line to 'None'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_target' from command line to 'None'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_clean_cache' from command line to 'False'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_clean_first' from command line to 'False'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'cmake_force_configure' from command line to 'False'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'ament_cmake_args' from command line to 'None'
+[0.889s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'catkin_cmake_args' from command line to 'None'
+[0.890s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_communication' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.890s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'sentry_communication' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/sentry_communication', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/sentry_communication', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/sentry_communication', 'symlink_install': False, 'test_result_base': None}[0m
+[0.890s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_args' from command line to 'None'
+[0.890s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_target' from command line to 'None'
+[0.890s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_clean_cache' from command line to 'False'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_clean_first' from command line to 'False'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'cmake_force_configure' from command line to 'False'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'ament_cmake_args' from command line to 'None'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'catkin_cmake_args' from command line to 'None'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.891s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'sentry_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/sentry_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/sentry_description', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/sentry_description', 'symlink_install': False, 'test_result_base': None}[0m
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_args' from command line to 'None'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_target' from command line to 'None'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_clean_cache' from command line to 'False'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_clean_first' from command line to 'False'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'cmake_force_configure' from command line to 'False'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'ament_cmake_args' from command line to 'None'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'catkin_cmake_args' from command line to 'None'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_localization' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.892s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'sentry_localization' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/sentry_localization', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/sentry_localization', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/sentry_localization', 'symlink_install': False, 'test_result_base': None}[0m
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_args' from command line to 'None'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_target' from command line to 'None'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_clean_cache' from command line to 'False'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_clean_first' from command line to 'False'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'cmake_force_configure' from command line to 'False'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'ament_cmake_args' from command line to 'None'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'catkin_cmake_args' from command line to 'None'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_navigation' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.893s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'sentry_navigation' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/sentry_navigation', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/sentry_navigation', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/sentry_navigation', 'symlink_install': False, 'test_result_base': None}[0m
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_args' from command line to 'None'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_target' from command line to 'None'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.894s] [34mcolcon.colcon_core.verb[0m [1;30mLevel 5[0m set package 'sentry_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.895s] [34mcolcon.colcon_core.verb[0m [1;30mDEBUG[0m [32mBuilding package 'sentry_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/qkrt/qkrt-nav/src/build/sentry_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/qkrt/qkrt-nav/src/install/sentry_bringup', 'merge_install': False, 'path': '/home/qkrt/qkrt-nav/src/sentry_bringup', 'symlink_install': False, 'test_result_base': None}[0m
+[0.895s] [34mcolcon.colcon_core.executor[0m [1;30mINFO[0m Executing jobs using 'parallel' executor
+[0.897s] [34mcolcon.colcon_parallel_executor.executor.parallel[0m [1;30mDEBUG[0m [32mrun_until_complete[0m
+[0.898s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/sentry_description' with build type 'ament_cmake'
+[0.898s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/sentry_description'
+[0.904s] [34mcolcon.colcon_core.plugin_system[0m [1;30mINFO[0m Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.904s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.905s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.911s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/sentry_localization' with build type 'ament_cmake'
+[0.913s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/sentry_localization'
+[0.914s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.915s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.922s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/sentry_navigation' with build type 'ament_cmake'
+[0.923s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/sentry_navigation'
+[0.923s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.924s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.935s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/ldlidar_ros2' with build type 'ament_cmake'
+[0.936s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/ldlidar_ros2'
+[0.937s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.937s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.943s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/omni_pursuit_controller' with build type 'ament_cmake'
+[0.944s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/omni_pursuit_controller'
+[0.944s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.945s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.951s] [34mcolcon.colcon_ros.task.ament_python.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/sentry_communication' with build type 'ament_python'
+[0.952s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_communication', 'ament_prefix_path')
+[0.952s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/ament_prefix_path.ps1'
+[0.955s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/ament_prefix_path.dsv'
+[0.956s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/ament_prefix_path.sh'
+[0.958s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.958s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[0.973s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_description -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_description[0m
+[0.983s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_localization -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_localization[0m
+[0.996s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_navigation -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_navigation[0m
+[1.004s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/ldlidar_ros2 -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/ldlidar_ros2[0m
+[1.009s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/omni_pursuit_controller -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller[0m
+[2.193s] [34mcolcon.colcon_core.task.python.build[0m [1;30mINFO[0m Building Python package in '/home/qkrt/qkrt-nav/src/sentry_communication'
+[2.194s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.194s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[3.307s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/sentry_communication': PYTHONPATH=/home/qkrt/qkrt-nav/src/build/sentry_communication/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/sentry_communication build --build-base /home/qkrt/qkrt-nav/src/build/sentry_communication/build install --record /home/qkrt/qkrt-nav/src/build/sentry_communication/install.log --single-version-externally-managed install_data[0m
+[3.663s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_description -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_description[0m
+[3.667s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_description -- -j6 -l6[0m
+[3.737s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_localization' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_localization -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_localization[0m
+[3.738s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_localization -- -j6 -l6[0m
+[3.748s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_description -- -j6 -l6[0m
+[3.769s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_description[0m
+[3.773s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_navigation -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_navigation[0m
+[3.774s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_navigation -- -j6 -l6[0m
+[3.873s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_localization' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_localization -- -j6 -l6[0m
+[3.874s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_localization': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_localization[0m
+[3.892s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_navigation -- -j6 -l6[0m
+[3.902s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_navigation[0m
+[3.916s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_localization)
+[3.921s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization' for CMake module files
+[3.923s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization' for CMake config files
+[3.923s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_localization', 'cmake_prefix_path')
+[3.923s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.ps1'
+[3.928s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.dsv'
+[3.929s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.sh'
+[3.931s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib'
+[3.931s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/bin'
+[3.932s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib/pkgconfig/sentry_localization.pc'
+[3.932s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib/python3.10/site-packages'
+[3.932s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_localization' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_localization[0m
+[3.934s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/bin'
+[3.935s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.ps1'
+[3.941s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.dsv'
+[3.943s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.sh'
+[3.946s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.bash'
+[3.949s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.zsh'
+[3.952s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_localization/share/colcon-core/packages/sentry_localization)
+[3.955s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_localization)
+[3.956s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization' for CMake module files
+[3.958s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization' for CMake config files
+[3.959s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_localization', 'cmake_prefix_path')
+[3.959s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.ps1'
+[3.961s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.dsv'
+[3.962s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/hook/cmake_prefix_path.sh'
+[3.963s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib'
+[3.963s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/bin'
+[3.963s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib/pkgconfig/sentry_localization.pc'
+[3.964s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/lib/python3.10/site-packages'
+[3.965s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_localization/bin'
+[3.966s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.ps1'
+[3.967s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.dsv'
+[3.969s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.sh'
+[3.970s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.bash'
+[3.971s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.zsh'
+[3.972s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_localization/share/colcon-core/packages/sentry_localization)
+[3.982s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_navigation)
+[3.985s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation' for CMake module files
+[3.987s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation' for CMake config files
+[3.987s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_navigation', 'cmake_prefix_path')
+[3.988s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.ps1'
+[3.991s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_navigation' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_navigation[0m
+[3.992s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.dsv'
+[3.993s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.sh'
+[3.995s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/bin'
+[3.995s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/lib/pkgconfig/sentry_navigation.pc'
+[3.996s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/lib/python3.10/site-packages'
+[3.997s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/bin'
+[3.998s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.ps1'
+[4.000s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.dsv'
+[4.001s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.sh'
+[4.003s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.bash'
+[4.003s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.zsh'
+[4.004s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/colcon-core/packages/sentry_navigation)
+[4.006s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_navigation)
+[4.006s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation' for CMake module files
+[4.007s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation' for CMake config files
+[4.008s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_navigation', 'cmake_prefix_path')
+[4.008s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.ps1'
+[4.010s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.dsv'
+[4.011s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/hook/cmake_prefix_path.sh'
+[4.012s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/bin'
+[4.013s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/lib/pkgconfig/sentry_navigation.pc'
+[4.013s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/lib/python3.10/site-packages'
+[4.014s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_navigation/bin'
+[4.015s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.ps1'
+[4.017s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.dsv'
+[4.018s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.sh'
+[4.019s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.bash'
+[4.020s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.zsh'
+[4.021s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_navigation/share/colcon-core/packages/sentry_navigation)
+[4.023s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_description)
+[4.024s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description' for CMake module files
+[4.027s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_description[0m
+[4.028s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description' for CMake config files
+[4.028s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_description', 'cmake_prefix_path')
+[4.029s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.ps1'
+[4.030s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.dsv'
+[4.031s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.sh'
+[4.032s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/bin'
+[4.033s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/lib/pkgconfig/sentry_description.pc'
+[4.033s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/lib/python3.10/site-packages'
+[4.034s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/bin'
+[4.035s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.ps1'
+[4.036s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.dsv'
+[4.038s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.sh'
+[4.038s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.bash'
+[4.039s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.zsh'
+[4.040s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_description/share/colcon-core/packages/sentry_description)
+[4.042s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_description)
+[4.042s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description' for CMake module files
+[4.043s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description' for CMake config files
+[4.044s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_description', 'cmake_prefix_path')
+[4.045s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.ps1'
+[4.046s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.dsv'
+[4.047s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/hook/cmake_prefix_path.sh'
+[4.048s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/bin'
+[4.048s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/lib/pkgconfig/sentry_description.pc'
+[4.049s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/lib/python3.10/site-packages'
+[4.049s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_description/bin'
+[4.050s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.ps1'
+[4.052s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.dsv'
+[4.053s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.sh'
+[4.054s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.bash'
+[4.055s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.zsh'
+[4.056s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_description/share/colcon-core/packages/sentry_description)
+[4.058s] [34mcolcon.colcon_ros.task.ament_cmake.build[0m [1;30mINFO[0m Building ROS package in '/home/qkrt/qkrt-nav/src/sentry_bringup' with build type 'ament_cmake'
+[4.058s] [34mcolcon.colcon_cmake.task.cmake.build[0m [1;30mINFO[0m Building CMake package in '/home/qkrt/qkrt-nav/src/sentry_bringup'
+[4.059s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.059s] [34mcolcon.colcon_core.shell[0m [1;30mDEBUG[0m [32mSkip shell extension 'dsv' for command environment[0m
+[4.070s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication' for CMake module files
+[4.071s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/sentry_communication' returned '0': PYTHONPATH=/home/qkrt/qkrt-nav/src/build/sentry_communication/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/sentry_communication build --build-base /home/qkrt/qkrt-nav/src/build/sentry_communication/build install --record /home/qkrt/qkrt-nav/src/build/sentry_communication/install.log --single-version-externally-managed install_data[0m
+[4.072s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication' for CMake config files
+[4.073s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication/lib'
+[4.074s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication/bin'
+[4.074s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/pkgconfig/sentry_communication.pc'
+[4.074s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages'
+[4.074s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_communication', 'pythonpath')
+[4.075s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/pythonpath.ps1'
+[4.076s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/pythonpath.dsv'
+[4.077s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/hook/pythonpath.sh'
+[4.078s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_communication/bin'
+[4.078s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_communication)
+[4.079s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/package.ps1'
+[4.080s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/package.dsv'
+[4.081s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/package.sh'
+[4.089s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/package.bash'
+[4.090s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication/package.zsh'
+[4.091s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_communication/share/colcon-core/packages/sentry_communication)
+[4.099s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_bringup -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_bringup[0m
+[4.826s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/ldlidar_ros2 -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/ldlidar_ros2[0m
+[4.826s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/ldlidar_ros2 -- -j6 -l6[0m
+[5.374s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup' returned '0': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/sentry_bringup -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_bringup[0m
+[5.377s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_bringup -- -j6 -l6[0m
+[5.546s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup' returned '0': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/sentry_bringup -- -j6 -l6[0m
+[5.547s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_bringup[0m
+[5.601s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_bringup)
+[5.602s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup' for CMake module files
+[5.603s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup' for CMake config files
+[5.603s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_bringup', 'cmake_prefix_path')
+[5.604s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.ps1'
+[5.605s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/sentry_bringup' returned '0': AMENT_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/sentry_bringup[0m
+[5.607s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.dsv'
+[5.608s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.sh'
+[5.615s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib'
+[5.615s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/bin'
+[5.617s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib/pkgconfig/sentry_bringup.pc'
+[5.617s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib/python3.10/site-packages'
+[5.618s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/bin'
+[5.619s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.ps1'
+[5.622s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.dsv'
+[5.624s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.sh'
+[5.625s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.bash'
+[5.626s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.zsh'
+[5.626s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/colcon-core/packages/sentry_bringup)
+[5.628s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(sentry_bringup)
+[5.629s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup' for CMake module files
+[5.630s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup' for CMake config files
+[5.630s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('sentry_bringup', 'cmake_prefix_path')
+[5.631s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.ps1'
+[5.633s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.dsv'
+[5.635s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/hook/cmake_prefix_path.sh'
+[5.636s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib'
+[5.645s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/bin'
+[5.645s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib/pkgconfig/sentry_bringup.pc'
+[5.645s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/lib/python3.10/site-packages'
+[5.646s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/sentry_bringup/bin'
+[5.647s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.ps1'
+[5.649s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.dsv'
+[5.844s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.sh'
+[5.846s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.bash'
+[5.847s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.zsh'
+[5.873s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/sentry_bringup/share/colcon-core/packages/sentry_bringup)
+[6.992s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/omni_pursuit_controller -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller[0m
+[6.993s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller -- -j6 -l6[0m
+[20.268s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller -- -j6 -l6[0m
+[20.269s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller[0m
+[20.295s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(nav2_pure_pursuit_controller)
+[20.296s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller' for CMake module files
+[20.297s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller[0m
+[20.298s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller' for CMake config files
+[20.298s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('nav2_pure_pursuit_controller', 'cmake_prefix_path')
+[20.299s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.ps1'
+[20.300s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.dsv'
+[20.301s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.sh'
+[20.302s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib'
+[20.303s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('nav2_pure_pursuit_controller', 'ld_library_path_lib')
+[20.303s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.ps1'
+[20.304s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.dsv'
+[20.305s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.sh'
+[20.305s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/bin'
+[20.306s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/pkgconfig/nav2_pure_pursuit_controller.pc'
+[20.306s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/python3.10/site-packages'
+[20.307s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/bin'
+[20.308s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.ps1'
+[20.309s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.dsv'
+[20.310s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.sh'
+[20.311s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.bash'
+[20.312s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.zsh'
+[20.313s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/colcon-core/packages/nav2_pure_pursuit_controller)
+[20.315s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(nav2_pure_pursuit_controller)
+[20.315s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller' for CMake module files
+[20.317s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller' for CMake config files
+[20.317s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('nav2_pure_pursuit_controller', 'cmake_prefix_path')
+[20.318s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.ps1'
+[20.319s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.dsv'
+[20.320s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/cmake_prefix_path.sh'
+[20.321s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib'
+[20.322s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('nav2_pure_pursuit_controller', 'ld_library_path_lib')
+[20.322s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.ps1'
+[20.323s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.dsv'
+[20.324s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/hook/ld_library_path_lib.sh'
+[20.325s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/bin'
+[20.325s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/pkgconfig/nav2_pure_pursuit_controller.pc'
+[20.325s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/python3.10/site-packages'
+[20.326s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/bin'
+[20.327s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.ps1'
+[20.328s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.dsv'
+[20.329s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.sh'
+[20.331s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.bash'
+[20.332s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.zsh'
+[20.333s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/colcon-core/packages/nav2_pure_pursuit_controller)
+[26.405s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/ldlidar_ros2 -- -j6 -l6[0m
+[26.410s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoking command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/ldlidar_ros2[0m
+[26.450s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(ldlidar_ros2)
+[26.451s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2' for CMake module files
+[26.452s] [34mcolcon.colcon_core.event_handler.log_command[0m [1;30mDEBUG[0m [32mInvoked command in '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/ldlidar_ros2[0m
+[26.454s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2' for CMake config files
+[26.455s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('ldlidar_ros2', 'cmake_prefix_path')
+[26.455s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.ps1'
+[26.458s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.dsv'
+[26.459s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.sh'
+[26.461s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib'
+[26.461s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/bin'
+[26.462s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/pkgconfig/ldlidar_ros2.pc'
+[26.463s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/python3.10/site-packages'
+[26.464s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/bin'
+[26.465s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.ps1'
+[26.468s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv'
+[26.470s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.sh'
+[26.473s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.bash'
+[26.474s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.zsh'
+[26.475s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/colcon-core/packages/ldlidar_ros2)
+[26.477s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_environment_scripts_only(ldlidar_ros2)
+[26.478s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2' for CMake module files
+[26.480s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2' for CMake config files
+[26.481s] [34mcolcon.colcon_core.shell[0m [1;30mLevel 1[0m create_environment_hook('ldlidar_ros2', 'cmake_prefix_path')
+[26.482s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.ps1'
+[26.484s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment descriptor '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.dsv'
+[26.485s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating environment hook '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.sh'
+[26.488s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib'
+[26.489s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/bin'
+[26.489s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/pkgconfig/ldlidar_ros2.pc'
+[26.490s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/python3.10/site-packages'
+[26.492s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m checking '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/bin'
+[26.493s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.ps1'
+[26.496s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package descriptor '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv'
+[26.504s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.sh'
+[26.506s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.bash'
+[26.508s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating package script '/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.zsh'
+[26.509s] [34mcolcon.colcon_core.environment[0m [1;30mLevel 1[0m create_file_with_runtime_dependencies(/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/colcon-core/packages/ldlidar_ros2)
+[26.511s] [34mcolcon.colcon_parallel_executor.executor.parallel[0m [1;30mDEBUG[0m [32mclosing loop[0m
+[26.513s] [34mcolcon.colcon_parallel_executor.executor.parallel[0m [1;30mDEBUG[0m [32mloop closed[0m
+[26.514s] [34mcolcon.colcon_parallel_executor.executor.parallel[0m [1;30mDEBUG[0m [32mrun_until_complete finished with '0'[0m
+[26.515s] [34mcolcon.colcon_core.event_reactor[0m [1;30mDEBUG[0m [32mjoining thread[0m
+[26.517s] [34mcolcon.colcon_core.event_reactor[0m [1;30mDEBUG[0m [32mjoined thread[0m
+[26.518s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix script '/home/qkrt/qkrt-nav/src/install/local_setup.ps1'
+[26.522s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix util module '/home/qkrt/qkrt-nav/src/install/_local_setup_util_ps1.py'
+[26.528s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix chain script '/home/qkrt/qkrt-nav/src/install/setup.ps1'
+[26.532s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix script '/home/qkrt/qkrt-nav/src/install/local_setup.sh'
+[26.534s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix util module '/home/qkrt/qkrt-nav/src/install/_local_setup_util_sh.py'
+[26.536s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix chain script '/home/qkrt/qkrt-nav/src/install/setup.sh'
+[26.539s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix script '/home/qkrt/qkrt-nav/src/install/local_setup.bash'
+[26.541s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix chain script '/home/qkrt/qkrt-nav/src/install/setup.bash'
+[26.544s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix script '/home/qkrt/qkrt-nav/src/install/local_setup.zsh'
+[26.546s] [34mcolcon.colcon_core.shell[0m [1;30mINFO[0m Creating prefix chain script '/home/qkrt/qkrt-nav/src/install/setup.zsh'

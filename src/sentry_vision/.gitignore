@@ -1,0 +1,82 @@
+# ROS 2 build and install artifacts
+build/
+install/
+log/
+.colcon/
+*.pyc
+__pycache__/
+
+# Gazebo
+*.world~
+*.log
+*.bak
+*.tmp
+*.sdf~
+*.urdf~
+.gazebo/
+.gazebo_log/
+
+# RViz and Nav2 configs/cache
+rviz/*~
+*.rviz~
+*.db3
+*.yaml~
+*.launch.py~
+nav2_bringup/logs/
+nav2_bringup/maps/*.pgm~
+nav2_bringup/maps/*.yaml~
+
+# CMake / build system
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Python virtual environments
+venv/
+.env/
+.envrc
+*.egg-info/
+dist/
+develop-eggs/
+.eggs/
+
+# IDE / editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.kate-swp
+*~
+.DS_Store
+Thumbs.db
+
+# Temporary ROS2 launch outputs
+ros2_ws/
+ros_log/
+.launch_history
+.launch_cache/
+
+# Map / data outputs
+maps/*.pgm
+maps/*.yaml
+maps/*.png
+maps/tmp/
+
+# Robot Localization / bag files
+*.bag
+*.bag.active
+*.bag.metadata
+*.db3
+*.sqlite3
+
+# Other random junk
+*.old
+*.orig
+*.rej
+*.zip
+*.tar.gz
+*.out
+*.backup
+*.pid
+*.core

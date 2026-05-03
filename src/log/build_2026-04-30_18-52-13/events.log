@@ -1,0 +1,759 @@
+[0.000000] (-) TimerEvent: {}
+[0.000933] (ldlidar_ros2) JobQueued: {'identifier': 'ldlidar_ros2', 'dependencies': OrderedDict()}
+[0.001133] (nav2_pure_pursuit_controller) JobQueued: {'identifier': 'nav2_pure_pursuit_controller', 'dependencies': OrderedDict()}
+[0.001390] (sentry_communication) JobQueued: {'identifier': 'sentry_communication', 'dependencies': OrderedDict()}
+[0.001877] (sentry_description) JobQueued: {'identifier': 'sentry_description', 'dependencies': OrderedDict()}
+[0.001999] (sentry_localization) JobQueued: {'identifier': 'sentry_localization', 'dependencies': OrderedDict()}
+[0.002080] (sentry_navigation) JobQueued: {'identifier': 'sentry_navigation', 'dependencies': OrderedDict()}
+[0.002154] (sentry_bringup) JobQueued: {'identifier': 'sentry_bringup', 'dependencies': OrderedDict([('sentry_description', '/home/qkrt/qkrt-nav/src/install/sentry_description'), ('sentry_localization', '/home/qkrt/qkrt-nav/src/install/sentry_localization'), ('sentry_navigation', '/home/qkrt/qkrt-nav/src/install/sentry_navigation')])}
+[0.002212] (sentry_description) JobStarted: {'identifier': 'sentry_description'}
+[0.016718] (sentry_localization) JobStarted: {'identifier': 'sentry_localization'}
+[0.025527] (sentry_navigation) JobStarted: {'identifier': 'sentry_navigation'}
+[0.038796] (ldlidar_ros2) JobStarted: {'identifier': 'ldlidar_ros2'}
+[0.046378] (nav2_pure_pursuit_controller) JobStarted: {'identifier': 'nav2_pure_pursuit_controller'}
+[0.056950] (sentry_communication) JobStarted: {'identifier': 'sentry_communication'}
+[0.071061] (sentry_description) JobProgress: {'identifier': 'sentry_description', 'progress': 'cmake'}
+[0.072009] (sentry_description) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/sentry_description', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_description'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_description'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.081269] (sentry_localization) JobProgress: {'identifier': 'sentry_localization', 'progress': 'cmake'}
+[0.082520] (sentry_localization) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/sentry_localization', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_localization'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_localization', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_localization'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.086252] (sentry_navigation) JobProgress: {'identifier': 'sentry_navigation', 'progress': 'cmake'}
+[0.087285] (sentry_navigation) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/sentry_navigation', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_navigation'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_navigation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_navigation'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.099259] (-) TimerEvent: {}
+[0.101482] (ldlidar_ros2) JobProgress: {'identifier': 'ldlidar_ros2', 'progress': 'cmake'}
+[0.105343] (ldlidar_ros2) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/ldlidar_ros2', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/ldlidar_ros2'], 'cwd': '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.108250] (nav2_pure_pursuit_controller) JobProgress: {'identifier': 'nav2_pure_pursuit_controller', 'progress': 'cmake'}
+[0.110626] (nav2_pure_pursuit_controller) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/omni_pursuit_controller', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller'], 'cwd': '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.199432] (-) TimerEvent: {}
+[0.300126] (-) TimerEvent: {}
+[0.400816] (-) TimerEvent: {}
+[0.506027] (-) TimerEvent: {}
+[0.606699] (-) TimerEvent: {}
+[0.709001] (-) TimerEvent: {}
+[0.809741] (-) TimerEvent: {}
+[0.910482] (-) TimerEvent: {}
+[1.011187] (-) TimerEvent: {}
+[1.112122] (-) TimerEvent: {}
+[1.212825] (-) TimerEvent: {}
+[1.306503] (sentry_description) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.307086] (sentry_description) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.307277] (sentry_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.313001] (-) TimerEvent: {}
+[1.316111] (sentry_localization) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.316614] (sentry_localization) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.316787] (sentry_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.319885] (sentry_navigation) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.320390] (sentry_navigation) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.320564] (sentry_navigation) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.326705] (ldlidar_ros2) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.327257] (ldlidar_ros2) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.327439] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.327585] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.327726] (ldlidar_ros2) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.327858] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.328008] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.328131] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.355168] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.356179] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.356356] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.413184] (-) TimerEvent: {}
+[1.448096] (sentry_localization) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.475159] (sentry_navigation) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.483460] (sentry_localization) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.484877] (sentry_localization) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.486555] (sentry_localization) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.501630] (sentry_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.502409] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.508079] (sentry_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.513595] (-) TimerEvent: {}
+[1.527087] (sentry_navigation) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.527674] (sentry_navigation) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.529789] (sentry_navigation) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.546671] (sentry_description) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.547378] (sentry_description) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.547924] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.549844] (sentry_description) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.550172] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.550757] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.562512] (sentry_navigation) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.564545] (sentry_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.565728] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[1.613758] (-) TimerEvent: {}
+[1.654261] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.668003] (ldlidar_ros2) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.669472] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.671022] (ldlidar_ros2) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.676468] (ldlidar_ros2) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.713928] (-) TimerEvent: {}
+[1.794059] (sentry_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.814122] (-) TimerEvent: {}
+[1.821320] (sentry_description) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.821896] (sentry_description) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.822663] (sentry_description) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.828588] (sentry_description) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.875476] (sentry_localization) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.888519] (sentry_navigation) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.907147] (sentry_navigation) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.914326] (-) TimerEvent: {}
+[1.919755] (sentry_localization) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.920324] (sentry_navigation) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.920673] (sentry_localization) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.920928] (sentry_navigation) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.922655] (sentry_localization) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.925393] (sentry_navigation) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.928742] (sentry_localization) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[1.931712] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[1.957426] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[1.958033] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[1.958780] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[1.963322] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[2.014521] (-) TimerEvent: {}
+[2.115698] (-) TimerEvent: {}
+[2.216775] (-) TimerEvent: {}
+[2.248019] (ldlidar_ros2) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.316950] (-) TimerEvent: {}
+[2.371015] (sentry_localization) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.377476] (sentry_description) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.407898] (sentry_communication) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/sentry_communication', 'build', '--build-base', '/home/qkrt/qkrt-nav/src/build/sentry_communication/build', 'install', '--record', '/home/qkrt/qkrt-nav/src/build/sentry_communication/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/qkrt/qkrt-nav/src/sentry_communication', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'en_CA:en', 'USER': 'qkrt', 'SSH_CLIENT': '192.168.8.105 59598 22', 'XDG_SESSION_TYPE': 'tty', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'MOTD_SHOWN': 'pam', 'HOME': '/home/qkrt', 'OLDPWD': '/home/qkrt/qkrt-nav', 'SSH_TTY': '/dev/pts/3', 'ROS_PYTHON_VERSION': '3', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'ROS_DISTRO': 'humble', 'LOGNAME': 'qkrt', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'TERM': 'xterm-256color', 'XDG_SESSION_ID': '11', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': 'localhost:12.0', 'LANG': 'en_US.UTF-8', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'ROS_DOMAIN_ID': '67', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'PWD': '/home/qkrt/qkrt-nav/src/build/sentry_communication', 'LC_ALL': 'en_US.UTF-8', 'SSH_CONNECTION': '192.168.8.105 59598 192.168.8.102 22', 'XDG_DATA_DIRS': '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/qkrt/qkrt-nav/src/build/sentry_communication/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[2.417132] (-) TimerEvent: {}
+[2.427532] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.432244] (sentry_navigation) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.451731] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rclcpp: 16.0.19 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[2.517316] (-) TimerEvent: {}
+[2.533367] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[2.542433] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[2.564274] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[2.591748] (ldlidar_ros2) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.617486] (-) TimerEvent: {}
+[2.626355] (ldlidar_ros2) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.635480] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found nav2_common: 1.1.20 (/opt/ros/humble/share/nav2_common/cmake)\n'}
+[2.638464] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found nav2_core: 1.1.20 (/opt/ros/humble/share/nav2_core/cmake)\n'}
+[2.712181] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[2.716934] (ldlidar_ros2) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[2.717575] (-) TimerEvent: {}
+[2.728580] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[2.742037] (sentry_description) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.748748] (sentry_description) StdoutLine: {'line': b'-- Generating done\n'}
+[2.752433] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[2.752988] (sentry_description) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_description\n'}
+[2.764515] (sentry_description) CommandEnded: {'returncode': 0}
+[2.765981] (sentry_description) JobProgress: {'identifier': 'sentry_description', 'progress': 'build'}
+[2.767827] (sentry_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/sentry_description', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_description'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[2.771377] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[2.787145] (sentry_localization) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.799800] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.811395] (sentry_localization) StdoutLine: {'line': b'-- Generating done\n'}
+[2.817791] (-) TimerEvent: {}
+[2.824447] (sentry_localization) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_localization\n'}
+[2.833070] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.839845] (sentry_localization) CommandEnded: {'returncode': 0}
+[2.840737] (sentry_localization) JobProgress: {'identifier': 'sentry_localization', 'progress': 'build'}
+[2.840802] (sentry_localization) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/sentry_localization', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_localization', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_localization'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[2.850552] (sentry_description) CommandEnded: {'returncode': 0}
+[2.851464] (sentry_description) JobProgress: {'identifier': 'sentry_description', 'progress': 'install'}
+[2.852483] (sentry_navigation) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.856869] (sentry_navigation) StdoutLine: {'line': b'-- Generating done\n'}
+[2.860852] (sentry_navigation) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_navigation\n'}
+[2.871010] (sentry_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/sentry_description'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_description'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[2.875709] (sentry_navigation) CommandEnded: {'returncode': 0}
+[2.876503] (sentry_navigation) JobProgress: {'identifier': 'sentry_navigation', 'progress': 'build'}
+[2.876566] (sentry_navigation) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/sentry_navigation', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_navigation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_navigation'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[2.885001] (sentry_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[2.885545] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch\n'}
+[2.886738] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/display_rviz.launch.py\n'}
+[2.888586] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/display.launch.py\n'}
+[2.894429] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/gazebo.launch.py\n'}
+[2.894741] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes\n'}
+[2.894921] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes/2026_ARC_3v3.stl\n'}
+[2.917957] (-) TimerEvent: {}
+[2.919216] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[2.924262] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[2.937767] (sentry_communication) StdoutLine: {'line': b'running egg_info\n'}
+[2.944136] (sentry_communication) StdoutLine: {'line': b'creating ../build/sentry_communication/sentry_communication.egg-info\n'}
+[2.944596] (sentry_communication) StdoutLine: {'line': b'writing ../build/sentry_communication/sentry_communication.egg-info/PKG-INFO\n'}
+[2.944760] (sentry_communication) StdoutLine: {'line': b'writing dependency_links to ../build/sentry_communication/sentry_communication.egg-info/dependency_links.txt\n'}
+[2.944905] (sentry_communication) StdoutLine: {'line': b'writing entry points to ../build/sentry_communication/sentry_communication.egg-info/entry_points.txt\n'}
+[2.945047] (sentry_communication) StdoutLine: {'line': b'writing requirements to ../build/sentry_communication/sentry_communication.egg-info/requires.txt\n'}
+[2.945176] (sentry_communication) StdoutLine: {'line': b'writing top-level names to ../build/sentry_communication/sentry_communication.egg-info/top_level.txt\n'}
+[2.945412] (sentry_communication) StdoutLine: {'line': b"writing manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'\n"}
+[2.945638] (sentry_communication) StdoutLine: {'line': b"reading manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'\n"}
+[2.945782] (sentry_communication) StdoutLine: {'line': b"adding license file 'LICENSE'\n"}
+[2.946819] (sentry_communication) StdoutLine: {'line': b"writing manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'\n"}
+[2.947217] (sentry_communication) StdoutLine: {'line': b'running build\n'}
+[2.947442] (sentry_communication) StdoutLine: {'line': b'running build_py\n'}
+[2.947645] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build\n'}
+[2.947875] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib\n'}
+[2.948119] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.948270] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/mcb_message.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.948472] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/__init__.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.948668] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/event_driven.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.948904] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/comm_hub.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.949121] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/async_io.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.949364] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/threaded_blocking_read.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication\n'}
+[2.949843] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.950115] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/communication/__init__.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.950357] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/communication/CRC.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.950603] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/communication/Message.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.950829] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/communication/Serial.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.951109] (sentry_communication) StdoutLine: {'line': b'copying sentry_communication/communication/Receive.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication\n'}
+[2.951729] (sentry_communication) StdoutLine: {'line': b'running install\n'}
+[2.952649] (sentry_communication) StdoutLine: {'line': b'running install_lib\n'}
+[2.954666] (ldlidar_ros2) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[2.956990] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.957413] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/mcb_message.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.957720] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/__init__.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.957922] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/event_driven.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.958134] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/comm_hub.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.958427] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/async_io.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.958689] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/threaded_blocking_read.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication\n'}
+[2.959052] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.959323] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/__init__.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.959561] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/CRC.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.959788] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Message.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.960015] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Serial.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.960233] (sentry_communication) StdoutLine: {'line': b'copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Receive.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication\n'}
+[2.961501] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/mcb_message.py to mcb_message.cpython-310.pyc\n'}
+[2.962679] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/__init__.py to __init__.cpython-310.pyc\n'}
+[2.963071] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/event_driven.py to event_driven.cpython-310.pyc\n'}
+[2.965054] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/comm_hub.py to comm_hub.cpython-310.pyc\n'}
+[2.968416] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/async_io.py to async_io.cpython-310.pyc\n'}
+[2.972284] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/threaded_blocking_read.py to threaded_blocking_read.cpython-310.pyc\n'}
+[2.975873] (sentry_localization) CommandEnded: {'returncode': 0}
+[2.976635] (sentry_localization) JobProgress: {'identifier': 'sentry_localization', 'progress': 'install'}
+[2.976779] (sentry_localization) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/sentry_localization'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_localization', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_localization'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[2.977431] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/__init__.py to __init__.cpython-310.pyc\n'}
+[2.977632] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/CRC.py to CRC.cpython-310.pyc\n'}
+[2.979028] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Message.py to Message.cpython-310.pyc\n'}
+[2.980056] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Serial.py to Serial.cpython-310.pyc\n'}
+[2.980737] (sentry_communication) StdoutLine: {'line': b'byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Receive.py to Receive.cpython-310.pyc\n'}
+[2.981381] (sentry_communication) StdoutLine: {'line': b'running install_data\n'}
+[2.981646] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index\n'}
+[2.981921] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index\n'}
+[2.982114] (sentry_communication) StdoutLine: {'line': b'creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index/packages\n'}
+[2.982326] (sentry_communication) StdoutLine: {'line': b'copying resource/sentry_communication -> /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index/packages\n'}
+[2.982506] (sentry_communication) StdoutLine: {'line': b'copying package.xml -> /home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication\n'}
+[2.982686] (sentry_communication) StdoutLine: {'line': b'running install_egg_info\n'}
+[2.986918] (sentry_communication) StdoutLine: {'line': b'Copying ../build/sentry_communication/sentry_communication.egg-info to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication-0.0.0-py3.10.egg-info\n'}
+[2.988963] (sentry_communication) StdoutLine: {'line': b'running install_scripts\n'}
+[2.994567] (sentry_navigation) CommandEnded: {'returncode': 0}
+[2.999170] (sentry_navigation) JobProgress: {'identifier': 'sentry_navigation', 'progress': 'install'}
+[2.999440] (sentry_navigation) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/sentry_navigation'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_navigation', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_navigation'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.005073] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes/2026_ARC_3v3_simplified.stl\n'}
+[3.006300] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf\n'}
+[3.007028] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf/sentry_description.urdf.xacro\n'}
+[3.007220] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf/robot_onshapetourdf.urdf.xacro\n'}
+[3.007374] (sentry_localization) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[3.007531] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/sim_comm_hub_bridge.py\n'}
+[3.007668] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/imu_turret_compensator.py\n'}
+[3.007853] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/generate_keepout_from_sdf.py\n'}
+[3.007985] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/lib/sentry_localization/turret_joint_state_publisher.py\n'}
+[3.008200] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config\n'}
+[3.008409] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/slam_toolbox.yaml\n'}
+[3.008577] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/ekf.yaml\n'}
+[3.008707] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//config/amcl.yaml\n'}
+[3.008901] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps\n'}
+[3.009058] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map_2.yaml\n'}
+[3.009188] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map_2.pgm\n'}
+[3.009340] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/ramp_cost_mask.yaml\n'}
+[3.009555] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets\n'}
+[3.009756] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/ramp_cost_mask.pgm\n'}
+[3.009881] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/OccupancyGrid2.png\n'}
+[3.010002] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/OccupancyGrid.png\n'}
+[3.010200] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/keepout_mask_from_sdf.pgm\n'}
+[3.010348] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/assets/keepout_mask.png\n'}
+[3.010472] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/keepout_mask_from_sdf.yaml\n'}
+[3.010664] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map.yaml\n'}
+[3.010788] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sim_map.pgm\n'}
+[3.011010] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/keepout_mask.yaml\n'}
+[3.011143] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//maps/sentry_map.yaml\n'}
+[3.011318] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch\n'}
+[3.011486] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch/global_localization.launch.py\n'}
+[3.011619] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization//launch/local_localization.launch.py\n'}
+[3.011818] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/package_run_dependencies/sentry_localization\n'}
+[3.011968] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/parent_prefix_path/sentry_localization\n'}
+[3.012186] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/ament_prefix_path.sh\n'}
+[3.012389] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/ament_prefix_path.dsv\n'}
+[3.012516] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/path.sh\n'}
+[3.012708] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/environment/path.dsv\n'}
+[3.012900] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.bash\n'}
+[3.013030] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.sh\n'}
+[3.013228] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.zsh\n'}
+[3.013354] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/local_setup.dsv\n'}
+[3.013545] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.dsv\n'}
+[3.013677] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/ament_index/resource_index/packages/sentry_localization\n'}
+[3.013845] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/cmake/sentry_localizationConfig.cmake\n'}
+[3.014084] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/cmake/sentry_localizationConfig-version.cmake\n'}
+[3.014491] (sentry_localization) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_localization/share/sentry_localization/package.xml\n'}
+[3.015325] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds\n'}
+[3.016010] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/my_world_prev.sdf\n'}
+[3.016700] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/my_world.sdf\n'}
+[3.027078] (sentry_navigation) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[3.027406] (-) TimerEvent: {}
+[3.027730] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config\n'}
+[3.027923] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/smoother_server.yaml\n'}
+[3.028080] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/controller_server.yaml\n'}
+[3.028704] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/planner_server.yaml\n'}
+[3.028857] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/behavior_server.yaml\n'}
+[3.028993] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/config/bt_navigator.yaml\n'}
+[3.029120] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/launch\n'}
+[3.029280] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/launch/navigation.launch.py\n'}
+[3.029405] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree\n'}
+[3.029529] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree/replanning_navigation.xml\n'}
+[3.029661] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/behavior_tree/simple_navigation.xml\n'}
+[3.033548] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/comp_map.sdf\n'}
+[3.034511] (sentry_localization) CommandEnded: {'returncode': 0}
+[3.037139] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz\n'}
+[3.038379] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz/sentry_config.rviz\n'}
+[3.038634] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz/display_config.rviz\n'}
+[3.044230] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/package_run_dependencies/sentry_description\n'}
+[3.045243] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/parent_prefix_path/sentry_description\n'}
+[3.045597] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/ament_prefix_path.sh\n'}
+[3.046146] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/ament_prefix_path.dsv\n'}
+[3.046511] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/path.sh\n'}
+[3.046971] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/path.dsv\n'}
+[3.048360] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.bash\n'}
+[3.048618] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.sh\n'}
+[3.049193] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/package_run_dependencies/sentry_navigation\n'}
+[3.050513] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/parent_prefix_path/sentry_navigation\n'}
+[3.050763] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/ament_prefix_path.sh\n'}
+[3.050953] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/ament_prefix_path.dsv\n'}
+[3.051098] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/path.sh\n'}
+[3.051256] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/environment/path.dsv\n'}
+[3.051387] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.bash\n'}
+[3.051526] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.sh\n'}
+[3.051649] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.zsh\n'}
+[3.051778] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/local_setup.dsv\n'}
+[3.052234] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.dsv\n'}
+[3.052570] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/ament_index/resource_index/packages/sentry_navigation\n'}
+[3.053772] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/cmake/sentry_navigationConfig.cmake\n'}
+[3.054179] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.zsh\n'}
+[3.054542] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.dsv\n'}
+[3.055242] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.dsv\n'}
+[3.055576] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/packages/sentry_description\n'}
+[3.056504] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig.cmake\n'}
+[3.056751] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig-version.cmake\n'}
+[3.058186] (sentry_description) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.xml\n'}
+[3.059422] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/cmake/sentry_navigationConfig-version.cmake\n'}
+[3.059760] (sentry_navigation) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_navigation/share/sentry_navigation/package.xml\n'}
+[3.059948] (sentry_communication) StdoutLine: {'line': b'Installing comm_hub script to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/sentry_communication\n'}
+[3.060276] (sentry_communication) StdoutLine: {'line': b'Installing threaded_blocking script to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/sentry_communication\n'}
+[3.060469] (sentry_communication) StdoutLine: {'line': b"writing list of installed files to '/home/qkrt/qkrt-nav/src/build/sentry_communication/install.log'\n"}
+[3.060742] (ldlidar_ros2) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[3.076366] (sentry_localization) JobEnded: {'identifier': 'sentry_localization', 'rc': 0}
+[3.093690] (sentry_navigation) CommandEnded: {'returncode': 0}
+[3.126130] (sentry_navigation) JobEnded: {'identifier': 'sentry_navigation', 'rc': 0}
+[3.128789] (-) TimerEvent: {}
+[3.129363] (sentry_description) CommandEnded: {'returncode': 0}
+[3.130137] (ldlidar_ros2) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[3.132265] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  \n'}
+[3.146805] (ldlidar_ros2) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[3.164371] (sentry_description) JobEnded: {'identifier': 'sentry_description', 'rc': 0}
+[3.165321] (sentry_bringup) JobStarted: {'identifier': 'sentry_bringup'}
+[3.173572] (sentry_communication) CommandEnded: {'returncode': 0}
+[3.186510] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/humble/include  \n'}
+[3.194754] (sentry_communication) JobEnded: {'identifier': 'sentry_communication', 'rc': 0}
+[3.198382] (sentry_bringup) JobProgress: {'identifier': 'sentry_bringup', 'progress': 'cmake'}
+[3.199425] (sentry_bringup) Command: {'cmd': ['/usr/bin/cmake', '/home/qkrt/qkrt-nav/src/sentry_bringup', '-DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/sentry_bringup'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble')]), 'shell': False}
+[3.228992] (-) TimerEvent: {}
+[3.268839] (nav2_pure_pursuit_controller) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[3.288449] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[3.296467] (ldlidar_ros2) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[3.297325] (ldlidar_ros2) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[3.311874] (sentry_bringup) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[3.329180] (-) TimerEvent: {}
+[3.418296] (sentry_bringup) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[3.429343] (-) TimerEvent: {}
+[3.434456] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[3.436392] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[3.440429] (sentry_bringup) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[3.444180] (ldlidar_ros2) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[3.446345] (ldlidar_ros2) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[3.529509] (-) TimerEvent: {}
+[3.554335] (ldlidar_ros2) StdoutLine: {'line': b'-- Found sensor_msgs: 4.9.1 (/opt/ros/humble/share/sensor_msgs/cmake)\n'}
+[3.570788] (sentry_bringup) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[3.587936] (sentry_bringup) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[3.589005] (sentry_bringup) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[3.589549] (sentry_bringup) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[3.595450] (sentry_bringup) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[3.610219] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[3.612409] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[3.620877] (ldlidar_ros2) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[3.629674] (-) TimerEvent: {}
+[3.730371] (-) TimerEvent: {}
+[3.760067] (sentry_bringup) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[3.772879] (sentry_bringup) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[3.773335] (sentry_bringup) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[3.774111] (sentry_bringup) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[3.778963] (sentry_bringup) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[3.794075] (ldlidar_ros2) StdoutLine: {'line': b'-- operation system is Linux-5.15.148-tegra\n'}
+[3.794518] (ldlidar_ros2) StdoutLine: {'line': b'-- current platform: Linux \n'}
+[3.801870] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[3.816783] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[3.817305] (ldlidar_ros2) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/qkrt/qkrt-nav/src/ldlidar_ros2/include;/home/qkrt/qkrt-nav/src/ldlidar_ros2/sdk/include\n'}
+[3.817485] (ldlidar_ros2) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[3.830500] (-) TimerEvent: {}
+[3.831373] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[3.831728] (ldlidar_ros2) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[3.833862] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[3.837877] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[3.840584] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257\n"}
+[3.853790] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[3.854277] (ldlidar_ros2) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[3.856760] (ldlidar_ros2) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[3.859811] (ldlidar_ros2) StdoutLine: {'line': b'-- Configuring done\n'}
+[3.888446] (ldlidar_ros2) StdoutLine: {'line': b'-- Generating done\n'}
+[3.899350] (ldlidar_ros2) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/ldlidar_ros2\n'}
+[3.927052] (ldlidar_ros2) CommandEnded: {'returncode': 0}
+[3.928993] (ldlidar_ros2) JobProgress: {'identifier': 'ldlidar_ros2', 'progress': 'build'}
+[3.929062] (ldlidar_ros2) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.930571] (-) TimerEvent: {}
+[4.020819] (ldlidar_ros2) StdoutLine: {'line': b'[  7%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_driver.cpp.o\x1b[0m\n'}
+[4.030750] (-) TimerEvent: {}
+[4.101340] (sentry_bringup) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[4.130996] (-) TimerEvent: {}
+[4.230243] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found Eigen3: TRUE (found version "3.4.0") \n'}
+[4.230908] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[4.231192] (-) TimerEvent: {}
+[4.331664] (-) TimerEvent: {}
+[4.432695] (-) TimerEvent: {}
+[4.443994] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Setting build type to Release as none was specified.\n'}
+[4.447639] (sentry_bringup) StdoutLine: {'line': b'-- Configuring done\n'}
+[4.454420] (sentry_bringup) StdoutLine: {'line': b'-- Generating done\n'}
+[4.459216] (sentry_bringup) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_bringup\n'}
+[4.476529] (sentry_bringup) CommandEnded: {'returncode': 0}
+[4.477968] (sentry_bringup) JobProgress: {'identifier': 'sentry_bringup', 'progress': 'build'}
+[4.478933] (sentry_bringup) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/sentry_bringup', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble')]), 'shell': False}
+[4.532876] (-) TimerEvent: {}
+[4.633987] (-) TimerEvent: {}
+[4.648786] (sentry_bringup) CommandEnded: {'returncode': 0}
+[4.649812] (sentry_bringup) JobProgress: {'identifier': 'sentry_bringup', 'progress': 'install'}
+[4.649889] (sentry_bringup) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/sentry_bringup'], 'cwd': '/home/qkrt/qkrt-nav/src/build/sentry_bringup', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/sentry_bringup'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/qkrt/qkrt-nav/src/install/sentry_navigation:/home/qkrt/qkrt-nav/src/install/sentry_localization:/home/qkrt/qkrt-nav/src/install/sentry_description:/opt/ros/humble')]), 'shell': False}
+[4.669443] (sentry_bringup) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[4.669900] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//config\n'}
+[4.670084] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//config/rplidar_a1_2.yaml\n'}
+[4.670781] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//config/laser_merger.yaml\n'}
+[4.671686] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//config/rplidar_a1_1.yaml\n'}
+[4.672504] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//launch\n'}
+[4.673274] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//launch/simulated_robot.launch.py\n'}
+[4.674607] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//launch/real_robot.launch.py\n'}
+[4.675503] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup//launch/lidar.launch.py\n'}
+[4.676718] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/lib/sentry_bringup/laser_merger.py\n'}
+[4.678078] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/ament_index/resource_index/package_run_dependencies/sentry_bringup\n'}
+[4.679621] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/ament_index/resource_index/parent_prefix_path/sentry_bringup\n'}
+[4.681334] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/environment/ament_prefix_path.sh\n'}
+[4.682291] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/environment/ament_prefix_path.dsv\n'}
+[4.683235] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/environment/path.sh\n'}
+[4.684156] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/environment/path.dsv\n'}
+[4.685114] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/local_setup.bash\n'}
+[4.686058] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/local_setup.sh\n'}
+[4.687075] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/local_setup.zsh\n'}
+[4.687974] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/local_setup.dsv\n'}
+[4.688849] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.dsv\n'}
+[4.689824] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/ament_index/resource_index/packages/sentry_bringup\n'}
+[4.690791] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/cmake/sentry_bringupConfig.cmake\n'}
+[4.691551] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/cmake/sentry_bringupConfig-version.cmake\n'}
+[4.696174] (sentry_bringup) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_bringup/share/sentry_bringup/package.xml\n'}
+[4.707795] (sentry_bringup) CommandEnded: {'returncode': 0}
+[4.734302] (-) TimerEvent: {}
+[4.746965] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[4.835066] (-) TimerEvent: {}
+[4.935728] (-) TimerEvent: {}
+[4.977065] (sentry_bringup) JobEnded: {'identifier': 'sentry_bringup', 'rc': 0}
+[4.990099] (ldlidar_ros2) StdoutLine: {'line': b'[ 15%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/network_socket_interface_linux.cpp.o\x1b[0m\n'}
+[5.035906] (-) TimerEvent: {}
+[5.136831] (-) TimerEvent: {}
+[5.237940] (-) TimerEvent: {}
+[5.338900] (-) TimerEvent: {}
+[5.360454] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Configuring done\n'}
+[5.439004] (-) TimerEvent: {}
+[5.539654] (-) TimerEvent: {}
+[5.640692] (-) TimerEvent: {}
+[5.741618] (-) TimerEvent: {}
+[5.845509] (-) TimerEvent: {}
+[5.944292] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Generating done\n'}
+[5.945610] (-) TimerEvent: {}
+[6.000648] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller\n'}
+[6.045794] (-) TimerEvent: {}
+[6.094590] (nav2_pure_pursuit_controller) CommandEnded: {'returncode': 0}
+[6.095636] (nav2_pure_pursuit_controller) JobProgress: {'identifier': 'nav2_pure_pursuit_controller', 'progress': 'build'}
+[6.095701] (nav2_pure_pursuit_controller) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller', '--', '-j6', '-l6'], 'cwd': '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[6.145960] (-) TimerEvent: {}
+[6.246649] (-) TimerEvent: {}
+[6.347322] (-) TimerEvent: {}
+[6.377614] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/nav2_pure_pursuit_controller.dir/src/omni_pursuit_controller.cpp.o\x1b[0m\n'}
+[6.447472] (-) TimerEvent: {}
+[6.548095] (-) TimerEvent: {}
+[6.648739] (-) TimerEvent: {}
+[6.749398] (-) TimerEvent: {}
+[6.850029] (-) TimerEvent: {}
+[6.950659] (-) TimerEvent: {}
+[7.051291] (-) TimerEvent: {}
+[7.081248] (ldlidar_ros2) StdoutLine: {'line': b'[ 23%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/serial_interface_linux.cpp.o\x1b[0m\n'}
+[7.151460] (-) TimerEvent: {}
+[7.252122] (-) TimerEvent: {}
+[7.352784] (-) TimerEvent: {}
+[7.453434] (-) TimerEvent: {}
+[7.554104] (-) TimerEvent: {}
+[7.654761] (-) TimerEvent: {}
+[7.755449] (-) TimerEvent: {}
+[7.856121] (-) TimerEvent: {}
+[7.956827] (-) TimerEvent: {}
+[8.031249] (ldlidar_ros2) StdoutLine: {'line': b'[ 30%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/sl_transform.cpp.o\x1b[0m\n'}
+[8.057010] (-) TimerEvent: {}
+[8.157784] (-) TimerEvent: {}
+[8.258529] (-) TimerEvent: {}
+[8.359333] (-) TimerEvent: {}
+[8.460044] (-) TimerEvent: {}
+[8.560750] (-) TimerEvent: {}
+[8.661490] (-) TimerEvent: {}
+[8.762234] (-) TimerEvent: {}
+[8.802666] (ldlidar_ros2) StdoutLine: {'line': b'[ 38%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/slbf.cpp.o\x1b[0m\n'}
+[8.862417] (-) TimerEvent: {}
+[8.963123] (-) TimerEvent: {}
+[9.063801] (-) TimerEvent: {}
+[9.164493] (-) TimerEvent: {}
+[9.265178] (-) TimerEvent: {}
+[9.365861] (-) TimerEvent: {}
+[9.466564] (-) TimerEvent: {}
+[9.567264] (-) TimerEvent: {}
+[9.667923] (-) TimerEvent: {}
+[9.768586] (-) TimerEvent: {}
+[9.869266] (-) TimerEvent: {}
+[9.875060] (ldlidar_ros2) StdoutLine: {'line': b'[ 46%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/tofbf.cpp.o\x1b[0m\n'}
+[9.969461] (-) TimerEvent: {}
+[10.070154] (-) TimerEvent: {}
+[10.170857] (-) TimerEvent: {}
+[10.271530] (-) TimerEvent: {}
+[10.372137] (-) TimerEvent: {}
+[10.472836] (-) TimerEvent: {}
+[10.573485] (-) TimerEvent: {}
+[10.674144] (-) TimerEvent: {}
+[10.774811] (-) TimerEvent: {}
+[10.875517] (-) TimerEvent: {}
+[10.945915] (ldlidar_ros2) StdoutLine: {'line': b'[ 53%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/log_module.cpp.o\x1b[0m\n'}
+[10.975686] (-) TimerEvent: {}
+[11.076367] (-) TimerEvent: {}
+[11.177074] (-) TimerEvent: {}
+[11.277772] (-) TimerEvent: {}
+[11.378477] (-) TimerEvent: {}
+[11.433487] (ldlidar_ros2) StdoutLine: {'line': b'[ 61%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_protocol.cpp.o\x1b[0m\n'}
+[11.478659] (-) TimerEvent: {}
+[11.509270] (ldlidar_ros2) StdoutLine: {'line': b'[ 69%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_dataprocess.cpp.o\x1b[0m\n'}
+[11.578857] (-) TimerEvent: {}
+[11.679622] (-) TimerEvent: {}
+[11.780343] (-) TimerEvent: {}
+[11.881030] (-) TimerEvent: {}
+[11.981724] (-) TimerEvent: {}
+[12.082402] (-) TimerEvent: {}
+[12.183082] (-) TimerEvent: {}
+[12.283768] (-) TimerEvent: {}
+[12.384468] (-) TimerEvent: {}
+[12.485134] (-) TimerEvent: {}
+[12.585798] (-) TimerEvent: {}
+[12.686442] (-) TimerEvent: {}
+[12.700893] (ldlidar_ros2) StdoutLine: {'line': b'[ 76%] \x1b[32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_driver_linux.cpp.o\x1b[0m\n'}
+[12.786620] (-) TimerEvent: {}
+[12.887338] (-) TimerEvent: {}
+[12.988032] (-) TimerEvent: {}
+[13.088734] (-) TimerEvent: {}
+[13.189579] (-) TimerEvent: {}
+[13.290303] (-) TimerEvent: {}
+[13.390991] (-) TimerEvent: {}
+[13.492005] (-) TimerEvent: {}
+[13.593042] (-) TimerEvent: {}
+[13.694101] (-) TimerEvent: {}
+[13.795190] (-) TimerEvent: {}
+[13.896501] (-) TimerEvent: {}
+[13.992907] (ldlidar_ros2) StdoutLine: {'line': b'[ 84%] \x1b[32m\x1b[1mLinking CXX static library libldlidar_driver.a\x1b[0m\n'}
+[13.996637] (-) TimerEvent: {}
+[14.097271] (-) TimerEvent: {}
+[14.101086] (ldlidar_ros2) StdoutLine: {'line': b'[ 84%] Built target ldlidar_driver\n'}
+[14.139464] (ldlidar_ros2) StdoutLine: {'line': b'[ 92%] \x1b[32mBuilding CXX object CMakeFiles/ldlidar_ros2_node.dir/src/demo.cpp.o\x1b[0m\n'}
+[14.197417] (-) TimerEvent: {}
+[14.298031] (-) TimerEvent: {}
+[14.398648] (-) TimerEvent: {}
+[14.499287] (-) TimerEvent: {}
+[14.599940] (-) TimerEvent: {}
+[14.700643] (-) TimerEvent: {}
+[14.801305] (-) TimerEvent: {}
+[14.901978] (-) TimerEvent: {}
+[15.002639] (-) TimerEvent: {}
+[15.103314] (-) TimerEvent: {}
+[15.203992] (-) TimerEvent: {}
+[15.304668] (-) TimerEvent: {}
+[15.405340] (-) TimerEvent: {}
+[15.506007] (-) TimerEvent: {}
+[15.606683] (-) TimerEvent: {}
+[15.707376] (-) TimerEvent: {}
+[15.808055] (-) TimerEvent: {}
+[15.908765] (-) TimerEvent: {}
+[16.009457] (-) TimerEvent: {}
+[16.110136] (-) TimerEvent: {}
+[16.210824] (-) TimerEvent: {}
+[16.311524] (-) TimerEvent: {}
+[16.412209] (-) TimerEvent: {}
+[16.512865] (-) TimerEvent: {}
+[16.613545] (-) TimerEvent: {}
+[16.714320] (-) TimerEvent: {}
+[16.815027] (-) TimerEvent: {}
+[16.915700] (-) TimerEvent: {}
+[17.016388] (-) TimerEvent: {}
+[17.117071] (-) TimerEvent: {}
+[17.217753] (-) TimerEvent: {}
+[17.318450] (-) TimerEvent: {}
+[17.419153] (-) TimerEvent: {}
+[17.519830] (-) TimerEvent: {}
+[17.620488] (-) TimerEvent: {}
+[17.721170] (-) TimerEvent: {}
+[17.821860] (-) TimerEvent: {}
+[17.922579] (-) TimerEvent: {}
+[18.023319] (-) TimerEvent: {}
+[18.124017] (-) TimerEvent: {}
+[18.224724] (-) TimerEvent: {}
+[18.325397] (-) TimerEvent: {}
+[18.426062] (-) TimerEvent: {}
+[18.526730] (-) TimerEvent: {}
+[18.627451] (-) TimerEvent: {}
+[18.728262] (-) TimerEvent: {}
+[18.736916] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libnav2_pure_pursuit_controller.so\x1b[0m\n'}
+[18.828407] (-) TimerEvent: {}
+[18.929128] (-) TimerEvent: {}
+[19.029847] (-) TimerEvent: {}
+[19.130531] (-) TimerEvent: {}
+[19.231391] (-) TimerEvent: {}
+[19.332279] (-) TimerEvent: {}
+[19.344513] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'[100%] Built target nav2_pure_pursuit_controller\n'}
+[19.370909] (nav2_pure_pursuit_controller) CommandEnded: {'returncode': 0}
+[19.371809] (nav2_pure_pursuit_controller) JobProgress: {'identifier': 'nav2_pure_pursuit_controller', 'progress': 'install'}
+[19.371877] (nav2_pure_pursuit_controller) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller'], 'cwd': '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[19.384969] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Install configuration: "Release"\n'}
+[19.385720] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/libnav2_pure_pursuit_controller.so\n'}
+[19.386197] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Set runtime path of "/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/libnav2_pure_pursuit_controller.so" to ""\n'}
+[19.386412] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/include/\n'}
+[19.386778] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/include//omni_pursuit_controller.hpp\n'}
+[19.387175] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/library_path.sh\n'}
+[19.387418] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/library_path.dsv\n'}
+[19.387640] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/nav2_pure_pursuit_controller.xml\n'}
+[19.388095] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/package_run_dependencies/nav2_pure_pursuit_controller\n'}
+[19.388639] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/parent_prefix_path/nav2_pure_pursuit_controller\n'}
+[19.388943] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/ament_prefix_path.sh\n'}
+[19.389236] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/ament_prefix_path.dsv\n'}
+[19.389505] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/path.sh\n'}
+[19.389782] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/path.dsv\n'}
+[19.390036] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.bash\n'}
+[19.390305] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.sh\n'}
+[19.391134] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.zsh\n'}
+[19.391410] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.dsv\n'}
+[19.391682] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.dsv\n'}
+[19.392056] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/packages/nav2_pure_pursuit_controller\n'}
+[19.392386] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/nav2_core__pluginlib__plugin/nav2_pure_pursuit_controller\n'}
+[19.392711] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[19.392979] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[19.393526] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[19.393908] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/nav2_pure_pursuit_controllerConfig.cmake\n'}
+[19.394107] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/nav2_pure_pursuit_controllerConfig-version.cmake\n'}
+[19.394353] (nav2_pure_pursuit_controller) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.xml\n'}
+[19.399371] (nav2_pure_pursuit_controller) CommandEnded: {'returncode': 0}
+[19.432413] (-) TimerEvent: {}
+[19.437373] (nav2_pure_pursuit_controller) JobEnded: {'identifier': 'nav2_pure_pursuit_controller', 'rc': 0}
+[19.532605] (-) TimerEvent: {}
+[19.633283] (-) TimerEvent: {}
+[19.733975] (-) TimerEvent: {}
+[19.834691] (-) TimerEvent: {}
+[19.935427] (-) TimerEvent: {}
+[20.036189] (-) TimerEvent: {}
+[20.136983] (-) TimerEvent: {}
+[20.238055] (-) TimerEvent: {}
+[20.338857] (-) TimerEvent: {}
+[20.439863] (-) TimerEvent: {}
+[20.540494] (-) TimerEvent: {}
+[20.641254] (-) TimerEvent: {}
+[20.741953] (-) TimerEvent: {}
+[20.842603] (-) TimerEvent: {}
+[20.943279] (-) TimerEvent: {}
+[21.043885] (-) TimerEvent: {}
+[21.144514] (-) TimerEvent: {}
+[21.245293] (-) TimerEvent: {}
+[21.346010] (-) TimerEvent: {}
+[21.446761] (-) TimerEvent: {}
+[21.547514] (-) TimerEvent: {}
+[21.648137] (-) TimerEvent: {}
+[21.748898] (-) TimerEvent: {}
+[21.849615] (-) TimerEvent: {}
+[21.950255] (-) TimerEvent: {}
+[22.051019] (-) TimerEvent: {}
+[22.151722] (-) TimerEvent: {}
+[22.252310] (-) TimerEvent: {}
+[22.353041] (-) TimerEvent: {}
+[22.453739] (-) TimerEvent: {}
+[22.554339] (-) TimerEvent: {}
+[22.655109] (-) TimerEvent: {}
+[22.755827] (-) TimerEvent: {}
+[22.856433] (-) TimerEvent: {}
+[22.957195] (-) TimerEvent: {}
+[23.057924] (-) TimerEvent: {}
+[23.158546] (-) TimerEvent: {}
+[23.259314] (-) TimerEvent: {}
+[23.360014] (-) TimerEvent: {}
+[23.460611] (-) TimerEvent: {}
+[23.561260] (-) TimerEvent: {}
+[23.662019] (-) TimerEvent: {}
+[23.762675] (-) TimerEvent: {}
+[23.863489] (-) TimerEvent: {}
+[23.964206] (-) TimerEvent: {}
+[24.064787] (-) TimerEvent: {}
+[24.165579] (-) TimerEvent: {}
+[24.266273] (-) TimerEvent: {}
+[24.366901] (-) TimerEvent: {}
+[24.467663] (-) TimerEvent: {}
+[24.568266] (-) TimerEvent: {}
+[24.668875] (-) TimerEvent: {}
+[24.769496] (-) TimerEvent: {}
+[24.870103] (-) TimerEvent: {}
+[24.971102] (-) TimerEvent: {}
+[24.977968] (ldlidar_ros2) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable ldlidar_ros2_node\x1b[0m\n'}
+[25.071125] (-) TimerEvent: {}
+[25.171790] (-) TimerEvent: {}
+[25.272438] (-) TimerEvent: {}
+[25.373086] (-) TimerEvent: {}
+[25.473832] (-) TimerEvent: {}
+[25.482200] (ldlidar_ros2) StdoutLine: {'line': b'[100%] Built target ldlidar_ros2_node\n'}
+[25.507371] (ldlidar_ros2) CommandEnded: {'returncode': 0}
+[25.509171] (ldlidar_ros2) JobProgress: {'identifier': 'ldlidar_ros2', 'progress': 'install'}
+[25.510013] (ldlidar_ros2) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2'], 'cwd': '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'qkrt'), ('SSH_CLIENT', '192.168.8.105 59598 22'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/qkrt'), ('OLDPWD', '/home/qkrt/qkrt-nav'), ('SSH_TTY', '/dev/pts/3'), ('ROS_PYTHON_VERSION', '3'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'qkrt'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '11'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/home/qkrt/.local/bin:/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', 'localhost:12.0'), ('LANG', 'en_US.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('ROS_DOMAIN_ID', '67'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('PWD', '/home/qkrt/qkrt-nav/src/build/ldlidar_ros2'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.8.105 59598 192.168.8.102 22'), ('XDG_DATA_DIRS', '/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[25.535314] (ldlidar_ros2) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[25.536013] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/ldlidar_ros2/ldlidar_ros2_node\n'}
+[25.541009] (ldlidar_ros2) StdoutLine: {'line': b'-- Set runtime path of "/home/qkrt/qkrt-nav/src/install/ldlidar_ros2/lib/ldlidar_ros2/ldlidar_ros2_node" to ""\n'}
+[25.541442] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch\n'}
+[25.541721] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld06.launch.py\n'}
+[25.542401] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld14.launch.py\n'}
+[25.542608] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld14.launch.py\n'}
+[25.542805] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld14p.launch.py\n'}
+[25.543017] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld19.launch.py\n'}
+[25.543147] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld14p.launch.py\n'}
+[25.543342] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld06.launch.py\n'}
+[25.543539] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld19.launch.py\n'}
+[25.543733] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//rviz2\n'}
+[25.543918] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//rviz2/ldlidar.rviz\n'}
+[25.544102] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//scripts\n'}
+[25.544277] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//scripts/ldlidar.rules\n'}
+[25.544400] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//scripts/delete_udev_rules.sh\n'}
+[25.544523] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2//scripts/create_udev_rules.sh\n'}
+[25.544731] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ament_index/resource_index/package_run_dependencies/ldlidar_ros2\n'}
+[25.545039] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ament_index/resource_index/parent_prefix_path/ldlidar_ros2\n'}
+[25.545380] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/environment/ament_prefix_path.sh\n'}
+[25.545624] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/environment/ament_prefix_path.dsv\n'}
+[25.545890] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/environment/path.sh\n'}
+[25.546182] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/environment/path.dsv\n'}
+[25.546438] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.bash\n'}
+[25.546693] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.sh\n'}
+[25.546977] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.zsh\n'}
+[25.547243] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.dsv\n'}
+[25.547498] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv\n'}
+[25.547827] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ament_index/resource_index/packages/ldlidar_ros2\n'}
+[25.548235] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/cmake/ldlidar_ros2Config.cmake\n'}
+[25.548432] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/cmake/ldlidar_ros2Config-version.cmake\n'}
+[25.548644] (ldlidar_ros2) StdoutLine: {'line': b'-- Installing: /home/qkrt/qkrt-nav/src/install/ldlidar_ros2/share/ldlidar_ros2/package.xml\n'}
+[25.553065] (ldlidar_ros2) CommandEnded: {'returncode': 0}
+[25.574586] (-) TimerEvent: {}
+[25.614860] (ldlidar_ros2) JobEnded: {'identifier': 'ldlidar_ros2', 'rc': 0}
+[25.618854] (-) EventReactorShutdown: {}

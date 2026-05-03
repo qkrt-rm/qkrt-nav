@@ -1,0 +1,68 @@
+[2.352s] Invoking command in '/home/qkrt/qkrt-nav/src/sentry_communication': PYTHONPATH=/home/qkrt/qkrt-nav/src/build/sentry_communication/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/sentry_communication build --build-base /home/qkrt/qkrt-nav/src/build/sentry_communication/build install --record /home/qkrt/qkrt-nav/src/build/sentry_communication/install.log --single-version-externally-managed install_data
+[2.881s] running egg_info
+[2.887s] creating ../build/sentry_communication/sentry_communication.egg-info
+[2.888s] writing ../build/sentry_communication/sentry_communication.egg-info/PKG-INFO
+[2.888s] writing dependency_links to ../build/sentry_communication/sentry_communication.egg-info/dependency_links.txt
+[2.888s] writing entry points to ../build/sentry_communication/sentry_communication.egg-info/entry_points.txt
+[2.888s] writing requirements to ../build/sentry_communication/sentry_communication.egg-info/requires.txt
+[2.888s] writing top-level names to ../build/sentry_communication/sentry_communication.egg-info/top_level.txt
+[2.888s] writing manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'
+[2.889s] reading manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'
+[2.889s] adding license file 'LICENSE'
+[2.890s] writing manifest file '../build/sentry_communication/sentry_communication.egg-info/SOURCES.txt'
+[2.890s] running build
+[2.890s] running build_py
+[2.891s] creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build
+[2.891s] creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib
+[2.891s] creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.891s] copying sentry_communication/mcb_message.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.892s] copying sentry_communication/__init__.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.892s] copying sentry_communication/event_driven.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.892s] copying sentry_communication/comm_hub.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.892s] copying sentry_communication/async_io.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.892s] copying sentry_communication/threaded_blocking_read.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication
+[2.893s] creating /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.893s] copying sentry_communication/communication/__init__.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.893s] copying sentry_communication/communication/CRC.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.894s] copying sentry_communication/communication/Message.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.894s] copying sentry_communication/communication/Serial.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.894s] copying sentry_communication/communication/Receive.py -> /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication
+[2.895s] running install
+[2.896s] running install_lib
+[2.900s] creating /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.900s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/mcb_message.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.901s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/__init__.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.901s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/event_driven.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.901s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/comm_hub.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.901s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/async_io.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.902s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/threaded_blocking_read.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication
+[2.902s] creating /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.902s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/__init__.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.903s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/CRC.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.903s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Message.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.903s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Serial.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.903s] copying /home/qkrt/qkrt-nav/src/build/sentry_communication/build/lib/sentry_communication/communication/Receive.py -> /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication
+[2.905s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/mcb_message.py to mcb_message.cpython-310.pyc
+[2.906s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/__init__.py to __init__.cpython-310.pyc
+[2.906s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/event_driven.py to event_driven.cpython-310.pyc
+[2.908s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/comm_hub.py to comm_hub.cpython-310.pyc
+[2.912s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/async_io.py to async_io.cpython-310.pyc
+[2.915s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/threaded_blocking_read.py to threaded_blocking_read.cpython-310.pyc
+[2.920s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/__init__.py to __init__.cpython-310.pyc
+[2.921s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/CRC.py to CRC.cpython-310.pyc
+[2.922s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Message.py to Message.cpython-310.pyc
+[2.923s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Serial.py to Serial.cpython-310.pyc
+[2.924s] byte-compiling /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication/communication/Receive.py to Receive.cpython-310.pyc
+[2.924s] running install_data
+[2.925s] creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index
+[2.925s] creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index
+[2.925s] creating /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index/packages
+[2.925s] copying resource/sentry_communication -> /home/qkrt/qkrt-nav/src/install/sentry_communication/share/ament_index/resource_index/packages
+[2.925s] copying package.xml -> /home/qkrt/qkrt-nav/src/install/sentry_communication/share/sentry_communication
+[2.926s] running install_egg_info
+[2.930s] Copying ../build/sentry_communication/sentry_communication.egg-info to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages/sentry_communication-0.0.0-py3.10.egg-info
+[2.932s] running install_scripts
+[3.003s] Installing comm_hub script to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/sentry_communication
+[3.003s] Installing threaded_blocking script to /home/qkrt/qkrt-nav/src/install/sentry_communication/lib/sentry_communication
+[3.004s] writing list of installed files to '/home/qkrt/qkrt-nav/src/build/sentry_communication/install.log'
+[3.117s] Invoked command in '/home/qkrt/qkrt-nav/src/sentry_communication' returned '0': PYTHONPATH=/home/qkrt/qkrt-nav/src/build/sentry_communication/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/qkrt/qkrt-nav/src/install/sentry_communication/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/sentry_communication build --build-base /home/qkrt/qkrt-nav/src/build/sentry_communication/build install --record /home/qkrt/qkrt-nav/src/build/sentry_communication/install.log --single-version-externally-managed install_data

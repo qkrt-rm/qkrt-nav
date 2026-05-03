@@ -1,0 +1,50 @@
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/qkrt/qkrt-nav/src/build/sentry_description
+-- Install configuration: ""
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/display_rviz.launch.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/display.launch.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//launch/gazebo.launch.py
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes/2026_ARC_3v3.stl
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//meshes/2026_ARC_3v3_simplified.stl
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf/sentry_description.urdf.xacro
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//urdf/robot_onshapetourdf.urdf.xacro
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/my_world_prev.sdf
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/my_world.sdf
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//worlds/comp_map.sdf
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz/sentry_config.rviz
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description//rviz/display_config.rviz
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/package_run_dependencies/sentry_description
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/parent_prefix_path/sentry_description
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/ament_prefix_path.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/ament_prefix_path.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/path.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/environment/path.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.bash
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.sh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.zsh
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/local_setup.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.dsv
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/ament_index/resource_index/packages/sentry_description
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig.cmake
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/cmake/sentry_descriptionConfig-version.cmake
+-- Installing: /home/qkrt/qkrt-nav/src/install/sentry_description/share/sentry_description/package.xml

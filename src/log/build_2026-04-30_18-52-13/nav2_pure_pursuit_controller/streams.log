@@ -1,0 +1,74 @@
+[0.065s] Invoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/omni_pursuit_controller -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller
+[1.309s] -- The C compiler identification is GNU 11.4.0
+[1.310s] -- The CXX compiler identification is GNU 11.4.0
+[1.310s] -- Detecting C compiler ABI info
+[1.456s] -- Detecting C compiler ABI info - done
+[1.501s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.504s] -- Detecting C compile features
+[1.504s] -- Detecting C compile features - done
+[1.519s] -- Detecting CXX compiler ABI info
+[1.885s] -- Detecting CXX compiler ABI info - done
+[1.911s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.911s] -- Detecting CXX compile features
+[1.912s] -- Detecting CXX compile features - done
+[1.917s] -- Found ament_cmake: 1.3.14 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.381s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[2.589s] -- Found nav2_common: 1.1.20 (/opt/ros/humble/share/nav2_common/cmake)
+[2.592s] -- Found nav2_core: 1.1.20 (/opt/ros/humble/share/nav2_core/cmake)
+[2.682s] -- Found rosidl_generator_c: 3.1.8 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[2.706s] -- Found rosidl_adapter: 3.1.8 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[2.725s] -- Found rosidl_generator_cpp: 3.1.8 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[2.753s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.787s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.873s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[2.878s] -- Found rmw_fastrtps_cpp: 6.2.10 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[3.086s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[3.140s] -- Found FastRTPS: /opt/ros/humble/include  
+[3.223s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.242s] -- Looking for pthread.h
+[3.388s] -- Looking for pthread.h - found
+[3.390s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[3.564s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[3.566s] -- Found Threads: TRUE  
+[4.184s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[4.184s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[4.398s] -- Setting build type to Release as none was specified.
+[4.701s] -- Found ament_lint_auto: 0.12.15 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[5.314s] -- Configuring done
+[5.898s] -- Generating done
+[5.954s] -- Build files have been written to: /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller
+[6.048s] Invoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/qkrt/qkrt-nav/src/omni_pursuit_controller -DCMAKE_INSTALL_PREFIX=/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller
+[6.049s] Invoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller -- -j6 -l6
+[6.331s] [ 50%] [32mBuilding CXX object CMakeFiles/nav2_pure_pursuit_controller.dir/src/omni_pursuit_controller.cpp.o[0m
+[18.691s] [100%] [32m[1mLinking CXX shared library libnav2_pure_pursuit_controller.so[0m
+[19.298s] [100%] Built target nav2_pure_pursuit_controller
+[19.325s] Invoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller -- -j6 -l6
+[19.325s] Invoking command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller
+[19.339s] -- Install configuration: "Release"
+[19.339s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/libnav2_pure_pursuit_controller.so
+[19.340s] -- Set runtime path of "/home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/lib/libnav2_pure_pursuit_controller.so" to ""
+[19.340s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/include/
+[19.340s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/include//omni_pursuit_controller.hpp
+[19.341s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/library_path.sh
+[19.341s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/library_path.dsv
+[19.341s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/nav2_pure_pursuit_controller.xml
+[19.342s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/package_run_dependencies/nav2_pure_pursuit_controller
+[19.342s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/parent_prefix_path/nav2_pure_pursuit_controller
+[19.342s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/ament_prefix_path.sh
+[19.343s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/ament_prefix_path.dsv
+[19.343s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/path.sh
+[19.343s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/environment/path.dsv
+[19.343s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.bash
+[19.344s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.sh
+[19.345s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.zsh
+[19.345s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/local_setup.dsv
+[19.345s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.dsv
+[19.345s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/packages/nav2_pure_pursuit_controller
+[19.346s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/ament_index/resource_index/nav2_core__pluginlib__plugin/nav2_pure_pursuit_controller
+[19.346s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_include_directories-extras.cmake
+[19.346s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_libraries-extras.cmake
+[19.347s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/ament_cmake_export_dependencies-extras.cmake
+[19.347s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/nav2_pure_pursuit_controllerConfig.cmake
+[19.348s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/cmake/nav2_pure_pursuit_controllerConfig-version.cmake
+[19.348s] -- Installing: /home/qkrt/qkrt-nav/src/install/nav2_pure_pursuit_controller/share/nav2_pure_pursuit_controller/package.xml
+[19.353s] Invoked command in '/home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/qkrt/qkrt-nav/src/build/nav2_pure_pursuit_controller

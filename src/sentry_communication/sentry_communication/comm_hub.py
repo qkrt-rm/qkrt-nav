@@ -80,8 +80,12 @@ ODOM_LABELS = [
 ODOM_NUM_FLOATS = len(ODOM_LABELS)
 ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 
-# Robot geometry for mecanum wheel odometry (from URDF)
-WHEEL_RADIUS = 0.1  # meters
+# Robot geometry for mecanum wheel odometry
+# Wheel radius from MCB: WHEEL_DIAMETER_M = 0.076 in holonomic_chassis_subsystem.hpp
+WHEEL_RADIUS = 0.038  # meters
+# MCB getVelocity() returns motor shaft rad/s (gearRatio=1 default in DjiMotorEncoder).
+# Divide by mechanical gear ratio to get wheel rad/s.
+GEAR_RATIO = 19.0  # from holonomic_chassis_subsystem.hpp
 WHEEL_BASE_X = 0.2475  # half of base_width (distance from center to wheel along x)
 WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel along y)
 
@@ -218,15 +222,13 @@ class OdomPublisher(Node):
         if dt <= 0.0 or dt > 1.0:
             return
 
-        # Extract wheel speeds (assumed to be angular velocities in rad/s)
+        # Extract wheel speeds. MCB getVelocity() returns motor shaft rad/s with
+        # isInverted already applied, so all wheels are positive = robot moves forward.
+        # Divide by gear ratio to get wheel angular velocity (rad/s).
         # Order: wheelLF, wheelLB, wheelRB, wheelRF
-        w_lf, w_lb, w_rb, w_rf = wheel_speeds
+        w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
 
-        # Mecanum inverse kinematics: wheel speeds → robot velocity
-        # For standard mecanum wheel configuration with 45° rollers:
-        # vx = (w_lf + w_rf + w_lb + w_rb) * R / 4
-        # vy = (-w_lf + w_rf + w_lb - w_rb) * R / 4
-        # omega = (-w_lf + w_rf - w_lb + w_rb) * R / (4 * (lx + ly))
+        # Mecanum forward kinematics (O-type, 45° rollers):
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 

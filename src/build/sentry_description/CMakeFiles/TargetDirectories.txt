@@ -1,0 +1,9 @@
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/uninstall.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/sentry_description_uninstall.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/test.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/edit_cache.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/rebuild_cache.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/list_install_components.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/install.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/install/local.dir
+/home/qkrt/qkrt-nav/src/build/sentry_description/CMakeFiles/install/strip.dir
