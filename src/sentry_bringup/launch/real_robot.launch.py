@@ -130,7 +130,7 @@ def generate_launch_description():
         executable='ldlidar_ros2_node',
         name='ldlidar_node_1',
         parameters=[{
-            'product_name': 'LDLiDAR_LD06',
+            'product_name': 'LDLiDAR_LD19',
             'laser_scan_topic_name': 'scan_left',
             'point_cloud_2d_topic_name': 'pointcloud2d_left',
             'port_name': '/dev/ttyUSB0',
@@ -147,7 +147,7 @@ def generate_launch_description():
         executable='ldlidar_ros2_node',
         name='ldlidar_node_2',
         parameters=[{
-            'product_name': 'LDLiDAR_LD06',
+            'product_name': 'LDLiDAR_LD19',
             'laser_scan_topic_name': 'scan_right',
             'point_cloud_2d_topic_name': 'pointcloud2d_right',
             'port_name': '/dev/ttyUSB1',
