@@ -104,7 +104,7 @@ class OdomPublisher(Node):
 
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
 
-        # Odometry state (integrated position)
+        # Odometry state (chassis = base_link frame)
         self.odom_x = 0.0
         self.odom_y = 0.0
         self.odom_theta = 0.0
@@ -207,10 +207,13 @@ class OdomPublisher(Node):
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
     def _publish_odometry(self, wheel_speeds, imu_yaw):
-        """Compute odometry from mecanum wheel speeds and publish."""
+        """Compute odometry from mecanum wheel speeds and publish.
+
+        base_link is the chassis frame. odom_theta tracks chassis heading.
+        The turret's world orientation is handled by the TF chain through gimbal_joint.
+        """
         current_time = time.time()
 
-        # Initialize time on first call
         if self.last_odom_time is None:
             self.last_odom_time = current_time
             return
@@ -218,36 +221,26 @@ class OdomPublisher(Node):
         dt = current_time - self.last_odom_time
         self.last_odom_time = current_time
 
-        # Skip if dt is too small or too large (missed messages)
         if dt <= 0.0 or dt > 1.0:
             return
 
-        # Extract wheel speeds. MCB getVelocity() returns motor shaft rad/s with
-        # isInverted already applied, so all wheels are positive = robot moves forward.
-        # Divide by gear ratio to get wheel angular velocity (rad/s).
-        # Order: wheelLF, wheelLB, wheelRB, wheelRF
+        # Negate and scale: MCB sends motor shaft rad/s with sign inverted relative to our convention.
         w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
 
-        # Mecanum forward kinematics (O-type, 45° rollers).
-        # base_link +Y = turret direction (forward); base_link +X = lateral (left strafe).
-        # All-wheels-forward motion lands in base_link +Y, so that formula gives vy_bl.
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # base_link +X (lateral)
-        vy = (w_lf + w_rf + w_lb + w_rb) * r / 4.0   # base_link +Y (forward)
+        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (chassis +Y = turret direction)
+        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (chassis +X)
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
-        # Integrate yaw from wheel odometry (avoids IMU gyro bias drift)
         self.odom_theta += omega * dt
 
-        # Integrate position in world frame
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
         self.odom_x += (vx * cos_theta - vy * sin_theta) * dt
         self.odom_y += (vx * sin_theta + vy * cos_theta) * dt
 
-        # Create odometry message
         now = self.get_clock().now().to_msg()
 
         odom_msg = Odometry()
@@ -255,31 +248,24 @@ class OdomPublisher(Node):
         odom_msg.header.frame_id = 'odom'
         odom_msg.child_frame_id = 'base_link'
 
-        # Position
         odom_msg.pose.pose.position.x = self.odom_x
         odom_msg.pose.pose.position.y = self.odom_y
         odom_msg.pose.pose.position.z = 0.0
-
-        # Orientation (quaternion from yaw)
         odom_msg.pose.pose.orientation.x = 0.0
         odom_msg.pose.pose.orientation.y = 0.0
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
-        # Velocity in robot frame
-        odom_msg.twist.twist.linear.x = -vx # base_link +X is lateral, so invert for forward
+        odom_msg.twist.twist.linear.x = vx
         odom_msg.twist.twist.linear.y = vy
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
         odom_msg.twist.twist.angular.z = omega
 
-        # Covariance (diagonal, rough estimates)
-        # Pose covariance [x, y, z, roll, pitch, yaw]
-        odom_msg.pose.covariance[0] = 0.01  # x
-        odom_msg.pose.covariance[7] = 0.01  # y
+        odom_msg.pose.covariance[0] = 0.01   # x
+        odom_msg.pose.covariance[7] = 0.01   # y
         odom_msg.pose.covariance[35] = 0.01  # yaw
-        # Twist covariance
         odom_msg.twist.covariance[0] = 0.01  # vx
         odom_msg.twist.covariance[7] = 0.01  # vy
         odom_msg.twist.covariance[35] = 0.01  # omega

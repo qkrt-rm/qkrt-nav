@@ -71,7 +71,7 @@
 </xacro:macro>
 
 
-  <!-- Base Link -->
+  <!-- Base Link = chassis. Footprint and odometry follow this frame. -->
   <link name="base_link">
     <visual>
       <origin xyz="0 0 ${base_height/2 + ground_offset}" rpy="0 0 0"/>
@@ -90,7 +90,7 @@
     </collision>
     <xacro:box_inertia m="${mass}" w="${base_width}" d="${base_length}" h="${base_height}"/>
   </link>
-  
+
   <!-- Front Left Wheel -->
   <link name="front_left_wheel">
     <visual>
@@ -221,10 +221,11 @@
       </collision>
       <xacro:cylinder_inertia m="0.5" rad="${gimbal_radius}" h="${gimbal_height}"/>
   </link>
+  <!-- gimbal_joint: turret rotates relative to chassis (base_link). -->
   <joint name="gimbal_joint" type="continuous">
       <parent link="base_link"/>
       <child link="gimbal_link"/>
-      <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 ${0}"/>
+      <origin xyz="0 0 ${base_height + ground_offset + gimbal_height/2}" rpy="0 0 1.5708"/>
       <axis xyz="0 0 1"/>
       <dynamics damping="0.1" friction="0.1"/>
   </joint>
