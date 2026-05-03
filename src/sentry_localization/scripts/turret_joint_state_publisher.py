@@ -17,6 +17,9 @@ class TurretJointStatePublisher(Node):
         self.imu_subscriber_ = self.create_subscription(Imu, '/imu', self.imu_cb, 10)
         self.gyro_z = 0.0
 
+        self.integrated_turret_position = 0.0
+        self.prev_imu_time = None
+
         self.base_heading = None
         self._last_turret_data = None
         self._last_mcb_time = None
@@ -37,7 +40,7 @@ class TurretJointStatePublisher(Node):
 
 
         js_msg.position = [
-            (-turret_data[0]),
+            -turret_data[0],
             -turret_data[2],
             0.0,
             0.0,
@@ -56,6 +59,12 @@ class TurretJointStatePublisher(Node):
 
     def imu_cb(self, msg: Imu):
         self.gyro_z = msg.angular_velocity.z
+        current_time = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
+        if self.prev_imu_time is not None:
+            dt = current_time - self.prev_imu_time
+            self.integrated_turret_position += self.gyro_z * dt
+        self.prev_imu_time = current_time
+        self.get_logger().info(f"itp: {self.integrated_turret_position}", throttle_duration_sec=1.0)
 
     def turret_cb(self, msg: Float32MultiArray):
         self._last_turret_data = msg.data
