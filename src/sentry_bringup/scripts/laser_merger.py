@@ -11,8 +11,8 @@ class LaserMerger(Node):
     def __init__(self):
         super().__init__('laser_merger')
 
-        # Parameters
         self.declare_parameter('destination_frame', 'base_link')
+        self.declare_parameter('fixed_frame', 'odom')
         self.declare_parameter('scan_destination_topic', '/scan')
         self.declare_parameter('angle_min', -math.pi)
         self.declare_parameter('angle_max', math.pi)
@@ -21,27 +21,24 @@ class LaserMerger(Node):
         self.declare_parameter('range_max', 10.0)
 
         self.destination_frame = self.get_parameter('destination_frame').value
+        self.fixed_frame = self.get_parameter('fixed_frame').value
         self.angle_min = self.get_parameter('angle_min').value
         self.angle_max = self.get_parameter('angle_max').value
         self.angle_increment = self.get_parameter('angle_increment').value
         self.range_min = self.get_parameter('range_min').value
         self.range_max = self.get_parameter('range_max').value
 
-        # TF
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        # Storage for latest scans
         self.scan_left = None
         self.scan_right = None
 
-        # Subscribers
         self.sub_left = self.create_subscription(
             LaserScan, '/scan_left', self.scan_left_callback, qos_profile_sensor_data)
         self.sub_right = self.create_subscription(
             LaserScan, '/scan_right', self.scan_right_callback, qos_profile_sensor_data)
 
-        # Publisher - use RELIABLE so SLAM toolbox can subscribe
         scan_topic = self.get_parameter('scan_destination_topic').value
         reliable_qos = QoSProfile(
             reliability=ReliabilityPolicy.RELIABLE,
@@ -49,11 +46,11 @@ class LaserMerger(Node):
             depth=10
         )
         self.pub_scan = self.create_publisher(LaserScan, scan_topic, reliable_qos)
+        self.create_timer(0.05, self.publish_merged_scan)
 
-        # Timer to publish merged scan
-        self.create_timer(0.05, self.publish_merged_scan)  # 20 Hz
-
-        self.get_logger().info(f'Laser merger started, publishing to {scan_topic}')
+        self.get_logger().info(
+            f'Laser merger started, publishing to {scan_topic}, '
+            f'deskew bridge frame: {self.fixed_frame}')
 
     def scan_left_callback(self, msg):
         self.scan_left = msg
@@ -62,7 +59,6 @@ class LaserMerger(Node):
         self.scan_right = msg
 
     def _extract_2d_transform(self, tf_stamped):
-        """Extract (tx, ty, yaw) from a TransformStamped."""
         tx = tf_stamped.transform.translation.x
         ty = tf_stamped.transform.translation.y
         q = tf_stamped.transform.rotation
@@ -70,57 +66,68 @@ class LaserMerger(Node):
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         return tx, ty, math.atan2(siny_cosp, cosy_cosp)
 
-    def transform_scan_to_frame(self, scan, target_frame):
-        """Transform a laser scan to the target frame with per-ray motion compensation."""
-        # The ldlidar_ros2 driver stamps each scan at publication time (after all rays
-        # are collected), so header.stamp is the END of the scan. The first ray was
-        # captured at stamp - (n-1)*time_increment.
+    def _lookup_deskew(self, source_frame, source_time, target_frame, canonical_time):
+        """Look up the deskew transform for one ray endpoint in time.
+
+        Tries three methods in order, returning (transform, mode_str):
+          'full'   — odom-bridged: corrects turret rotation + robot body motion
+          'turret' — exact time, no bridge: corrects turret rotation only
+          'latest' — latest available TF: no per-ray correction at all
+        Returns (None, None) if all methods fail.
+        """
+        zero = rclpy.duration.Duration(seconds=0)
+        try:
+            tf = self.tf_buffer.lookup_transform_full(
+                target_frame, canonical_time,
+                source_frame, source_time,
+                self.fixed_frame, zero)
+            return tf, 'full'
+        except Exception:
+            pass
+        try:
+            tf = self.tf_buffer.lookup_transform(
+                target_frame, source_frame, source_time, zero)
+            return tf, 'turret'
+        except Exception:
+            pass
+        try:
+            tf = self.tf_buffer.lookup_transform(
+                target_frame, source_frame, rclpy.time.Time(), zero)
+            return tf, 'latest'
+        except Exception:
+            return None, None
+
+    def transform_scan_to_frame(self, scan, target_frame, canonical_time):
+        """Transform scan rays to target_frame with full per-ray deskewing.
+
+        Each ray is corrected using the TF at its exact capture time, bridged
+        through odom so both turret rotation and robot body motion are removed.
+        All resulting points are expressed in target_frame at canonical_time.
+        """
         n = len(scan.ranges)
         scan_duration = (n - 1) * scan.time_increment if scan.time_increment > 0.0 and n > 1 else 0.0
         t_end = rclpy.time.Time.from_msg(scan.header.stamp)
         t_start = t_end - rclpy.duration.Duration(seconds=scan_duration)
 
-        using_exact_time = True
-        try:
-            tf_start = self.tf_buffer.lookup_transform(
-                target_frame,
-                scan.header.frame_id,
-                t_start,
-                timeout=rclpy.duration.Duration(seconds=0)
-            )
-        except Exception:
-            # TF at scan time unavailable — fall back to latest available transform.
-            using_exact_time = False
-            try:
-                tf_start = self.tf_buffer.lookup_transform(
-                    target_frame,
-                    scan.header.frame_id,
-                    rclpy.time.Time(),
-                    timeout=rclpy.duration.Duration(seconds=0)
-                )
-            except Exception as e:
-                self.get_logger().warning(
-                    f'Could not transform from {scan.header.frame_id} to {target_frame}: {e}',
-                    throttle_duration_sec=2.0)
-                return []
+        tf_start, mode = self._lookup_deskew(
+            scan.header.frame_id, t_start, target_frame, canonical_time)
+        if tf_start is None:
+            self.get_logger().warning(
+                f'TF completely unavailable: {scan.header.frame_id} → {target_frame}',
+                throttle_duration_sec=2.0)
+            return []
 
         tx_s, ty_s, yaw_s = self._extract_2d_transform(tf_start)
-
-        # Motion compensation: interpolate TF across scan duration using time_increment.
-        # The LD19 takes ~167ms per scan; with a rotating turret this causes significant
-        # smearing if all rays are transformed with the same turret angle.
         tx_e, ty_e, yaw_e = tx_s, ty_s, yaw_s
         do_interp = False
-        if using_exact_time and scan_duration > 0.0:
-            try:
-                tf_end = self.tf_buffer.lookup_transform(
-                    target_frame,
-                    scan.header.frame_id,
-                    t_end,
-                    timeout=rclpy.duration.Duration(seconds=0)
-                )
+
+        # Only interpolate when we have a consistent time-aware lookup for both endpoints.
+        # 'latest' mode gives a TF at an unknown time, so interpolating to t_end is wrong.
+        if mode != 'latest' and scan_duration > 0.0:
+            tf_end, mode_end = self._lookup_deskew(
+                scan.header.frame_id, t_end, target_frame, canonical_time)
+            if tf_end is not None and mode_end == mode:
                 tx_e, ty_e, yaw_e = self._extract_2d_transform(tf_end)
-                # Normalize yaw delta to [-pi, pi] to handle wrap-around
                 dyaw = yaw_e - yaw_s
                 if dyaw > math.pi:
                     dyaw -= 2.0 * math.pi
@@ -128,8 +135,12 @@ class LaserMerger(Node):
                     dyaw += 2.0 * math.pi
                 yaw_e = yaw_s + dyaw
                 do_interp = True
-            except Exception:
-                pass  # fall back to single transform at scan start
+
+        if not do_interp:
+            self.get_logger().warning(
+                f'Deskewing inactive for {scan.header.frame_id} (mode={mode}): '
+                f'using single transform for all rays',
+                throttle_duration_sec=5.0)
 
         points = []
         inv_n1 = 1.0 / (n - 1) if n > 1 else 0.0
@@ -141,7 +152,7 @@ class LaserMerger(Node):
 
             if do_interp:
                 # LD19 scans CCW; with laser_scan_dir=True the driver mirrors the
-                # array, so index 0 = physical 359° (captured last, at t_end) and
+                # array so index 0 = physical 359° (captured last, at t_end) and
                 # index n-1 = physical 0° (captured first, at t_start).
                 alpha = 1.0 - i * inv_n1
                 tx = tx_s + alpha * (tx_e - tx_s)
@@ -167,34 +178,40 @@ class LaserMerger(Node):
         if self.scan_left is None and self.scan_right is None:
             return
 
-        # Collect all points from both scans
+        # Use the most recent input scan's timestamp so SLAM looks up the correct
+        # robot pose.  The old approach of stamping with now() caused SLAM to use
+        # a pose from up to 50 ms in the future relative to the actual scan data.
+        available = [s for s in [self.scan_left, self.scan_right] if s is not None]
+        canonical_stamp = max(
+            available,
+            key=lambda s: rclpy.time.Time.from_msg(s.header.stamp).nanoseconds
+        ).header.stamp
+        canonical_time = rclpy.time.Time.from_msg(canonical_stamp)
+
         all_points = []
-
         if self.scan_left is not None:
-            points = self.transform_scan_to_frame(self.scan_left, self.destination_frame)
-            all_points.extend(points)
-
+            all_points.extend(
+                self.transform_scan_to_frame(
+                    self.scan_left, self.destination_frame, canonical_time))
         if self.scan_right is not None:
-            points = self.transform_scan_to_frame(self.scan_right, self.destination_frame)
-            all_points.extend(points)
+            all_points.extend(
+                self.transform_scan_to_frame(
+                    self.scan_right, self.destination_frame, canonical_time))
 
         if not all_points:
             return
 
-        # Create merged scan
         num_readings = int((self.angle_max - self.angle_min) / self.angle_increment)
         ranges = [float('inf')] * num_readings
 
-        # Fill in ranges (keep minimum range for each angle bin)
         for angle, r in all_points:
             if self.angle_min <= angle <= self.angle_max:
                 idx = int((angle - self.angle_min) / self.angle_increment + 0.5)
                 if 0 <= idx < num_readings:
                     ranges[idx] = min(ranges[idx], r)
 
-        # Build message
         merged = LaserScan()
-        merged.header.stamp = self.get_clock().now().to_msg()
+        merged.header.stamp = canonical_stamp
         merged.header.frame_id = self.destination_frame
         merged.angle_min = self.angle_min
         merged.angle_max = self.angle_max

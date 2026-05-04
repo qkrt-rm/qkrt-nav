@@ -1,6 +1,7 @@
 laser_merger:
   ros__parameters:
     destination_frame: base_link
+    fixed_frame: odom
     scan_destination_topic: /scan
     laserscan_topics:
     - /scan_left
