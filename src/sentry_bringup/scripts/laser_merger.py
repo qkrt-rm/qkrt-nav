@@ -66,7 +66,7 @@ class LaserMerger(Node):
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         return tx, ty, math.atan2(siny_cosp, cosy_cosp)
 
-    def _lookup_deskew(self, source_frame, source_time, target_frame, canonical_time):
+    def _lookup_deskew(self, source_frame, source_time, target_frame):
         """Look up the deskew transform for one ray endpoint in time.
 
         Tries three methods in order, returning (transform, mode_str):
@@ -74,11 +74,16 @@ class LaserMerger(Node):
           'turret' — exact time, no bridge: corrects turret rotation only
           'latest' — latest available TF: no per-ray correction at all
         Returns (None, None) if all methods fail.
+
+        Target time is rclpy.time.Time() (latest EKF) to avoid blocking the
+        executor.  The merged scan is stamped with self.get_clock().now() to
+        match, so SLAM applies the correct pose.  Residual error is at most
+        one EKF period (~20 ms at 50 Hz) — roughly 2 cm at 1 m/s.
         """
         zero = rclpy.duration.Duration(seconds=0)
         try:
             tf = self.tf_buffer.lookup_transform_full(
-                target_frame, canonical_time,
+                target_frame, rclpy.time.Time(),
                 source_frame, source_time,
                 self.fixed_frame, zero)
             return tf, 'full'
@@ -97,12 +102,13 @@ class LaserMerger(Node):
         except Exception:
             return None, None
 
-    def transform_scan_to_frame(self, scan, target_frame, canonical_time):
+    def transform_scan_to_frame(self, scan, target_frame):
         """Transform scan rays to target_frame with full per-ray deskewing.
 
         Each ray is corrected using the TF at its exact capture time, bridged
         through odom so both turret rotation and robot body motion are removed.
-        All resulting points are expressed in target_frame at canonical_time.
+        All resulting points are expressed in target_frame at rclpy.time.Time()
+        (the latest available EKF time).
         """
         n = len(scan.ranges)
         scan_duration = (n - 1) * scan.time_increment if scan.time_increment > 0.0 and n > 1 else 0.0
@@ -110,7 +116,7 @@ class LaserMerger(Node):
         t_start = t_end - rclpy.duration.Duration(seconds=scan_duration)
 
         tf_start, mode = self._lookup_deskew(
-            scan.header.frame_id, t_start, target_frame, canonical_time)
+            scan.header.frame_id, t_start, target_frame)
         if tf_start is None:
             self.get_logger().warning(
                 f'TF completely unavailable: {scan.header.frame_id} → {target_frame}',
@@ -125,7 +131,7 @@ class LaserMerger(Node):
         # 'latest' mode gives a TF at an unknown time, so interpolating to t_end is wrong.
         if mode != 'latest' and scan_duration > 0.0:
             tf_end, mode_end = self._lookup_deskew(
-                scan.header.frame_id, t_end, target_frame, canonical_time)
+                scan.header.frame_id, t_end, target_frame)
             if tf_end is not None and mode_end == mode:
                 tx_e, ty_e, yaw_e = self._extract_2d_transform(tf_end)
                 dyaw = yaw_e - yaw_s
@@ -178,25 +184,27 @@ class LaserMerger(Node):
         if self.scan_left is None and self.scan_right is None:
             return
 
-        # Use the most recent input scan's timestamp so SLAM looks up the correct
-        # robot pose.  The old approach of stamping with now() caused SLAM to use
-        # a pose from up to 50 ms in the future relative to the actual scan data.
-        available = [s for s in [self.scan_left, self.scan_right] if s is not None]
-        canonical_stamp = max(
-            available,
-            key=lambda s: rclpy.time.Time.from_msg(s.header.stamp).nanoseconds
-        ).header.stamp
-        canonical_time = rclpy.time.Time.from_msg(canonical_stamp)
+        # Probe the actual latest EKF stamp so the merged scan is stamped with
+        # a time that is already in the TF buffer.  The deskew lookups use
+        # rclpy.time.Time() (= this same EKF time), so stamp and deskew target
+        # are consistent — SLAM can look up the TF immediately without waiting
+        # for extrapolation into the future (which caused the message-filter
+        # queue-full warnings and the room appearing to drift backwards).
+        zero = rclpy.duration.Duration(seconds=0)
+        try:
+            ekf_tf = self.tf_buffer.lookup_transform(
+                self.destination_frame, self.fixed_frame, rclpy.time.Time(), zero)
+            merged_stamp = ekf_tf.header.stamp
+        except Exception:
+            merged_stamp = self.get_clock().now().to_msg()
 
         all_points = []
         if self.scan_left is not None:
             all_points.extend(
-                self.transform_scan_to_frame(
-                    self.scan_left, self.destination_frame, canonical_time))
+                self.transform_scan_to_frame(self.scan_left, self.destination_frame))
         if self.scan_right is not None:
             all_points.extend(
-                self.transform_scan_to_frame(
-                    self.scan_right, self.destination_frame, canonical_time))
+                self.transform_scan_to_frame(self.scan_right, self.destination_frame))
 
         if not all_points:
             return
@@ -211,7 +219,7 @@ class LaserMerger(Node):
                     ranges[idx] = min(ranges[idx], r)
 
         merged = LaserScan()
-        merged.header.stamp = canonical_stamp
+        merged.header.stamp = merged_stamp
         merged.header.frame_id = self.destination_frame
         merged.angle_min = self.angle_min
         merged.angle_max = self.angle_max

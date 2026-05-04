@@ -42,6 +42,8 @@ def generate_launch_description():
     )
 
     # SLAM Toolbox in mapping mode.
+    # cwd='/tmp' prevents slam_toolbox from finding and reloading stale .posegraph
+    # files left over from previous runs with bad odometry.
     slam_toolbox_node = Node(
         package='slam_toolbox',
         executable='async_slam_toolbox_node',
@@ -52,7 +54,8 @@ def generate_launch_description():
             {'use_sim_time': use_sim_time}
         ],
         arguments=['--ros-args', '--log-level', 'slam_toolbox:=WARN'],
-        condition=IfCondition(slam)
+        condition=IfCondition(slam),
+        cwd='/tmp',
     )
 
     # Map server - used when slam=false to serve a pre-built map

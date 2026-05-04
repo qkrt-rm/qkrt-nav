@@ -366,7 +366,7 @@
    <joint name="turret_joint" type="fixed">
       <parent link="turret_shaft_link"/>
       <child link="turret_link"/>
-      <origin xyz="${-(turret_height_offset)} -0.014 0" rpy="1.5708 0 1.5708"/>
+      <origin xyz="${(turret_height_offset)} -0.014 0" rpy="1.5708 0 -1.5708"/>
   </joint>
 
   <!-- gun barrel shaft -->

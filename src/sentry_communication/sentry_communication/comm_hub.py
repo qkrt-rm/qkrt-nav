@@ -230,8 +230,8 @@ class OdomPublisher(Node):
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (chassis +Y = turret direction)
-        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (chassis +X)
+        vx = -(w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (chassis +Y = turret direction)
+        vy = -(-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (chassis +X)
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
         self.odom_theta += omega * dt
