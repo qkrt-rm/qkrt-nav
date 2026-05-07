@@ -83,9 +83,9 @@ ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 # Robot geometry for mecanum wheel odometry
 # Wheel radius from MCB: WHEEL_DIAMETER_M = 0.076 in holonomic_chassis_subsystem.hpp
 WHEEL_RADIUS = 0.038  # meters
-# MCB getVelocity() returns motor shaft rad/s (gearRatio=1 default in DjiMotorEncoder).
-# Divide by mechanical gear ratio to get wheel rad/s.
-GEAR_RATIO = 19.0  # from holonomic_chassis_subsystem.hpp
+# MCB getVelocity() appears to return wheel shaft rad/s (already gear-reduced in firmware).
+# Empirically calibrated: robot travels 1m, odom reported 0.513m with GEAR_RATIO=19 → ratio ~9.75.
+GEAR_RATIO = 9.75
 WHEEL_BASE_X = 0.2475  # half of base_width (distance from center to wheel along x)
 WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel along y)
 
@@ -230,8 +230,8 @@ class OdomPublisher(Node):
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = -(w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (chassis +Y = turret direction)
-        vy = -(-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (chassis +X)
+        vx = -(w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (all wheels same direction)
+        vy = -(-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (strafe pattern)
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
         self.odom_theta += omega * dt
@@ -261,7 +261,7 @@ class OdomPublisher(Node):
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
-        odom_msg.twist.twist.angular.z = -omega #inverted bc of sign convention of the gimbal yaw encoder
+        odom_msg.twist.twist.angular.z = omega
 
         odom_msg.pose.covariance[0] = 0.01   # x
         odom_msg.pose.covariance[7] = 0.01   # y
