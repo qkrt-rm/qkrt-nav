@@ -230,9 +230,9 @@ class OdomPublisher(Node):
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = -(w_lf + w_rf + w_lb + w_rb) * r / 4.0   # forward (all wheels same direction)
-        vy = -(-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # lateral (strafe pattern)
-        omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
+        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0    # forward (all wheels same direction)
+        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0   # lateral (strafe pattern)
+        omega = ((w_lf - w_rf + w_lb - w_rb) * r / (4.0 * l_sum))
 
         self.odom_theta += omega * dt
 
@@ -253,15 +253,15 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.position.z = 0.0
         odom_msg.pose.pose.orientation.x = 0.0
         odom_msg.pose.pose.orientation.y = 0.0
-        odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
-        odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
+        odom_msg.pose.pose.orientation.z = -math.sin(self.odom_theta / 2.0) #negated to match ccw is positive sign convention
+        odom_msg.pose.pose.orientation.w = -math.cos(self.odom_theta / 2.0) #negated to match ccw is positive sign convention
 
         odom_msg.twist.twist.linear.x = vx
         odom_msg.twist.twist.linear.y = vy
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
-        odom_msg.twist.twist.angular.z = omega
+        odom_msg.twist.twist.angular.z = omega 
 
         odom_msg.pose.covariance[0] = 0.01   # x
         odom_msg.pose.covariance[7] = 0.01   # y

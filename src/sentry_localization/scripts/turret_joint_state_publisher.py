@@ -30,7 +30,7 @@ class TurretJointStatePublisher(Node):
         self._last_mcb_time = None
         self.test_publisher_ = self.create_publisher(String, '/adjusted_speed', 10)
 
-        self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
+        # self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
 
     def _heartbeat_cb(self):
         if self._last_turret_data is not None:
@@ -63,7 +63,7 @@ class TurretJointStatePublisher(Node):
         self.js_publisher_.publish(js_msg)
 
         newMsg = String()
-        newMsg.data = f"new_speed: {self.odom_omega - self.gyro_z:.3f}"
+        newMsg.data = f"new_speed: {self.gyro_z - self.odom_omega:.3f}"
         self.test_publisher_.publish(newMsg)
 
     def imu_cb(self, msg: Imu):
