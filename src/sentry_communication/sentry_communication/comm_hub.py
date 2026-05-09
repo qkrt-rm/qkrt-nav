@@ -89,6 +89,8 @@ GEAR_RATIO = 9.75
 WHEEL_BASE_X = 0.2475  # half of base_width (distance from center to wheel along x)
 WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel along y)
 
+IMU_BIAS = 0 # imu bias, found by averaging values from 'ros2 topic echo /imu --field angular_velocity.z' while robot is stationary
+
 class OdomPublisher(Node):
     def __init__(self):
         super().__init__('odom_publisher')
@@ -183,7 +185,7 @@ class OdomPublisher(Node):
                     # Angular velocity (indices 11-13)
                     imu_msg.angular_velocity.x = values[11]  # imuGx
                     imu_msg.angular_velocity.y = values[12]  # imuGy
-                    imu_msg.angular_velocity.z = values[13]  # imuGz
+                    imu_msg.angular_velocity.z = values[13] - IMU_BIAS  # imuGz
                     imu_msg.angular_velocity_covariance[8] = 0.01  # gyro z variance (rad/s)^2
                     # Orientation from euler angles (indices 14-16: yaw, pitch, roll)
                     yaw, pitch, roll = values[14], values[15], values[16]

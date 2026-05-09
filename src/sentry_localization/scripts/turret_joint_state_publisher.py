@@ -30,11 +30,25 @@ class TurretJointStatePublisher(Node):
         self._last_mcb_time = None
         self.test_publisher_ = self.create_publisher(String, '/adjusted_speed', 10)
 
-        # self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
+        #self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
 
     def _heartbeat_cb(self):
         if self._last_turret_data is not None:
             self.publish_turret_js(self._last_turret_data)
+        else:
+            self._publish_zero_js()
+
+    def _publish_zero_js(self):
+        js_msg = JointState()
+        js_msg.header.stamp = self.get_clock().now().to_msg()
+        js_msg.name = [
+            'gimbal_joint', 'turret_shaft_joint',
+            'front_left_wheel_joint', 'front_right_wheel_joint',
+            'back_left_wheel_joint', 'back_right_wheel_joint'
+        ]
+        js_msg.position = [0.0] * 6
+        js_msg.velocity = [0.0] * 6
+        self.js_publisher_.publish(js_msg)
 
     def publish_turret_js(self, turret_data, stamp=None):
         js_msg = JointState()

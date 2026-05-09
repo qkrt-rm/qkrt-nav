@@ -131,10 +131,9 @@ def generate_launch_description():
         name='ldlidar_node_1',
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
-            'laser_scan_topic_name': 'scan_left',
-            'point_cloud_2d_topic_name': 'pointcloud2d_left',
+            'topic_name': 'scan_left',
             'port_name': '/dev/ttyUSB0',
-            'serial_baudrate': 230400,
+            'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
             'frame_id': 'laser_frame_left'
@@ -148,10 +147,9 @@ def generate_launch_description():
         name='ldlidar_node_2',
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
-            'laser_scan_topic_name': 'scan_right',
-            'point_cloud_2d_topic_name': 'pointcloud2d_right',
+            'topic_name': 'scan_right',
             'port_name': '/dev/ttyUSB1',
-            'serial_baudrate': 230400,
+            'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
             'frame_id': 'laser_frame_right'

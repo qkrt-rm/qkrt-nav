@@ -9,7 +9,7 @@ laser_merger:
     angle_min: -3.14159
     angle_max: 3.14159
     angle_increment: 0.01
-    range_min: 0.1
+    range_min: 0.25
     range_max: 10.0
     scan_time: 0.1
   

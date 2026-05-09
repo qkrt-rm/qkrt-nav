@@ -44,7 +44,7 @@ slam_toolbox:
     scan_buffer_maximum_scan_distance: 10.0
     link_match_minimum_response_fine: 0.1                   
     link_scan_maximum_distance: 5.0
-    minimum_laser_range: 0.1
+    minimum_laser_range: 0.25
     maximum_laser_range: 10.0
 
 
