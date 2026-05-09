@@ -532,6 +532,8 @@ b. the encoder yaw angle can sometimems reset seemingly randomly
 
 9. **Time delay between scans being published and being deskewed** - sometimes, there is a noticeable delay between rotating the turret in real life and the deskewing process. A lot of distortion and smearing will be likely visible here. Cause is unknown.  
 
+10. **Turret position drifts** - imu is drifting. Go to `comm_hub.py`. Reset the `IMU_BIAS` variable to 0, and see if that fixes the issue. If not, keep a bias of 0, and do ```ros2 topic echo /imu --field angular_velocity.z```. Average the values printed from there, and `IMU_BIAS` equal to that.
+
 ---
 
 ## To Be Completed
