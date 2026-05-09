@@ -64,12 +64,12 @@ class TurretJointStatePublisher(Node):
         ]
 
         js_msg.position = [
-            self.integrated_turret_position,
+            turret_data[0],
             -turret_data[2],
             0.0, 0.0, 0.0, 0.0
         ]
         js_msg.velocity = [
-            self.odom_omega - self.gyro_z,
+            self.odom_omega - turret_data[1],
             turret_data[3],
             0.0, 0.0, 0.0, 0.0
         ]
