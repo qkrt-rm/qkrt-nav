@@ -365,6 +365,20 @@ All transformed points are binned into a fixed angular grid (`angle_min=-π`, `a
 
 ## Setup Instructions
 
+### Startup Up the Physical Robot
+1. Unplug the chassis power cable from the referee serial module
+2. Insert a battery into the battery holder. Double click the power button and hold for 3 seconds on the second click to activate the battery
+3. Flick the switch from 'O' to 'I' to activate power distribution
+4. While the robot powers on, hold the turret level so the turret-mounted IMU calibrates properly
+5. Once you hear some startup noise, see lights flashing, and the serial module shows 3 green lights going to the chassis, gimbal, and ammo booster, replug the chassis power cable into the serial module
+6. Turn the remote on. If the remote is paired, it will auto connect. If not, look under the back-left side of the turret for a white/silver square. With a pen, push and hold the central-most button until lights start flashing. Your controller should then pair with the white receiver that is now in pairing mode.
+7. Drive the robot. Flick the left switch down to accept autonav commands. If the left switch is neutral, the robot will only accept controller commands. This is a safety feature
+
+Troubleshooting: 
+- If the chassis light turns off after reinserting cable, a: Remove the jetson power cable, turn the power distribution off and on again. Try the steps above again. Replug the jetson once everything works. b: keep the hardware setup the same, but turn on the power distribution with the chassis power cable already plugged in. Then, pray. 
+- If at any point the turret starts spinning erratically or you can spin it way faster than it should allow, it means the imu lost calibration. Restart from step 1 and power cycle the robot
+- If ssh drops or disconnects at any point, unplug and replug the router in the room
+
 The jetson connects to to the **QKRT-5G** or the **QKRT** wifi if 5G doesn't work. Log in to the wifi. Password: goodlife
 
 ssh into the jetson with: 
