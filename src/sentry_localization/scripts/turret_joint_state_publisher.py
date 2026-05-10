@@ -63,22 +63,27 @@ class TurretJointStatePublisher(Node):
             'back_left_wheel_joint',
             'back_right_wheel_joint'
         ]
+        
+        # Wrap to [-pi, pi] so 2pi jumps in turret_data[0] don't corrupt position
+        raw_diff = turret_data[0] - self.integrated_turret_position
+        gimbal_pos = math.atan2(math.sin(raw_diff), math.cos(raw_diff))
 
         js_msg.position = [
-            self.integrated_turret_position,
-            -turret_data[2],
+            gimbal_pos,
+            turret_data[2],
             0.0, 0.0, 0.0, 0.0
         ]
+        # d/dt(turret_abs - base_heading) = turret_abs_omega - odom_omega
         js_msg.velocity = [
-            self.odom_omega + turret_data[1],
-            turret_data[3],
+            turret_data[1] - self.odom_omega,
+            -turret_data[3],
             0.0, 0.0, 0.0, 0.0
         ]
 
         self.js_publisher_.publish(js_msg)
 
         newMsg = String()
-        newMsg.data = f"new_speed: {self.gyro_z - self.odom_omega:.3f}"
+        newMsg.data = f"new_speed: {raw_diff:.3f}"
         self.test_publisher_.publish(newMsg)
 
     def imu_cb(self, msg: Imu):
@@ -101,7 +106,7 @@ class TurretJointStatePublisher(Node):
 
         if self.prev_odom_time is not None:
             dt = current_time - self.prev_odom_time
-            #self.integrated_turret_position += self.odom_omega * dt
+            self.integrated_turret_position = self.odom_omega * dt
 
         self.prev_odom_time = current_time
 
@@ -115,7 +120,7 @@ class TurretJointStatePublisher(Node):
         current_time = self._last_mcb_time.nanoseconds * 1e-9
         if self.prev_turret_time is not None:
             dt = current_time - self.prev_turret_time
-            self.integrated_turret_position += msg.data[1] * dt
+            #self.integrated_turret_position += msg.data[1] * dt
 
         self._last_turret_data = list(msg.data)
         self.publish_turret_js(self._last_turret_data)
