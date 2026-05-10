@@ -8,10 +8,12 @@ from sentry_communication.communication.Receive import parse_frame
 import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, TransformStamped
 from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
+from tf2_ros import TransformBroadcaster
+from sensor_msgs.msg import JointState
 
 # MCB uses UART1 at 115200 baud
 serial = Serial("/dev/ttyTHS1", 115200)
@@ -37,7 +39,7 @@ def read_frame(ser):
     hdr_rest = ser.read(4)
     if len(hdr_rest) < 4:
         return None
-
+    # Extract payload length and validate (max 1024 bytes to avoid bad frames)
     payload_len = struct.unpack_from('<H', hdr_rest, 0)[0]
     if payload_len > 1024:
         return None
@@ -89,6 +91,8 @@ GEAR_RATIO = 19.0  # from holonomic_chassis_subsystem.hpp
 WHEEL_BASE_X = 0.2475  # half of base_width (distance from center to wheel along x)
 WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel along y)
 
+BASE_ROTATION_ODOM_OFFSET = 0.15 * math.pi # 0.15 pi offset
+
 class OdomPublisher(Node):
     def __init__(self):
         super().__init__('odom_publisher')
@@ -100,19 +104,26 @@ class OdomPublisher(Node):
         # Separate topic publishers
         self.imu_publisher_ = self.create_publisher(Imu, 'imu', 10)
         self.wheel_publisher_ = self.create_publisher(Float32MultiArray, 'wheel_speeds', 10)
-        self.turret_publisher_ = self.create_publisher(Float32MultiArray, 'turret', 10)
+        self.turret_publisher_ = self.create_publisher(Float32MultiArray, 'turret', 10)    # yaw/pitch pos/vel
+        
+        self.joint_state_pub_ = self.create_publisher(JointState, 'joint_states', 10)
 
+        # Odometry publisher and TF broadcaster
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
+        self.tf_broadcaster_ = TransformBroadcaster(self)
 
         # Odometry state (integrated position)
         self.odom_x = 0.0
         self.odom_y = 0.0
         self.odom_theta = 0.0
+        self.integrated_odom_theta = 0.0 
+        self.base_rotation_corrections = 0
         self.last_odom_time = None
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
 
+    # Read loop runs in separate thread to continuously read from serial and publish messages
     def _read_loop(self):
         self.get_logger().info('Read loop started, waiting for data...')
         while rclpy.ok():
@@ -172,6 +183,16 @@ class OdomPublisher(Node):
                     turret_msg.data = list(values[4:8])  # yawPos, yawVel, pitchPos, pitchVel
                     self.turret_publisher_.publish(turret_msg)
 
+                    js = JointState()
+                    js.header.stamp = self.get_clock().now().to_msg()
+                    js.name = ['turret_shaft_joint', 'gimbal_joint']
+
+                    # positions
+                    js.position = [float(values[4]), float(values[6])]  # yawPos, pitchPos          
+                    # velocities
+                    js.velocity = [float(values[5]), float(values[7])]  # yawVel, pitchVel
+                    self.joint_state_pub_.publish(js)
+
                     # Publish IMU data (indices 8-16)
                     imu_msg = Imu()
                     imu_msg.header.stamp = self.get_clock().now().to_msg()
@@ -184,7 +205,6 @@ class OdomPublisher(Node):
                     imu_msg.angular_velocity.x = values[11]  # imuGx
                     imu_msg.angular_velocity.y = values[12]  # imuGy
                     imu_msg.angular_velocity.z = values[13]  # imuGz
-                    imu_msg.angular_velocity_covariance[8] = 0.01  # gyro z variance (rad/s)^2
                     # Orientation from euler angles (indices 14-16: yaw, pitch, roll)
                     yaw, pitch, roll = values[14], values[15], values[16]
                     # Convert euler to quaternion (ZYX convention)
@@ -198,7 +218,11 @@ class OdomPublisher(Node):
                     self.imu_publisher_.publish(imu_msg)
 
                     # Compute and publish wheel odometry
-                    self._publish_odometry(values[0:4], yaw)
+                    # Base yaw = total IMU yaw minus turret yaw (turret rotates on top of base)
+                    turret_yaw = values[4]
+                    base_yaw = yaw - turret_yaw
+                    imu_gz = values[13] # IMU yaw rate (rad/s)
+                    self._publish_odometry(values[0:4], yaw, imu_gz, turret_yaw_vel)
 
                     self.get_logger().debug(
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
@@ -206,7 +230,7 @@ class OdomPublisher(Node):
                 else:
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
-    def _publish_odometry(self, wheel_speeds, imu_yaw):
+    def _publish_odometry(self, wheel_speeds, imu_yaw, imu_gz, turret_yaw_vel):
         """Compute odometry from mecanum wheel speeds and publish."""
         current_time = time.time()
 
@@ -228,16 +252,29 @@ class OdomPublisher(Node):
         # Order: wheelLF, wheelLB, wheelRB, wheelRF
         w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
 
-        # Mecanum forward kinematics (O-type, 45° rollers):
+        # Mecanum forward kinematics (O-type, 45° rollers).
+        # base_link +Y = turret direction (forward); base_link +X = lateral (left strafe).
+        # All-wheels-forward motion lands in base_link +Y, so that formula gives vy_bl.
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
-        vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0
-        vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
+        vx = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0  # base_link +X (lateral)
+        vy = (w_lf + w_rf + w_lb + w_rb) * r / 4.0   # base_link +Y (forward)
         omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
-        # Integrate yaw from wheel odometry (avoids IMU gyro bias drift)
-        self.odom_theta += omega * dt
+        omega2 = values[14] - values[5] #chassis omega based on encoder vyaw - imu turret vyaw
+        self.integrated_odom_theta += omega2 * dt
+        self.odom_theta = omega * dt
+        
+        # apply the offset corection for every rotation. 
+        corrections_due = int(self.integrated_odom_theta / (2.0 * math.pi))        
+        delta = corrections_due - self.base_rotation_corrections                   
+        if delta != 0:                                                             
+            self.odom_theta -= delta * BASE_ROTATION_ODOM_OFFSET                   
+            self.base_rotation_corrections = corrections_due 
+
+        # Use IMU yaw directly for orientation (more accurate than integrated omega)
+        #self.odom_theta = imu_yaw
 
         # Integrate position in world frame
         cos_theta = math.cos(self.odom_theta)
@@ -262,15 +299,16 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.orientation.x = 0.0
         odom_msg.pose.pose.orientation.y = 0.0
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
-        odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
+        #odom_msg.pose.pose.orientation.w = -math.cos(self.odom_theta / 2.0)
+
 
         # Velocity in robot frame
-        odom_msg.twist.twist.linear.x = vx
+        odom_msg.twist.twist.linear.x = -vx # base_link +X is lateral, so invert for forward
         odom_msg.twist.twist.linear.y = vy
         odom_msg.twist.twist.linear.z = 0.0
         odom_msg.twist.twist.angular.x = 0.0
         odom_msg.twist.twist.angular.y = 0.0
-        odom_msg.twist.twist.angular.z = omega
+        odom_msg.twist.twist.angular.z = omega2
 
         # Covariance (diagonal, rough estimates)
         # Pose covariance [x, y, z, roll, pitch, yaw]
@@ -283,6 +321,66 @@ class OdomPublisher(Node):
         odom_msg.twist.covariance[35] = 0.01  # omega
 
         self.odom_publisher_.publish(odom_msg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # Broadcast TF: odom → base_link
+        #tf_msg = TransformStamped()
+        #tf_msg.header.stamp = now
+        #tf_msg.header.frame_id = 'odom'
+        #tf_msg.child_frame_id = 'base_link'
+        #tf_msg.transform.translation.x = self.odom_x
+        #tf_msg.transform.translation.y = self.odom_y
+        #tf_msg.transform.translation.z = 0.0
+        #tf_msg.transform.rotation = odom_msg.pose.pose.orientation
+        #self.tf_broadcaster_.sendTransform(tf_msg)
+        
 
 
 def main():
