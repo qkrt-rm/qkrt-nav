@@ -65,7 +65,7 @@ class NavSubscriber(Node):
             Twist, 'cmd_vel', self.listener_callback, 10)
 
     def listener_callback(self, msg):
-        cmd = [msg.linear.x, msg.linear.y, msg.angular.z]
+        cmd = [msg.linear.y, msg.linear.x, 0.0]
         self.get_logger().info(f'Sending Command: {cmd}')
         sendVelocityCommand(cmd)
 

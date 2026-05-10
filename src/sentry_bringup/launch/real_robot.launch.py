@@ -131,12 +131,12 @@ def generate_launch_description():
         name='ldlidar_node_1',
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
-            'topic_name': 'scan_left',
+            'topic_name': 'scan_right',
             'port_name': '/dev/ttyUSB0',
             'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
-            'frame_id': 'laser_frame_left'
+            'frame_id': 'laser_frame_right'
         }],
         output='screen'
     )
@@ -231,7 +231,7 @@ def generate_launch_description():
         # Drivers
         comm_hub,
         laser_driver_1,
-        laser_driver_2,
+        # laser_driver_2,  # broken cable — unplug USB adapter before re-enabling
         laser_merger,
         # Control
         keyboard_teleop,

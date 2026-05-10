@@ -15,7 +15,7 @@ class TurretJointStatePublisher(Node):
 
         self.js_publisher_ = self.create_publisher(JointState, '/joint_states', 10)
         self.turret_subsciber_ = self.create_subscription(Float32MultiArray, '/turret', self.turret_cb, 10)
-        self.imu_subscriber_ = self.create_subscription(Imu, '/imu', self.imu_cb, 10)
+        #self.imu_subscriber_ = self.create_subscription(Imu, '/imu', self.imu_cb, 10)
         self.odom_subscriber_ = self.create_subscription(Odometry, '/odom', self.odom_cb, 10)
 
         self.gyro_z = 0.0
@@ -29,6 +29,7 @@ class TurretJointStatePublisher(Node):
         self._last_turret_data = None
         self._last_mcb_time = None
         self.test_publisher_ = self.create_publisher(String, '/adjusted_speed', 10)
+        self.prev_turret_time = None
 
         #self.create_timer(0.02, self._heartbeat_cb)  # 50 Hz
 
@@ -64,12 +65,12 @@ class TurretJointStatePublisher(Node):
         ]
 
         js_msg.position = [
-            turret_data[0],
+            self.integrated_turret_position,
             -turret_data[2],
             0.0, 0.0, 0.0, 0.0
         ]
         js_msg.velocity = [
-            self.odom_omega - turret_data[1],
+            self.odom_omega + turret_data[1],
             turret_data[3],
             0.0, 0.0, 0.0, 0.0
         ]
@@ -87,7 +88,7 @@ class TurretJointStatePublisher(Node):
 
         if self.prev_imu_time is not None:
             dt = current_time - self.prev_imu_time
-            self.integrated_turret_position += (self.odom_omega - self.gyro_z) * dt
+            #self.integrated_turret_position += (self.odom_omega - self.gyro_z) * dt
 
         self.prev_imu_time = current_time
 
@@ -96,17 +97,30 @@ class TurretJointStatePublisher(Node):
 
     def odom_cb(self, msg: Odometry):
         self.odom_omega = msg.twist.twist.angular.z
-        self.prev_odom_time = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
+        current_time = msg.header.stamp.sec + msg.header.stamp.nanosec * 1e-9
+
+        if self.prev_odom_time is not None:
+            dt = current_time - self.prev_odom_time
+            #self.integrated_turret_position += self.odom_omega * dt
+
+        self.prev_odom_time = current_time
 
     def turret_cb(self, msg: Float32MultiArray):
-        self._last_turret_data = msg.data
         self._last_mcb_time = self.get_clock().now()
 
         turret_heading = msg.data[0]
         if self.base_heading is None:
             self.base_heading = turret_heading
 
-        self.publish_turret_js(list(msg.data))
+        current_time = self._last_mcb_time.nanoseconds * 1e-9
+        if self.prev_turret_time is not None:
+            dt = current_time - self.prev_turret_time
+            self.integrated_turret_position += msg.data[1] * dt
+
+        self._last_turret_data = list(msg.data)
+        self.publish_turret_js(self._last_turret_data)
+        self.prev_turret_time = current_time
+
 
 
 def main(args=None):

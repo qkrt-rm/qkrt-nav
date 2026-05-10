@@ -82,14 +82,6 @@ class LaserMerger(Node):
         """
         zero = rclpy.duration.Duration(seconds=0)
         try:
-            tf = self.tf_buffer.lookup_transform_full(
-                target_frame, rclpy.time.Time(),
-                source_frame, source_time,
-                self.fixed_frame, zero)
-            return tf, 'full'
-        except Exception:
-            pass
-        try:
             tf = self.tf_buffer.lookup_transform(
                 target_frame, source_frame, source_time, zero)
             return tf, 'turret'
