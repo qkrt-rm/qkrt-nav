@@ -64,6 +64,27 @@ def generate_launch_description():
         description="Launch navigation stack"
     )
 
+    use_battery_mission = LaunchConfiguration("use_battery_mission")
+    use_battery_mission_arg = DeclareLaunchArgument(
+        "use_battery_mission",
+        default_value="false",
+        description="Launch battery mission controller and dummy battery publisher."
+    )
+
+    center_x = LaunchConfiguration("center_x")
+    center_x_arg = DeclareLaunchArgument(
+        "center_x",
+        default_value="6.0",
+        description="X coordinate of arena center in map frame."
+    )
+
+    center_y = LaunchConfiguration("center_y")
+    center_y_arg = DeclareLaunchArgument(
+        "center_y",
+        default_value="4.0",
+        description="Y coordinate of arena center in map frame."
+    )
+
     display = LaunchConfiguration("display")
     display_arg = DeclareLaunchArgument(
         "display",
@@ -98,12 +119,27 @@ def generate_launch_description():
         condition=IfCondition(use_joint_state_publisher),
     )
 
-    # Comm hub - MCB communication (publishes /odom, /imu, subscribes /cmd_vel)
+    # Comm hub - MCB communication (publishes /odom, /imu, subscribes /cmd_vel_rotated)
     comm_hub = Node(
         package='sentry_communication',
         executable='comm_hub',
         name='comm_hub',
-        output='screen'
+        output='screen',
+        remappings=[('cmd_vel', 'cmd_vel_rotated')]
+    )
+
+    # Rotate nav2's /cmd_vel (base_link frame) into gimbal_link frame before
+    # sending to the MCB. Costmaps use base_link so the footprint stays fixed.
+    cmd_vel_rotator = Node(
+        package='sentry_bringup',
+        executable='cmd_vel_gimbal_rotator.py',
+        name='cmd_vel_gimbal_rotator',
+        output='screen',
+        parameters=[{
+            'input_topic': '/cmd_vel',
+            'output_topic': '/cmd_vel_rotated',
+            'gimbal_joint_name': 'gimbal_joint',
+        }]
     )
 
     # LiDARs
@@ -147,12 +183,12 @@ def generate_launch_description():
         name='ldlidar_node_2',
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
-            'topic_name': 'scan_right',
+            'topic_name': 'scan_left',
             'port_name': '/dev/ttyUSB1',
             'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
-            'frame_id': 'laser_frame_right'
+            'frame_id': 'laser_frame_left'
         }],
         output='screen'
     )
@@ -199,7 +235,12 @@ def generate_launch_description():
     # Navigation (if use_nav is true)
     navigation = IncludeLaunchDescription(
         os.path.join(pkg_navigation, "launch", "navigation.launch.py"),
-        launch_arguments={'use_keepout': use_keepout}.items(),
+        launch_arguments={
+            'use_keepout': use_keepout,
+            'use_battery_mission': use_battery_mission,
+            'center_x': center_x,
+            'center_y': center_y,
+        }.items(),
         condition=IfCondition(use_nav)
     )
 
@@ -224,14 +265,18 @@ def generate_launch_description():
         use_localization_arg,
         use_keepout_arg,
         use_nav_arg,
+        use_battery_mission_arg,
+        center_x_arg,
+        center_y_arg,
         display_arg,
         # Robot description
         robot_state_publisher,
         #joint_state_publisher,
         # Drivers
         comm_hub,
+        cmd_vel_rotator,
         laser_driver_1,
-        # laser_driver_2,  # broken cable — unplug USB adapter before re-enabling
+        laser_driver_2,
         laser_merger,
         # Control
         keyboard_teleop,

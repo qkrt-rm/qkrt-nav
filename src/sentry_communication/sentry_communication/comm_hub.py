@@ -9,8 +9,8 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32
-from sensor_msgs.msg import Imu
+from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32, String
+from sensor_msgs.msg import Imu, JointState
 from nav_msgs.msg import Odometry
 
 # MCB uses UART1 at 115200 baud
@@ -112,6 +112,18 @@ class OdomPublisher(Node):
         self.odom_theta = 0.0
         self.last_odom_time = None
 
+
+        # Joint state publisher
+        self.js_publisher_ = self.create_publisher(JointState, '/joint_states', 10)
+
+        # Turret/IMU state — updated each MCB frame before _publish_odometry
+        self.gyro_z = 0.0       # turret world angular velocity (IMU gyro z)
+        self.gimbal_vel = 0.0   # turret yaw velocity from MCB encoder
+        self.pitch_pos = 0.0    # turret pitch position from MCB encoder
+        self.pitch_vel = 0.0    # turret pitch velocity from MCB encoder
+        self.turret_pos = 0.0   # integrated gimbal_joint angle (turret relative to base)
+
+
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
 
@@ -199,7 +211,14 @@ class OdomPublisher(Node):
                     imu_msg.orientation.z = cr * cp * sy - sr * sp * cy
                     self.imu_publisher_.publish(imu_msg)
 
-                    # Compute and publish wheel odometry
+                    # Update turret/IMU state before odometry so _publish_odometry uses current frame
+                    self.gyro_z = imu_msg.angular_velocity.z
+                    self.gimbal_pos = values[4]
+                    self.gimbal_vel = values[5]
+                    self.pitch_pos = values[6]
+                    self.pitch_vel = values[7]
+
+                    # Compute and publish wheel odometry + joint states
                     self._publish_odometry(values[0:4], yaw)
 
                     self.get_logger().debug(
@@ -234,7 +253,11 @@ class OdomPublisher(Node):
 
         vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0    # forward (all wheels same direction)
         vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0   # lateral (strafe pattern)
-        omega = ((w_lf - w_rf + w_lb - w_rb) * r / (4.0 * l_sum))
+        # omega = ((w_lf - w_rf + w_lb - w_rb) * r / (4.0 * l_sum)) # BAD OMEGA! 35% underestimate of true omega
+        
+        #########################################################
+        omega = self.gimbal_vel - self.gyro_z #VERIFY WHETHER THESE ARE THE CORRECT SIGNS IN REAL LIFE
+        #######################################################
 
         self.odom_theta += omega * dt
 
@@ -255,8 +278,8 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.position.z = 0.0
         odom_msg.pose.pose.orientation.x = 0.0
         odom_msg.pose.pose.orientation.y = 0.0
-        odom_msg.pose.pose.orientation.z = -math.sin(self.odom_theta / 2.0) #negated to match ccw is positive sign convention
-        odom_msg.pose.pose.orientation.w = -math.cos(self.odom_theta / 2.0) #negated to match ccw is positive sign convention
+        odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
+        odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
         odom_msg.twist.twist.linear.x = vx
         odom_msg.twist.twist.linear.y = vy
@@ -272,8 +295,36 @@ class OdomPublisher(Node):
         odom_msg.twist.covariance[7] = 0.01  # vy
         odom_msg.twist.covariance[35] = 0.01  # omega
 
-        self.odom_publisher_.publish(odom_msg)
 
+        js_msg = JointState()
+        js_msg.header.stamp = now
+
+        js_msg.name = [
+            'gimbal_joint',
+            'turret_shaft_joint',
+            'front_left_wheel_joint',
+            'front_right_wheel_joint',
+            'back_left_wheel_joint',
+            'back_right_wheel_joint'
+        ]
+
+        # gimbal_joint = turret angle relative to base.
+        # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
+        self.turret_pos += dt * (self.gyro_z - omega)
+        js_msg.position = [
+            self.turret_pos,
+            self.pitch_pos,
+            0.0, 0.0, 0.0, 0.0
+        ]
+        # gimbal_joint vel = turret_world_vel - base_world_vel. VERIFY SIGNS IRL.
+        js_msg.velocity = [
+            self.gyro_z - omega,
+            -self.pitch_vel,
+            0.0, 0.0, 0.0, 0.0
+        ]
+
+        self.odom_publisher_.publish(odom_msg)
+        self.js_publisher_.publish(js_msg)
 
 def main():
     rclpy.init()
@@ -283,6 +334,7 @@ def main():
     executor = MultiThreadedExecutor()
     executor.add_node(nav_subscriber)
     executor.add_node(odom_publisher)
+
 
     try:
         executor.spin()

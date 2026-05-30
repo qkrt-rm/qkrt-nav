@@ -25,7 +25,7 @@ controller_server:
     FollowPath:
       plugin: "nav2_omni_pursuit_controller::OmniPursuitController"
       desired_linear_vel: 0.25
-      lookahead_dist: 0.10
+      lookahead_dist: 0.20
       max_angular_vel: 0.0
       approach_velocity_scaling_dist: 0.35
       min_approach_linear_velocity: 0.08
@@ -37,7 +37,7 @@ local_costmap:
       update_frequency: 5.0
       publish_frequency: 2.0
       global_frame: odom
-      robot_base_frame: gimbal_link
+      robot_base_frame: base_link
       transform_tolerance: 0.8
       use_sim_time: true
       rolling_window: true

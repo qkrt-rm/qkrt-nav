@@ -48,7 +48,7 @@ global_costmap:
       update_frequency: 2.0
       publish_frequency: 1.0
       global_frame: map
-      robot_base_frame: gimbal_link
+      robot_base_frame: base_link
       transform_tolerance: 0.8
       use_sim_time: true
       footprint: "[[0.30, 0.24], [0.24, 0.30], [-0.24, 0.30], [-0.30, 0.24], [-0.30, -0.24], [-0.24, -0.30], [0.24, -0.30], [0.30, -0.24]]"

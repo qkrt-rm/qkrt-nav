@@ -15,6 +15,7 @@ install(DIRECTORY
 
 install(PROGRAMS
   scripts/laser_merger.py
+  scripts/cmd_vel_gimbal_rotator.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

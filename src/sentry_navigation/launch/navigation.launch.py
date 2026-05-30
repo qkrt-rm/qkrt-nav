@@ -14,6 +14,9 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration("use_sim_time")
     keepout_mask = LaunchConfiguration("keepout_mask")
     use_keepout = LaunchConfiguration("use_keepout")
+    use_battery_mission = LaunchConfiguration("use_battery_mission")
+    center_x = LaunchConfiguration("center_x")
+    center_y = LaunchConfiguration("center_y")
     lifecycle_nodes_base = [
         "controller_server",
         "planner_server",
@@ -42,6 +45,24 @@ def generate_launch_description():
     keepout_mask_arg = DeclareLaunchArgument(
         "keepout_mask",
         default_value="keepout_mask_from_sdf.yaml"
+    )
+
+    use_battery_mission_arg = DeclareLaunchArgument(
+        "use_battery_mission",
+        default_value="false",
+        description="Launch battery mission controller and dummy battery publisher."
+    )
+
+    center_x_arg = DeclareLaunchArgument(
+        "center_x",
+        default_value="6.0",
+        description="X coordinate of arena center in map frame."
+    )
+
+    center_y_arg = DeclareLaunchArgument(
+        "center_y",
+        default_value="4.0",
+        description="Y coordinate of arena center in map frame."
     )
 
     use_keepout_arg = DeclareLaunchArgument(
@@ -179,8 +200,33 @@ def generate_launch_description():
         condition=UnlessCondition(use_keepout),
     )
 
+    battery_health_publisher = Node(
+        package='sentry_navigation',
+        executable='battery_health_publisher.py',
+        name='battery_health_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}],
+        condition=IfCondition(use_battery_mission)
+    )
+
+    battery_mission_controller = Node(
+        package='sentry_navigation',
+        executable='battery_mission_controller.py',
+        name='battery_mission_controller',
+        output='screen',
+        parameters=[
+            {'use_sim_time': use_sim_time, 'map_frame': 'map', 'base_frame': 'base_link'},
+            {'center_x': center_x},
+            {'center_y': center_y},
+        ],
+        condition=IfCondition(use_battery_mission)
+    )
+
     return LaunchDescription([
         use_sim_time_arg,
+        use_battery_mission_arg,
+        center_x_arg,
+        center_y_arg,
         keepout_mask_arg,
         use_keepout_arg,
         nav2_controller_server,
@@ -192,4 +238,6 @@ def generate_launch_description():
         nav2_bt_navigator,
         nav2_lifecycle_manager,
         nav2_lifecycle_manager_no_keepout,
+        battery_health_publisher,
+        battery_mission_controller,
     ])

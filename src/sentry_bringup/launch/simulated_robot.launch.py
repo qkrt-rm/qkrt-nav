@@ -17,6 +17,9 @@ def generate_launch_description():
     map_yaml = LaunchConfiguration('map')
     robot_model = LaunchConfiguration('robot_model')
     world = LaunchConfiguration('world')
+    use_battery_mission = LaunchConfiguration('use_battery_mission')
+    center_x = LaunchConfiguration('center_x')
+    center_y = LaunchConfiguration('center_y')
 
     slam_arg = DeclareLaunchArgument(
         'slam',
@@ -43,6 +46,24 @@ def generate_launch_description():
     world_arg = DeclareLaunchArgument(
         'world',
         default_value='comp_map.sdf'
+    )
+
+    use_battery_mission_arg = DeclareLaunchArgument(
+        'use_battery_mission',
+        default_value='false',
+        description='Launch battery mission controller and dummy battery publisher.'
+    )
+
+    center_x_arg = DeclareLaunchArgument(
+        'center_x',
+        default_value='1.0',
+        description='X coordinate of arena center in map frame.'
+    )
+
+    center_y_arg = DeclareLaunchArgument(
+        'center_y',
+        default_value='0.0',
+        description='Y coordinate of arena center in map frame.'
     )
 
     gazebo = IncludeLaunchDescription(
@@ -87,7 +108,12 @@ def generate_launch_description():
             'launch',
             'navigation.launch.py'
         ),
-        launch_arguments={'use_sim_time': use_sim_time}.items()
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'use_battery_mission': use_battery_mission,
+            'center_x': center_x,
+            'center_y': center_y,
+        }.items()
     )
 
     laser_merger = Node(
@@ -107,6 +133,9 @@ def generate_launch_description():
         map_arg,
         robot_model_arg,
         world_arg,
+        use_battery_mission_arg,
+        center_x_arg,
+        center_y_arg,
         gazebo,
         TimerAction(
             period=5.0,
