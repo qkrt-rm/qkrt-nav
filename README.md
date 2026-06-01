@@ -30,7 +30,7 @@ Autonomous navigation stack for a DJI RoboMaster-style omnidirectional sentry ro
 
 Autonav works in simulation. The full stack (SLAM, EKF, Nav2, battery mission controller) launches and runs without crashing in `simulated_robot.launch.py`.
 
-The last known working hardware version is on **origin/real_robot_dev** — look for the commit **"AUTONAV WORKS, NO BEYBLADING"**. Everything since then should be the same or better, but the newer code hasn't been tested on the physical robot yet.
+The last known working hardware version is on **origin/develop** — look for the commit **"AUTONAV WORKS, NO BEYBLADING"**. Everything since then should be the same or better, but the newer code hasn't been tested on the physical robot yet.
 
 **Since the last hardware test:**
 - `turret_joint_state_publisher.py` has been merged into `comm_hub.py`. This means the turret joint states are now computed and published directly inside the MCB bridge — one fewer node, and the turret/odom data never has to pass between two separate processes. See the [VERIFY THESE SIGNS](#verify-these-signs-on-real-hardware) section before running on hardware, as several sign conventions in the new code need to be confirmed against real robot behaviour.
