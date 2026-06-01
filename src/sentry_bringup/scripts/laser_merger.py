@@ -66,7 +66,8 @@ class LaserMerger(Node):
         cosy_cosp = 1.0 - 2.0 * (q.y * q.y + q.z * q.z)
         return tx, ty, math.atan2(siny_cosp, cosy_cosp)
 
-    def _lookup_deskew(self, source_frame, source_time, target_frame):
+    def _lookup_deskew(self, source_frame, source_time, target_frame,
+                       timeout_sec=0.0):
         """Look up the deskew transform for one ray endpoint in time.
 
         Tries three methods in order, returning (transform, mode_str):
@@ -80,10 +81,11 @@ class LaserMerger(Node):
         match, so SLAM applies the correct pose.  Residual error is at most
         one EKF period (~20 ms at 50 Hz) — roughly 2 cm at 1 m/s.
         """
+        timeout = rclpy.duration.Duration(seconds=timeout_sec)
         zero = rclpy.duration.Duration(seconds=0)
         try:
             tf = self.tf_buffer.lookup_transform(
-                target_frame, source_frame, source_time, zero)
+                target_frame, source_frame, source_time, timeout)
             return tf, 'turret'
         except Exception:
             pass
@@ -123,7 +125,7 @@ class LaserMerger(Node):
         # 'latest' mode gives a TF at an unknown time, so interpolating to t_end is wrong.
         if mode != 'latest' and scan_duration > 0.0:
             tf_end, mode_end = self._lookup_deskew(
-                scan.header.frame_id, t_end, target_frame)
+                scan.header.frame_id, t_end, target_frame, timeout_sec=0.02)
             if tf_end is not None and mode_end == mode:
                 tx_e, ty_e, yaw_e = self._extract_2d_transform(tf_end)
                 dyaw = yaw_e - yaw_s
