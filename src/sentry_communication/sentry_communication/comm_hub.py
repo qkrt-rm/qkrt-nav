@@ -93,6 +93,11 @@ WHEEL_BASE_Y = 0.2475  # half of base_length (distance from center to wheel alon
 # --- heading: per-revolution drift correction ---
 BASE_ROTATION_ODOM_OFFSET = 0.15 * math.pi  # 0.15 pi offset
 
+# --- turret-snap heading correction ---
+# Gate: turret world yaw rate (imu_gz) below this threshold means turret is locked to world
+TURRET_LOCK_RATE_THRESHOLD = 0.1 * math.pi  # rad/s
+TURRET_SNAP_INTERVAL = 0.5 * math.pi        # snap odom_theta every quarter turn
+
 IMU_BIAS = 0  # imu bias, found by averaging 'ros2 topic echo /imu --field angular_velocity.z' while stationary
 
 
@@ -121,6 +126,12 @@ class OdomPublisher(Node):
         self.integrated_odom_theta = 0.0
         self.base_rotation_corrections = 0
         self.last_odom_time = None
+
+        # Turret-snap correction state
+        self.turret_snap_ref_pos = None   # turretYawPos at last gate-on or reference reset
+        self.odom_snap_ref_theta = 0.0    # odom_theta at last reference reset
+        self.turret_accumulated = 0.0     # unwrapped turret delta since reference reset
+        self.turret_snap_count = 0        # how many 0.5π snaps applied in current window
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
@@ -229,6 +240,40 @@ class OdomPublisher(Node):
                 else:
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
+    def _apply_turret_snap_correction(self, turret_yaw_pos, imu_gz):
+        """Snap odom_theta to nearest 0.5π boundary using turret-base angle difference.
+
+        Valid only while the turret is locked to a fixed world heading (gate: |imu_gz| < threshold).
+        When the turret moves, the reference resets so no error is injected into normal driving.
+        Sign assumption: base rotating CCW decreases turretYawPos (turret appears CW relative to base).
+        """
+        if abs(imu_gz) > TURRET_LOCK_RATE_THRESHOLD:
+            # Gate OFF: turret moving in world — reset reference, let wheel odom run uncorrected
+            self.turret_snap_ref_pos = turret_yaw_pos
+            self.odom_snap_ref_theta = self.odom_theta
+            self.turret_accumulated = 0.0
+            self.turret_snap_count = 0
+            return
+
+        if self.turret_snap_ref_pos is None:
+            self.turret_snap_ref_pos = turret_yaw_pos
+            self.odom_snap_ref_theta = self.odom_theta
+            return
+
+        # Incremental turret delta, normalized to [-π, π] to handle wrap-around
+        delta = turret_yaw_pos - self.turret_snap_ref_pos
+        delta = (delta + math.pi) % (2.0 * math.pi) - math.pi
+        self.turret_accumulated += delta
+        self.turret_snap_ref_pos = turret_yaw_pos
+
+        # Base rotates opposite to turret relative motion
+        base_rotation_estimate = -self.turret_accumulated
+        snaps_due = int(base_rotation_estimate / TURRET_SNAP_INTERVAL)
+
+        if snaps_due != self.turret_snap_count:
+            self.odom_theta = self.odom_snap_ref_theta + snaps_due * TURRET_SNAP_INTERVAL
+            self.turret_snap_count = snaps_due
+
     def _publish_odometry(self, wheel_speeds, imu_yaw, imu_gz, turret_yaw_vel, values):
         """Compute odometry from mecanum wheel speeds and publish."""
         current_time = time.time()
@@ -267,6 +312,9 @@ class OdomPublisher(Node):
         if delta != 0:
             self.odom_theta -= delta * BASE_ROTATION_ODOM_OFFSET
             self.base_rotation_corrections = corrections_due
+
+        # Snap odom_theta to nearest 0.5π when turret is locked to world heading
+        self._apply_turret_snap_correction(values[4], imu_gz)
 
         # Integrate position in world frame
         cos_theta = math.cos(self.odom_theta)
@@ -337,7 +385,6 @@ def main():
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
         rclpy.shutdown()
-
 
 if __name__ == "__main__":
     main()
