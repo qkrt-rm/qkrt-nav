@@ -526,6 +526,7 @@ export ROS_DOMAIN_ID=67
 ```
 
 Open RViz locally (better performance than running it on the Jetson):
+TODO: Command is wrong - fix this
 ```bash
 rviz2 -d /local-path-to/src/sentry_description/rviz/sentry_config.rviz
 ```
@@ -533,6 +534,7 @@ rviz2 -d /local-path-to/src/sentry_description/rviz/sentry_config.rviz
 On the Jetson, launch the full stack:
 ```bash
 # Full bringup with SLAM (default)
+# TODO: Consider preventing keepout in other rooms for testing with: ros2 launch sentry_bringup real_robot.launch.py use_keepout:=false
 ros2 launch sentry_bringup real_robot.launch.py
 
 # With pre-built map (AMCL)

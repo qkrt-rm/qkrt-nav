@@ -254,9 +254,11 @@ class OdomPublisher(Node):
         vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0    # forward (all wheels same direction)
         vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0   # lateral (strafe pattern)
         # omega = ((w_lf - w_rf + w_lb - w_rb) * r / (4.0 * l_sum)) # BAD OMEGA! 35% underestimate of true omega
-        
+
         #########################################################
-        omega = self.gimbal_vel - self.gyro_z #VERIFY WHETHER THESE ARE THE CORRECT SIGNS IN REAL LIFE
+        # TODO: This sign is addition
+        # omega = (self.gyro_z) - self.gimbal_vel #VERIFY WHETHER THESE ARE THE CORRECT SIGNS IN REAL LIFE
+        omega = self.gimbal_vel - self.gyro_z 
         #######################################################
 
         self.odom_theta += omega * dt
@@ -310,7 +312,9 @@ class OdomPublisher(Node):
 
         # gimbal_joint = turret angle relative to base.
         # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
-        self.turret_pos += dt * (self.gyro_z - omega)
+        # self.turret_pos += dt * (-self.gimbal_vel)
+        self.turret_pos += dt * (omega - self.gyro_z) 
+        # self.turret_pos += 0.0
         js_msg.position = [
             self.turret_pos,
             self.pitch_pos,
@@ -318,7 +322,7 @@ class OdomPublisher(Node):
         ]
         # gimbal_joint vel = turret_world_vel - base_world_vel. VERIFY SIGNS IRL.
         js_msg.velocity = [
-            self.gyro_z - omega,
+            (omega - self.gyro_z),
             -self.pitch_vel,
             0.0, 0.0, 0.0, 0.0
         ]
