@@ -258,7 +258,7 @@ class OdomPublisher(Node):
         #########################################################
         # TODO: This sign is addition
         # omega = (self.gyro_z) - self.gimbal_vel #VERIFY WHETHER THESE ARE THE CORRECT SIGNS IN REAL LIFE
-        omega = self.gimbal_vel - self.gyro_z 
+        omega = self.gimbal_vel - (-self.gyro_z)
         #######################################################
 
         self.odom_theta += omega * dt
@@ -313,16 +313,17 @@ class OdomPublisher(Node):
         # gimbal_joint = turret angle relative to base.
         # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
         # self.turret_pos += dt * (-self.gimbal_vel)
-        self.turret_pos += dt * (omega - self.gyro_z) 
+        # self.turret_pos += dt * (omega - self.gyro_z) 
+        self.turret_pos = self.gimbal_pos
         # self.turret_pos += 0.0
         js_msg.position = [
-            self.turret_pos,
+            self.turret_pos,  # NOTE: This is in rads
             self.pitch_pos,
             0.0, 0.0, 0.0, 0.0
         ]
         # gimbal_joint vel = turret_world_vel - base_world_vel. VERIFY SIGNS IRL.
         js_msg.velocity = [
-            (omega - self.gyro_z),
+            self.gimbal_vel,  # NOTE: Rad/sec
             -self.pitch_vel,
             0.0, 0.0, 0.0, 0.0
         ]
