@@ -88,7 +88,15 @@ class SimCommHubBridge(Node):
         self.odom_x = 0.0
         self.odom_y = 0.0
         self.odom_theta = 0.0
+        self.gyro_z_integrated = 0.0     # integrated gyro z (turret world angle)
         self.last_odom_stamp_ns = None
+
+        # Turret/IMU state — updated each joint_state callback before publish_odometry
+        self.gyro_z = 0.0       # turret world angular velocity (IMU gyro z)
+        self.gimbal_pos = 0.0   # turret yaw position (turret relative to base)
+        self.gimbal_vel = 0.0   # turret yaw velocity (turret relative to base)
+        self.pitch_pos = 0.0
+        self.pitch_vel = 0.0
 
         self.get_logger().info(
             f"Bridge started. joint_states={joint_states_topic}, imu_in={imu_in_topic}, imu_out={imu_out_topic}, "
@@ -146,7 +154,15 @@ class SimCommHubBridge(Node):
         self.publish_turret(values[4:8])
         if self.has_imu and self.publish_imu:
             self.imu_pub.publish(self.latest_imu)
-        self.publish_odometry(values[0:4], values[14], msg.header.stamp)
+
+        # Update turret/IMU state before odometry so publish_odometry uses current frame
+        self.gimbal_pos = values[4]
+        self.gimbal_vel = values[5]
+        self.pitch_pos = values[6]
+        self.pitch_vel = values[7]
+        self.gyro_z = values[13]
+
+        self.publish_odometry(values[0:4], msg.header.stamp)
 
     def publish_mcb_odom(self, values):
         msg = Float32MultiArray()
@@ -175,7 +191,7 @@ class SimCommHubBridge(Node):
         msg.data = list(turret_values)
         self.turret_pub.publish(msg)
 
-    def publish_odometry(self, wheel_speeds, imu_yaw, stamp):
+    def publish_odometry(self, wheel_speeds, stamp):
         stamp_ns = stamp.sec * 1_000_000_000 + stamp.nanosec
         if stamp_ns <= 0:
             stamp_ns = self.get_clock().now().nanoseconds
@@ -191,13 +207,15 @@ class SimCommHubBridge(Node):
 
         w_lf, w_lb, w_rb, w_rf = wheel_speeds
         r = WHEEL_RADIUS
-        l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
 
         vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0
         vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0
-        omega = (-w_lf + w_rf - w_lb + w_rb) * r / (4.0 * l_sum)
 
-        self.odom_theta = imu_yaw
+        # TODO: This sign is addition
+        omega = self.gimbal_vel - (-self.gyro_z)
+
+        self.gyro_z_integrated += omega * dt
+        self.odom_theta = self.gyro_z_integrated % (2 * math.pi)  # Keep in [0, 2pi)
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
         self.odom_x += (vx * cos_theta - vy * sin_theta) * dt
@@ -212,8 +230,8 @@ class SimCommHubBridge(Node):
         odom_msg.pose.pose.position.x = self.odom_x
         odom_msg.pose.pose.position.y = self.odom_y
         odom_msg.pose.pose.position.z = 0.0
-        odom_msg.pose.pose.orientation.x = 0.0
-        odom_msg.pose.pose.orientation.y = 0.0
+        odom_msg.pose.pose.orientation.x = vx
+        odom_msg.pose.pose.orientation.y = vy
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
