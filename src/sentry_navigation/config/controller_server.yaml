@@ -51,7 +51,7 @@ local_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 4.5
-        inflation_radius: 0.32
+        inflation_radius: 0.10
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: true
@@ -75,7 +75,7 @@ local_costmap:
         lethal_override_cost: 200.0
       filter_inflation:
         plugin: "nav2_costmap_2d::InflationLayer"
-        inflation_radius: 0.20
+        inflation_radius: 0.10
         cost_scaling_factor: 8.0
       always_send_full_costmap: true
       footprint_clearing_enabled: true
