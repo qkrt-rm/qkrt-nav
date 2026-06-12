@@ -2,6 +2,7 @@ import struct
 import threading
 import math
 import time
+import numpy as np
 
 from sentry_communication.communication import RobotPositionMessage, NavMessage, Serial
 from sentry_communication.communication.Receive import parse_frame
@@ -112,7 +113,6 @@ class OdomPublisher(Node):
         self.odom_theta = 0.0
         self.last_odom_time = None
 
-
         # Joint state publisher
         self.js_publisher_ = self.create_publisher(JointState, '/joint_states', 10)
 
@@ -122,7 +122,7 @@ class OdomPublisher(Node):
         self.pitch_pos = 0.0    # turret pitch position from MCB encoder
         self.pitch_vel = 0.0    # turret pitch velocity from MCB encoder
         self.turret_pos = 0.0   # integrated gimbal_joint angle (turret relative to base)
-
+        self.gyro_z_integrated = 0.0     # integrated gyro z (turret world angle)
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
@@ -246,10 +246,11 @@ class OdomPublisher(Node):
             return
 
         # Negate and scale: MCB sends motor shaft rad/s with sign inverted relative to our convention.
-        w_lf, w_lb, w_rb, w_rf = [-v / GEAR_RATIO for v in wheel_speeds]
+        w_lf, w_lb, w_rb, w_rf = [v / GEAR_RATIO for v in wheel_speeds]
 
         r = WHEEL_RADIUS
         l_sum = WHEEL_BASE_X + WHEEL_BASE_Y
+
 
         vx = (w_lf + w_rf + w_lb + w_rb) * r / 4.0    # forward (all wheels same direction)
         vy = (-w_lf + w_rf + w_lb - w_rb) * r / 4.0   # lateral (strafe pattern)
@@ -261,7 +262,8 @@ class OdomPublisher(Node):
         omega = self.gimbal_vel - (-self.gyro_z)
         #######################################################
 
-        self.odom_theta += omega * dt
+        self.gyro_z_integrated += omega * dt
+        self.odom_theta = self.gyro_z_integrated % (2 * math.pi)  # Keep in [0, 2pi)
 
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
@@ -278,8 +280,8 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.position.x = self.odom_x
         odom_msg.pose.pose.position.y = self.odom_y
         odom_msg.pose.pose.position.z = 0.0
-        odom_msg.pose.pose.orientation.x = 0.0
-        odom_msg.pose.pose.orientation.y = 0.0
+        odom_msg.pose.pose.orientation.x = vx
+        odom_msg.pose.pose.orientation.y = vy
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
