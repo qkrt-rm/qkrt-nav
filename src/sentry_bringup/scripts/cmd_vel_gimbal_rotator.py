@@ -74,8 +74,7 @@ class CmdVelGimbalRotator(Node):
 
     def _cmd_vel_cb(self, msg: Twist):
         # Rotate the incoming velocity from chassis frame into turret frame.
-        # We negate the angle because we're going chassis→turret (inverse rotation).
-        theta = -self.gimbal_angle
+        theta = self.gimbal_angle + math.pi/2       # add 90° to convert from chassis-forward to turret-forward
         c = math.cos(theta)
         s = math.sin(theta)
 

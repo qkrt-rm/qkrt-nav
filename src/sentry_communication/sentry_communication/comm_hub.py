@@ -280,8 +280,8 @@ class OdomPublisher(Node):
         odom_msg.pose.pose.position.x = self.odom_x
         odom_msg.pose.pose.position.y = self.odom_y
         odom_msg.pose.pose.position.z = 0.0
-        odom_msg.pose.pose.orientation.x = vx
-        odom_msg.pose.pose.orientation.y = vy
+        odom_msg.pose.pose.orientation.x = 0.0
+        odom_msg.pose.pose.orientation.y = 0.0
         odom_msg.pose.pose.orientation.z = math.sin(self.odom_theta / 2.0)
         odom_msg.pose.pose.orientation.w = math.cos(self.odom_theta / 2.0)
 
