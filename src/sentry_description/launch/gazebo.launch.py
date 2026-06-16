@@ -1,6 +1,6 @@
 import os
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
@@ -9,7 +9,12 @@ from launch_ros.parameter_descriptions import ParameterValue
 def generate_launch_description():
     pkg_description = get_package_share_directory('sentry_description')
     rviz_config_path = os.path.join(pkg_description, 'rviz', 'sentry_config.rviz')
+    models_path = os.path.join(pkg_description, 'models')
     use_sim_time = LaunchConfiguration('use_sim_time')
+
+    # Ensure Gazebo can find custom models (e.g. AprilTag markers)
+    existing_model_path = os.environ.get('GAZEBO_MODEL_PATH', '')
+    gazebo_model_path = models_path + (':' + existing_model_path if existing_model_path else '')
 
     robot_model_arg = DeclareLaunchArgument(
         'robot_model',
@@ -75,6 +80,7 @@ def generate_launch_description():
     )
     
     return LaunchDescription([
+        SetEnvironmentVariable('GAZEBO_MODEL_PATH', gazebo_model_path),
         robot_model_arg,
         world_arg,
         use_sim_time_arg,
