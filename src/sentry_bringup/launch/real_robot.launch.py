@@ -128,6 +128,13 @@ def generate_launch_description():
         remappings=[('cmd_vel', 'cmd_vel_rotated')]
     )
 
+    vision_bridge = Node(
+        package='sentry_communication',
+        executable='vision_bridge_node',
+        name='vision_bridge_node',
+        output='screen'
+    )
+
     # Rotate nav2's /cmd_vel (base_link frame) into gimbal_link frame before
     # sending to the MCB. Costmaps use base_link so the footprint stays fixed.
     cmd_vel_rotator = Node(
@@ -274,6 +281,7 @@ def generate_launch_description():
         #joint_state_publisher,
         # Drivers
         comm_hub,
+        vision_bridge,
         cmd_vel_rotator,
         laser_driver_1,
         laser_driver_2,
