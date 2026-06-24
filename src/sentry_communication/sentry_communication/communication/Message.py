@@ -167,3 +167,39 @@ class NavMessage(DJIMessage):
         """
         # Unpacks the list into the 3 float slots for struct.pack
         return struct.pack("<fff", *self.cmd)
+
+
+class AimTargetMessage(DJIMessage):
+    """
+    Represents a message that communicates an aimbot target to the MCB.
+    The payload is a pre-packed 13-byte blob: 3 floats (x, y, z) followed
+    by 1 unsigned byte (color id), in little-endian format.
+    """
+
+    # Matches MCB_MESSAGE_TYPE_AIM in comm_hub.py / jetson_message.hpp
+    MESSAGE_ID = 0x01
+
+    def __init__(self, payload: bytes):
+        """
+        Initializes the AimTargetMessage with an already-packed payload.
+
+        Args:
+            payload (bytes): 13-byte payload packed as '<fffB' (x, y, z, color_id).
+        """
+        self.payload = payload
+
+    def getID(self) -> int:
+        """
+        Returns the unique message ID for AimTargetMessage.
+        ID: 0x01
+        """
+        return self.MESSAGE_ID
+
+    def getPayload(self) -> bytes:
+        """
+        Returns the pre-packed payload as-is.
+
+        Returns:
+            bytes: The 13-byte aim target payload.
+        """
+        return self.payload

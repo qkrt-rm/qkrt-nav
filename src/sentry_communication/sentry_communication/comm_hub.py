@@ -4,7 +4,7 @@ import math
 import time
 import numpy as np
 
-from sentry_communication.communication import RobotPositionMessage, NavMessage, Serial
+from sentry_communication.communication import AimTargetMessage, NavMessage, Serial
 from sentry_communication.communication.Receive import parse_frame
 import rclpy
 from rclpy.node import Node
@@ -17,8 +17,16 @@ from nav_msgs.msg import Odometry
 # MCB uses UART1 at 115200 baud
 serial = Serial("/dev/ttyTHS1", 115200)
 
+# Guards serial.write() so concurrent NavSubscriber/AimSubscriber callbacks
+# (running on different MultiThreadedExecutor threads) can't interleave bytes
+# of two frames on the wire.
+serial_write_lock = threading.Lock()
+
 # Message type IDs matching jetson_message.hpp on the MCB
+MCB_MESSAGE_TYPE_AIM = 1
+#MCB_MESSAGE_TYPE_NAV = 2 (not used here, just for number reference)
 MCB_MESSAGE_TYPE_ODOM = 3
+
 
 
 def read_frame(ser):
@@ -56,7 +64,8 @@ def read_frame(ser):
 
 def sendVelocityCommand(command: list[float]):
     message = NavMessage(command)
-    serial.write(message.createMessage())
+    with serial_write_lock:
+        serial.write(message.createMessage())
 
 
 class NavSubscriber(Node):
@@ -68,8 +77,40 @@ class NavSubscriber(Node):
     def listener_callback(self, msg):
         cmd = [msg.linear.y, msg.linear.x, 0.0]
         self.get_logger().info(f'Sending Command: {cmd}')
-        sendVelocityCommand(cmd)
+        #sendVelocityCommand(cmd)
 
+class AimSubscriber(Node):
+    def __init__(self):
+        super().__init__('aim_subscriber')
+        self.subscription = self.create_subscription(
+            Float32MultiArray, 
+            '/sentry/aim_target', 
+            self.listener_callback, 
+            10
+        )
+
+    def listener_callback(self, msg):
+        if len(msg.data) < 4:
+            return
+
+        x_pos = msg.data[0]
+        y_pos = msg.data[1]
+        z_pos = msg.data[2]
+        color_id = int(msg.data[3])
+
+        # 1. Pack ONLY the raw payload values (13 bytes total)
+        # <fffB = 3 floats (4 bytes each) + 1 unsigned char (1 byte)
+        raw_payload = struct.pack('<fffB', x_pos, y_pos, z_pos, color_id)
+
+        try:
+            # 2. Let your team's custom wrapper handle adding the length (13),
+            # the message type (2), and computing the DJI CRCs automatically!
+            message = AimTargetMessage(raw_payload)
+            with serial_write_lock:
+                serial.write(message.createMessage())
+            
+        except Exception as e:
+            self.get_logger().error(f"Failed to transmit aim target over serial: {e}")
 
 ODOM_LABELS = [
     'wheelLF', 'wheelLB', 'wheelRB', 'wheelRF',
@@ -337,10 +378,12 @@ def main():
     rclpy.init()
     nav_subscriber = NavSubscriber()
     odom_publisher = OdomPublisher()
+    aim_subscriber = AimSubscriber()
 
     executor = MultiThreadedExecutor()
     executor.add_node(nav_subscriber)
     executor.add_node(odom_publisher)
+    executor.add_node(aim_subscriber)
 
 
     try:
@@ -350,6 +393,7 @@ def main():
     finally:
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
+        aim_subscriber.destroy_node()
         rclpy.shutdown()
 
 
