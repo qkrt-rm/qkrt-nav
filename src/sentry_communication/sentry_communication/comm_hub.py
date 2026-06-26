@@ -1,5 +1,6 @@
 import struct
 import threading
+import queue
 import math
 import time
 import numpy as np
@@ -20,14 +21,15 @@ serial = Serial("/dev/ttyTHS1", 115200)
 # Guards serial.write() so concurrent NavSubscriber/AimSubscriber callbacks
 # (running on different MultiThreadedExecutor threads) can't interleave bytes
 # of two frames on the wire.
-serial_write_lock = threading.Lock()
+# serial_write_lock = threading.Lock()
 
 # Message type IDs matching jetson_message.hpp on the MCB
 MCB_MESSAGE_TYPE_AIM = 1
 #MCB_MESSAGE_TYPE_NAV = 2 (not used here, just for number reference)
 MCB_MESSAGE_TYPE_ODOM = 3
 
-
+PRIORITY_VISION = 1
+PRIORITY_NAV = 2
 
 def read_frame(ser):
     """Synchronize on 0xA5 and read one complete DJI serial frame.
@@ -61,27 +63,33 @@ def read_frame(ser):
     frame = bytes([0xA5]) + hdr_rest + remaining
     return frame
 
+# MOVED INTO NavSubscriber(Node)
 
-def sendVelocityCommand(command: list[float]):
-    message = NavMessage(command)
-    with serial_write_lock:
-        serial.write(message.createMessage())
+# def sendVelocityCommand(command: list[float]):
+#     message = NavMessage(command)
+#     with serial_write_lock:
+#         serial.write(message.createMessage())
 
 
 class NavSubscriber(Node):
-    def __init__(self):
+    def __init__(self, tx_queue):
         super().__init__('nav_subscriber')
+        self.tx_queue = tx_queue
         self.subscription = self.create_subscription(
             Twist, 'cmd_vel', self.listener_callback, 10)
 
     def listener_callback(self, msg):
         cmd = [msg.linear.y, msg.linear.x, 0.0]
-        self.get_logger().info(f'Sending Command: {cmd}')
+        self.get_logger().info(f'Queuing Nav Command: {cmd}')
         #sendVelocityCommand(cmd)
+        message = NavMessage(cmd)
+        packet_bytes = message.createMessage()
+        self.tx_queue.put((PRIORITY_NAV, time.monotonic(), packet_bytes))
 
 class AimSubscriber(Node):
-    def __init__(self):
+    def __init__(self, tx_queue):
         super().__init__('aim_subscriber')
+        self.tx_queue = tx_queue
         self.subscription = self.create_subscription(
             Float32MultiArray, 
             '/sentry/aim_target', 
@@ -106,9 +114,11 @@ class AimSubscriber(Node):
             # 2. Let your team's custom wrapper handle adding the length (13),
             # the message type (2), and computing the DJI CRCs automatically!
             message = AimTargetMessage(raw_payload)
-            with serial_write_lock:
-                serial.write(message.createMessage())
-            
+            packet_bytes = message.createMessage()
+            # with serial_write_lock:
+            #     serial.write(message.createMessage())
+            self.tx_queue.put((PRIORITY_VISION, time.monotonic(), packet_bytes))
+
         except Exception as e:
             self.get_logger().error(f"Failed to transmit aim target over serial: {e}")
 
@@ -374,11 +384,45 @@ class OdomPublisher(Node):
         self.odom_publisher_.publish(odom_msg)
         self.js_publisher_.publish(js_msg)
 
+def serial_tx_loop(tx_queue):
+    """The exclusive gateway worker thread handling safe sequential UART writes."""
+    while rclpy.ok():
+        try:
+            # ADDED: Safely blocks thread until an item is pushed into the queue.
+            # Drops CPU utilization to near 0% when the robot is idling.
+            priority, timestamp, packet_bytes = tx_queue.get(timeout=0.2)
+            
+            # ADDED: STALE PACKET DROPPING PARAMETER
+            # If a vision tracking command sits in the queue for more than 40ms 
+            # (e.g. during heavy serial traffic or a skipped camera frame), drop it.
+            # This prevents the turret from lagging or shooting at outdated target positions.
+            if priority == PRIORITY_VISION and (time.monotonic() - timestamp) > 0.040:
+                tx_queue.task_done()
+                continue
+                
+            # ADDED: Perform the sequential execution down the physical wire.
+            # Since this is the only thread doing this, write collisions are impossible.
+            serial.write(packet_bytes)
+            tx_queue.task_done()
+            
+        except queue.Empty:
+            continue
+        except Exception as e:
+            print(f"[CommHub TX Error] Serial line failure: {e}")
+            time.sleep(0.05)
+
+
 def main():
     rclpy.init()
-    nav_subscriber = NavSubscriber()
+
+    tx_queue = queue.PriorityQueue()
+    
+    nav_subscriber = NavSubscriber(tx_queue)
     odom_publisher = OdomPublisher()
-    aim_subscriber = AimSubscriber()
+    aim_subscriber = AimSubscriber(tx_queue)
+
+    tx_worker = threading.Thread(target=serial_tx_loop, args=(tx_queue,), daemon=True)
+    tx_worker.start()
 
     executor = MultiThreadedExecutor()
     executor.add_node(nav_subscriber)
