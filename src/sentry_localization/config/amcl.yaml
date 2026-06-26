@@ -1,6 +1,6 @@
 amcl:
   ros__parameters:
-    use_sim_time: true
+    use_sim_time: false
     
     alpha1: 0.2
     alpha2: 0.2
@@ -56,8 +56,9 @@ amcl:
     scan_topic: scan
     
     set_initial_pose: true
+    # TODO: Set initial pose correctly
     initial_pose:
       x: 0.0
       y: 0.0
-      z: 0.0
-      yaw: 0.0
+      z: 0.15
+      yaw: -0.15

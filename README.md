@@ -537,6 +537,9 @@ rviz2 -d ~/qkrt/qkrt-nav/src/sentry_description/rviz/slam_debug.rviz
 TODO: Save a slam map
 ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap "name: {data: 'tron_room'}"
 
+TODO: Run this command for going back and forth rn
+ros2 launch sentry_bringup real_robot.launch.py     slam:=false     map:=tron_room.yaml     use_keepout:=false     use_battery_mission:=true     center_x:=3.0     center_y:=0.0
+
 
 On the Jetson, launch the full stack:
 ```bash
@@ -554,7 +557,7 @@ ros2 launch sentry_bringup real_robot.launch.py use_nav:=false use_localization:
 ros2 launch sentry_bringup real_robot.launch.py use_battery_mission:=true center_x:=6.0 center_y:=4.0
 
 # Simulation
-ros2 launch sentry_bringup simulated_robot.lPaunch.py
+ros2 launch sentry_bringup simulated_robot.launch.py
 
 # Simulation with battery mission
 ros2 launch sentry_bringup simulated_robot.launch.py use_battery_mission:=true
