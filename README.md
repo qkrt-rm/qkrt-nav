@@ -531,6 +531,13 @@ TODO: Command is wrong - fix this
 rviz2 -d /local-path-to/src/sentry_description/rviz/sentry_config.rviz
 ```
 
+TODO: Run rviz with debug rviz config
+rviz2 -d ~/qkrt/qkrt-nav/src/sentry_description/rviz/slam_debug.rviz
+
+TODO: Save a slam map
+ros2 service call /slam_toolbox/save_map slam_toolbox/srv/SaveMap "name: {data: 'tron_room'}"
+
+
 On the Jetson, launch the full stack:
 ```bash
 # Full bringup with SLAM (default)
