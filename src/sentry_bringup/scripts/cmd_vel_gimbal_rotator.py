@@ -74,13 +74,13 @@ class CmdVelGimbalRotator(Node):
 
     def _cmd_vel_cb(self, msg: Twist):
         # Rotate the incoming velocity from chassis frame into turret frame.
-        theta = self.gimbal_angle + math.pi/2       # add 90° to convert from chassis-forward to turret-forward
+        theta = self.gimbal_angle + 3*math.pi/2      # add 90° to convert from chassis-forward to turret-forward
         c = math.cos(theta)
         s = math.sin(theta)
 
         out = Twist()
-        out.linear.x = c * msg.linear.x - s * msg.linear.y
-        out.linear.y = s * msg.linear.x + c * msg.linear.y
+        out.linear.x = - (c * msg.linear.x - s * msg.linear.y)
+        out.linear.y = - (s * msg.linear.x + c * msg.linear.y)
         out.linear.z = msg.linear.z   # unused for ground robot, pass through anyway
         out.angular = msg.angular     # spin rate is the same in both frames
         self.pub.publish(out)
