@@ -168,7 +168,7 @@ def generate_launch_description():
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
             'topic_name': 'scan_right',
-            'port_name': '/dev/ttyUSB0',
+            'port_name': '/dev/ttyUSB1',
             'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
@@ -184,7 +184,7 @@ def generate_launch_description():
         parameters=[{
             'product_name': 'LDLiDAR_LD19',
             'topic_name': 'scan_left',
-            'port_name': '/dev/ttyUSB1',
+            'port_name': '/dev/ttyUSB0',
             'port_baudrate': 230400,
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
