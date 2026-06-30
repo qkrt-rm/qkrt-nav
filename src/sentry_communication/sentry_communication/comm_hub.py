@@ -396,9 +396,9 @@ def serial_tx_loop(tx_queue):
             # If a vision tracking command sits in the queue for more than 40ms 
             # (e.g. during heavy serial traffic or a skipped camera frame), drop it.
             # This prevents the turret from lagging or shooting at outdated target positions.
-            if priority == PRIORITY_VISION and (time.monotonic() - timestamp) > 0.040:
-                tx_queue.task_done()
-                continue
+            # if priority == PRIORITY_VISION and (time.monotonic() - timestamp) > 0.040:
+            #     tx_queue.task_done()
+            #     continue
                 
             # ADDED: Perform the sequential execution down the physical wire.
             # Since this is the only thread doing this, write collisions are impossible.
