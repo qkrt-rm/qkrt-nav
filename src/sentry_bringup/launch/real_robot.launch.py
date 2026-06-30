@@ -92,6 +92,27 @@ def generate_launch_description():
         description="Launch RViz for visualization"
     )
 
+    # AMCL seeding: seed a known start pose at boot and skip the global scatter.
+    # These default to the map origin (0,0,0) which is almost certainly NOT where the
+    # robot physically starts — set initial_pose_x/y/yaw to the robot's real start spot
+    # in the map frame (override on the command line from your startup script), e.g.:
+    #   ros2 launch sentry_bringup real_robot.launch.py slam:=false \
+    #        initial_pose_x:=1.5 initial_pose_y:=0.8 initial_pose_yaw:=3.14
+    seed_initial_pose = LaunchConfiguration("seed_initial_pose")
+    seed_initial_pose_arg = DeclareLaunchArgument(
+        "seed_initial_pose",
+        default_value="false",
+        description="false = AMCL auto-localizes from an unknown start (global scatter). "
+                    "Set true (with initial_pose_*) only when the start pose is known."
+    )
+
+    initial_pose_x = LaunchConfiguration("initial_pose_x")
+    initial_pose_x_arg = DeclareLaunchArgument("initial_pose_x", default_value="0.0")
+    initial_pose_y = LaunchConfiguration("initial_pose_y")
+    initial_pose_y_arg = DeclareLaunchArgument("initial_pose_y", default_value="0.0")
+    initial_pose_yaw = LaunchConfiguration("initial_pose_yaw")
+    initial_pose_yaw_arg = DeclareLaunchArgument("initial_pose_yaw", default_value="0.0")
+
     # Robot state publisher (publishes URDF transforms: base_link → laser frames, etc.)
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -169,7 +190,7 @@ def generate_launch_description():
             'product_name': 'LDLiDAR_LD19',
             'topic_name': 'scan_right',
             'port_name': '/dev/ttyUSB1',
-            'port_baudrate': 230400,
+            'port_baudrate': 230400,    
             'laser_scan_dir': True,
             'enable_angle_crop_func': False,
             'frame_id': 'laser_frame_right'
@@ -221,7 +242,12 @@ def generate_launch_description():
         launch_arguments={
             'use_sim_time': 'false',
             'slam': slam,
-            'map': map_yaml
+            'map': map_yaml,
+            # Seed AMCL at the robot's known start pose (set initial_pose_* below / on CLI).
+            'seed_initial_pose': seed_initial_pose,
+            'initial_pose_x': initial_pose_x,
+            'initial_pose_y': initial_pose_y,
+            'initial_pose_yaw': initial_pose_yaw,
         }.items(),
         condition=IfCondition(use_localization)
     )
@@ -269,13 +295,17 @@ def generate_launch_description():
         center_x_arg,
         center_y_arg,
         display_arg,
+        seed_initial_pose_arg,
+        initial_pose_x_arg,
+        initial_pose_y_arg,
+        initial_pose_yaw_arg,
         # Robot description
         robot_state_publisher,
         #joint_state_publisher,
         # Drivers
         comm_hub,
         cmd_vel_rotator,
-        laser_driver_1,
+        # laser_driver_1,
         laser_driver_2,
         laser_merger,
         # Control

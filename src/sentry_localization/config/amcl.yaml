@@ -45,8 +45,10 @@ amcl:
     
     transform_tolerance: 0.5
     
-    update_min_a: 0.15
-    update_min_d: 0.15
+    # 0.1 = AMCL runs a scan update after ~0.1 m / ~0.1 rad of motion. Cheaper than
+    # updating every cycle while still converging quickly as the robot moves/rotates.
+    update_min_a: 0.1
+    update_min_d: 0.1
     
     z_hit: 0.6
     z_max: 0.05
@@ -55,10 +57,12 @@ amcl:
     
     scan_topic: scan
     
-    set_initial_pose: true
-    # TODO: Set initial pose correctly
+    # Auto-localize: no seeded pose. global_localization.launch.py calls
+    # /reinitialize_global_localization after boot to scatter particles across the
+    # map; AMCL finds the true pose by scan-matching as the robot rotates.
+    set_initial_pose: false
     initial_pose:
       x: 0.0
       y: 0.0
-      z: 0.15
-      yaw: 0.15
+      z: 0.0
+      yaw: 0.0

@@ -74,8 +74,12 @@ class ImuTurretCompensator(Node):
         self.declare_parameter("joint_states_topic", "/joint_states")
         self.declare_parameter("output_topic", "/imu_base_compensated")
         self.declare_parameter("base_frame", "base_link")
-        self.declare_parameter("yaw_joint_name", "turret_shaft_joint")
-        self.declare_parameter("pitch_joint_name", "gimbal_joint")
+        # On the real robot comm_hub publishes turret YAW on gimbal_joint and
+        # PITCH on turret_shaft_joint, so the yaw joint is gimbal_joint. These
+        # defaults match local_localization.launch.py's overrides; keep them in
+        # sync so the node is correct even when run without the launch file.
+        self.declare_parameter("yaw_joint_name", "gimbal_joint")
+        self.declare_parameter("pitch_joint_name", "turret_shaft_joint")
         self.declare_parameter("yaw_axis_base", [0.0, 0.0, 1.0])
         self.declare_parameter("pitch_axis_yaw_frame", [0.0, 1.0, 0.0])
 

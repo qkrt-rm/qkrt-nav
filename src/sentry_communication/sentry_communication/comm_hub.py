@@ -323,7 +323,7 @@ class OdomPublisher(Node):
         # gimbal_joint = turret angle relative to base.
         # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
         # self.turret_pos += dt * (-self.gimbal_vel)
-        # self.turret_pos += dt * (omega - self.gyro_z) 
+        # self.turret_pos += dt * (omega - self.gyro_z)
         self.turret_pos = self.gimbal_pos
         # self.turret_pos += 0.0
         js_msg.position = [
