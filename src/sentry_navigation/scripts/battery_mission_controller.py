@@ -60,8 +60,8 @@ class BatteryMissionController(Node):
         super().__init__('battery_mission_controller')
 
         # These are set in the launch file — no need to touch this code
-        self.declare_parameter('center_x', 6.0)
-        self.declare_parameter('center_y', 4.0)
+        self.declare_parameter('center_x', 3.0)
+        self.declare_parameter('center_y', 0.0)
         self.declare_parameter('map_frame', 'map')
         self.declare_parameter('base_frame', 'base_link')
 
@@ -103,6 +103,7 @@ class BatteryMissionController(Node):
         # Try to read where the robot is right now in the map frame.
         # This will fail (and we'll retry) until SLAM/AMCL has a fix.
         try:
+            # Use an explicit blank Time message to get the latest available frame
             tf = self.tf_buffer.lookup_transform(
                 self.map_frame, self.base_frame,
                 rclpy.time.Time(), timeout=Duration(seconds=1.0))
@@ -116,6 +117,8 @@ class BatteryMissionController(Node):
         self.get_logger().info(
             f'Home captured: ({self.home_pose.pose.position.x:.2f}, '
             f'{self.home_pose.pose.position.y:.2f})')
+        
+
 
         # If a battery reading already came in while we were waiting, act on it now
         if self.battery is not None:
@@ -160,9 +163,14 @@ class BatteryMissionController(Node):
         if self._goal_handle is not None:
             self._goal_handle.cancel_goal_async()
 
+        # FIX: Update the pose timestamp to the exact current time
+        # This stops the planner from looking up transforms at t=0
+        pose.header.stamp = self.get_clock().now().to_msg()
+
         goal = NavigateToPose.Goal()
         goal.pose = pose
 
+        
         self._navigating = True
         send_future = self._nav_client.send_goal_async(goal)
         send_future.add_done_callback(self._goal_accepted_cb)
