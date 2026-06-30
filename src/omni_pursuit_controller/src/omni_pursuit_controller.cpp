@@ -69,6 +69,8 @@ void OmniPursuitController::configure(
     node, plugin_name_ + ".min_approach_linear_velocity", rclcpp::ParameterValue(0.05));
   declare_parameter_if_not_declared(
     node, plugin_name_ + ".transform_tolerance", rclcpp::ParameterValue(0.1));
+  declare_parameter_if_not_declared(
+    node, plugin_name_ + ".max_linear_accel", rclcpp::ParameterValue(1.0));
 
   node->get_parameter(plugin_name_ + ".desired_linear_vel", desired_linear_vel_);
   node->get_parameter(plugin_name_ + ".lookahead_dist", lookahead_dist_);
@@ -77,6 +79,7 @@ void OmniPursuitController::configure(
     plugin_name_ + ".approach_velocity_scaling_dist", approach_velocity_scaling_dist_);
   node->get_parameter(
     plugin_name_ + ".min_approach_linear_velocity", min_approach_linear_velocity_);
+  node->get_parameter(plugin_name_ + ".max_linear_accel", max_linear_accel_);
   double transform_tolerance;
   node->get_parameter(plugin_name_ + ".transform_tolerance", transform_tolerance);
   transform_tolerance_ = rclcpp::Duration::from_seconds(transform_tolerance);
@@ -93,6 +96,10 @@ void OmniPursuitController::setPlan(const nav_msgs::msg::Path & path)
 {
   global_plan_ = path;
   progress_index_ = 0;
+  // NOTE: do NOT reset the velocity ramp here. Nav2 calls setPlan on every replan
+  // (~1 Hz) while the robot is moving, so zeroing prev_vx_/prev_vy_ would stutter the
+  // robot to a stop each cycle. The accel limiter continues from the last command;
+  // the dt > 1 s guard in computeVelocityCommands handles a genuine cold restart.
 }
 
 geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
@@ -154,12 +161,11 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
     pose.pose.position.x - global_plan_.poses.back().pose.position.x,
     pose.pose.position.y - global_plan_.poses.back().pose.position.y);
 
-  // Within the lookahead radius of the final goal: stop and let the goal checker
-  // declare success rather than overshooting and driving past the endpoint.
-  if (dist_to_goal <= lookahead_dist_) {
-    return cmd_vel;  // zero velocity
-  }
-
+  // Near the goal there is no pose >= lookahead_dist ahead, so goal_it above
+  // falls back to the final plan pose and we drive straight at it. Do NOT stop
+  // at lookahead_dist (that parks the robot ~lookahead_dist short of the goal
+  // and the goal checker never fires). Approach-velocity scaling below slows us
+  // down, and the goal checker (xy_goal_tolerance) declares success.
   double speed = desired_linear_vel_;
   if (dist_to_goal < approach_velocity_scaling_dist_) {
     speed = max(
@@ -172,10 +178,32 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
   double dy = goal_pose_base.pose.position.y;
   double dist = hypot(dx, dy);
 
+  double target_vx = 0.0;
+  double target_vy = 0.0;
   if (dist > 0.001) {
-    cmd_vel.twist.linear.x = speed * (dx / dist);
-    cmd_vel.twist.linear.y = speed * (dy / dist);
+    target_vx = speed * (dx / dist);
+    target_vy = speed * (dy / dist);
   }
+
+  // Acceleration limiting: clamp how much vx/vy can change this cycle. This turns an
+  // instantaneous +0.2 -> -0.2 reversal (the jitter) into a ramp, and stops feeding
+  // sudden motion back into odom/AMCL while localization is still settling.
+  rclcpp::Time now = clock_->now();
+  if (have_prev_cmd_) {
+    double dt = (now - last_cmd_time_).seconds();
+    if (dt > 1e-3 && dt < 1.0) {
+      double max_dv = max_linear_accel_ * dt;
+      target_vx = std::clamp(target_vx, prev_vx_ - max_dv, prev_vx_ + max_dv);
+      target_vy = std::clamp(target_vy, prev_vy_ - max_dv, prev_vy_ + max_dv);
+    }
+  }
+  prev_vx_ = target_vx;
+  prev_vy_ = target_vy;
+  last_cmd_time_ = now;
+  have_prev_cmd_ = true;
+
+  cmd_vel.twist.linear.x = target_vx;
+  cmd_vel.twist.linear.y = target_vy;
   cmd_vel.twist.angular.z = 0.0;
 
   return cmd_vel;

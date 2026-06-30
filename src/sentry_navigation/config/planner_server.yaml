@@ -6,7 +6,7 @@ planner_server:
 
     GridBased:
       plugin: "nav2_smac_planner/SmacPlanner2D"
-      tolerance: 0.30
+      tolerance: 0.10
       downsample_costmap: false
       downsampling_factor: 1
       allow_unknown: false
@@ -65,7 +65,7 @@ global_costmap:
 
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
-        enabled: false
+        enabled: true
         observation_sources: scan
         scan:
           topic: /scan
@@ -84,7 +84,7 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 2.3
-        inflation_radius: 0.07
+        inflation_radius: 0.35
 
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"

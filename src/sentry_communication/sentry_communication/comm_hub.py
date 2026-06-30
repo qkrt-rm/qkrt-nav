@@ -173,7 +173,10 @@ class OdomPublisher(Node):
         self.pitch_pos = 0.0    # turret pitch position from MCB encoder
         self.pitch_vel = 0.0    # turret pitch velocity from MCB encoder
         self.turret_pos = 0.0   # integrated gimbal_joint angle (turret relative to base)
-        self.gyro_z_integrated = 0.0     # integrated gyro z (turret world angle)
+        self.gimbal_pos = 0.0   # alias for turret_pos. TODO: Fix this bad code
+        self.odom_theta_integrated = 0.0    #integrated chassis yaw heading relative to world
+        self.turret_yaw_world = 0.0
+
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
@@ -270,7 +273,7 @@ class OdomPublisher(Node):
                     self.pitch_vel = values[7]
 
                     # Compute and publish wheel odometry + joint states
-                    self._publish_odometry(values[0:4], yaw)
+                    self._publish_odometry(values[0:4])
 
                     self.get_logger().debug(
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
@@ -278,7 +281,7 @@ class OdomPublisher(Node):
                 else:
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
-    def _publish_odometry(self, wheel_speeds, imu_yaw):
+    def _publish_odometry(self, wheel_speeds):
         """Compute odometry from mecanum wheel speeds and publish.
 
         base_link is the chassis frame. odom_theta tracks chassis heading.
@@ -313,8 +316,13 @@ class OdomPublisher(Node):
         omega = self.gimbal_vel - (-self.gyro_z)
         #######################################################
 
-        self.gyro_z_integrated += omega * dt
-        self.odom_theta = self.gyro_z_integrated % (2 * math.pi)  # Keep in [0, 2pi)
+        #old code
+        # self.odom_theta_integrated += omega * dt
+        # self.odom_theta = self.odom_theta_integrated % (2 * math.pi)  # Keep in [0, 2pi)
+
+        self.turret_yaw_world = (self.turret_yaw_world + dt * self.gyro_z) % (2*math.pi) #TODO: verify the sign on gyro_z
+        self.odom_theta = (self.turret_yaw_world + self.gimbal_pos) % (2*math.pi)  #TODO: verify signs here as well, spin turret, look for 0 chassis yaw
+
 
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
@@ -366,7 +374,7 @@ class OdomPublisher(Node):
         # gimbal_joint = turret angle relative to base.
         # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
         # self.turret_pos += dt * (-self.gimbal_vel)
-        # self.turret_pos += dt * (omega - self.gyro_z) 
+        # self.turret_pos += dt * (omega - self.gyro_z)
         self.turret_pos = self.gimbal_pos
         # self.turret_pos += 0.0
         js_msg.position = [
