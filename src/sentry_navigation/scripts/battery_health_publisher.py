@@ -31,7 +31,7 @@ from std_msgs.msg import Float32
 
 
 # Total time for one full up-and-down cycle (seconds)
-PERIOD_S = 40.0  # 20s going down (100→0), then 20s going back up (0→100)
+PERIOD_S = 60.0  # 20s going down (100→0), then 20s going back up (0→100)
 
 
 class BatteryHealthPublisher(Node):
