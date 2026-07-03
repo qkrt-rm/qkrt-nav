@@ -313,7 +313,7 @@ def generate_launch_description():
         comm_hub,
         vision_bridge,
         cmd_vel_rotator,
-        # laser_driver_1,
+        laser_driver_1,
         laser_driver_2,
         laser_merger,
         # Control

@@ -76,6 +76,10 @@ class BatteryMissionController(Node):
         self.battery = None
         # which destination the robot is currently heading to ('center' or 'home')
         self.current_target = None
+        # Forces the very first evaluation to target 'home' (a no-op goal at the
+        # robot's own start position) regardless of the battery reading, so it
+        # doesn't immediately bolt to center_x/center_y on startup.
+        self._first_evaluate_done = False
         # handle to the active nav2 goal so we can cancel it if needed
         self._goal_handle = None
         self._navigating = False
@@ -140,7 +144,11 @@ class BatteryMissionController(Node):
 
     def _evaluate(self):
         # Decide where we should be going based on current battery level
-        desired = 'center' if self.battery >= BATTERY_THRESHOLD else 'home'
+        if not self._first_evaluate_done:
+            self._first_evaluate_done = True
+            desired = 'home'
+        else:
+            desired = 'center' if self.battery >= BATTERY_THRESHOLD else 'home'
 
         # Don't interrupt if we're already going to the right place
         if desired == self.current_target and self._navigating:

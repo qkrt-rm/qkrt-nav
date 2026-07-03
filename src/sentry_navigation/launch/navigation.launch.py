@@ -3,7 +3,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, TimerAction, ExecuteProcess
 from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -209,6 +209,27 @@ def generate_launch_description():
         condition=IfCondition(use_battery_mission)
     )
 
+    # Cancel any goal left over from a previous session (e.g. a stale RViz "2D Nav
+    # Goal" click, or a mission node that was killed mid-navigation) so a fresh
+    # bt_navigator never picks up and immediately drives toward an old target.
+    # A zero goal_id + zero stamp is the action protocol's "cancel all goals"
+    # request. `ros2 service call` blocks until the service appears, so this
+    # fires as soon as bt_navigator's action server comes up.
+    cancel_stale_nav_goal = TimerAction(
+        period=3.0,
+        actions=[
+            ExecuteProcess(
+                cmd=['ros2', 'service', 'call',
+                     '/navigate_to_pose/_action/cancel_goal',
+                     'action_msgs/srv/CancelGoal',
+                     '{goal_info: {goal_id: {uuid: '
+                     '[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}, '
+                     'stamp: {sec: 0, nanosec: 0}}}'],
+                output='screen',
+            )
+        ],
+    )
+
     battery_mission_controller = Node(
         package='sentry_navigation',
         executable='battery_mission_controller.py',
@@ -240,4 +261,5 @@ def generate_launch_description():
         nav2_lifecycle_manager_no_keepout,
         battery_health_publisher,
         battery_mission_controller,
+        cancel_stale_nav_goal,
     ])
