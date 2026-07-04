@@ -100,7 +100,7 @@ def generate_launch_description():
             # Sim spawns the robot at a known pose, so seed AMCL instead of scattering.
             # Keep these in sync with the spawn pose in gazebo.launch.py (-x -y -Y).
             'seed_initial_pose': 'true',
-            'initial_pose_x': '0.0',
+            'initial_pose_x': '-5.25',
             'initial_pose_y': '0.0',
             'initial_pose_yaw': '0.0',
         }.items()

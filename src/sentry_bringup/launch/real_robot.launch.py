@@ -74,7 +74,7 @@ def generate_launch_description():
     center_x = LaunchConfiguration("center_x")
     center_x_arg = DeclareLaunchArgument(
         "center_x",
-        default_value="3.0",
+        default_value="0.0",
         description="X coordinate of arena center in map frame."
     )
 

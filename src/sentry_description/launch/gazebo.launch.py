@@ -57,7 +57,7 @@ def generate_launch_description():
         arguments=[
             '-topic', 'robot_description',
             '-entity', 'sentry_robot',
-            '-x', '0.0',
+            '-x', '-5.25',
             '-y', '0.0',
             '-z', '0.05'
         ],
