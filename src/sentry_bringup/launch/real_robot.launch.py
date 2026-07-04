@@ -24,7 +24,7 @@ def generate_launch_description():
     map_yaml = LaunchConfiguration("map")
     map_arg = DeclareLaunchArgument(
         "map",
-        default_value='sentry_map.yaml',
+        default_value='ARCC20263v3FieldCleaned.yaml',
         description="Map filename."
     )
 
@@ -53,8 +53,8 @@ def generate_launch_description():
     use_keepout = LaunchConfiguration("use_keepout")
     use_keepout_arg = DeclareLaunchArgument(
         "use_keepout",
-        default_value="true",
-        description="Load arena keepout mask. Set false when not in the arena."
+        default_value="false",
+        description="Enable arena keepout filter. Set true when running in the arena."
     )
 
     use_nav = LaunchConfiguration("use_nav")

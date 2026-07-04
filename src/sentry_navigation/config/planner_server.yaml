@@ -84,18 +84,18 @@ global_costmap:
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 2.3
-        inflation_radius: 0.35
+        inflation_radius: 0.4
 
       keepout_filter:
         plugin: "nav2_costmap_2d::KeepoutFilter"
-        enabled: false  # Set true only when running in the arena with use_keepout:=true
+        enabled: true  # Active whenever the keepout servers run (use_keepout:=true); inert otherwise
         filter_info_topic: "/costmap_filter_info"
         override_lethal_cost: true
         lethal_override_cost: 200.0
 
       filter_inflation:
         plugin: "nav2_costmap_2d::InflationLayer"
-        inflation_radius: 0.15
+        inflation_radius: 0.4
         cost_scaling_factor: 9.0
       
       always_send_full_costmap: true

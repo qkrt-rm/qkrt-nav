@@ -33,7 +33,7 @@ def generate_launch_description():
 
     map_arg = DeclareLaunchArgument(
         'map',
-        default_value='sentry_map.yaml'
+        default_value='ARCC20263v3FieldCleaned.yaml'
     )
 
     amcl_config_arg = DeclareLaunchArgument(
