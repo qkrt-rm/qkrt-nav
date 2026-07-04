@@ -37,8 +37,8 @@ from nav2_msgs.action import NavigateToPose
 HOME_CAPTURE_DELAY_S = 5.0
 
 # Battery health from the MCB is a uint16 (0-200). Above this the robot goes to
-# centre; at or below it retreats home. So at 101 it retreats.
-BATTERY_THRESHOLD = 101.0
+# centre; at or below it retreats home. So at 151 it retreats.
+BATTERY_THRESHOLD = 151.0
 
 import tf2_ros
 
