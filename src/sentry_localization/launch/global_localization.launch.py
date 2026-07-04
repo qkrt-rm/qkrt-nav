@@ -112,13 +112,13 @@ def generate_launch_description():
         condition=UnlessCondition(slam)
     )
 
-    # ~5 s after boot (once map_server + amcl are active), scatter particles across
+    # ~4 s after boot (once map_server + amcl are active), scatter particles across
     # the whole map so AMCL auto-localizes by scan-matching — no hardcoded start pose.
     # `ros2 service call` waits for the service to appear, so if AMCL isn't up at
-    # exactly 5 s the call blocks until it is, then fires. Let the robot rotate after
+    # exactly 4 s the call blocks until it is, then fires. Let the robot rotate after
     # this so the cloud collapses onto the true pose.
     global_localization_init = TimerAction(
-        period=5.0,
+        period=4.0,
         actions=[
             ExecuteProcess(
                 cmd=['ros2', 'service', 'call',

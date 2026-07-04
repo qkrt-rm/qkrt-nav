@@ -116,15 +116,36 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
     return cmd_vel;
   }
 
+  // `pose` arrives pre-transformed into the controller costmap's global frame (odom), but
+  // global_plan_ is stamped in the planner's frame (map). Comparing their coordinates
+  // directly mixes frames whenever map->odom drifts (which it constantly does on this
+  // platform), which corrupts the closest-point/lookahead search below and was the actual
+  // cause of the lookahead point -- and therefore commanded direction -- flipping every
+  // cycle (the vx/vy sign-flip shuffle). Transform pose into the plan's frame once and use
+  // that consistently for all distance math.
+  geometry_msgs::msg::PoseStamped pose_in_plan_frame = pose;
+  if (pose.header.frame_id != global_plan_.header.frame_id) {
+    geometry_msgs::msg::PoseStamped pose_to_transform = pose;
+    pose_to_transform.header.stamp = rclcpp::Time(0);
+    try {
+      tf_->transform(
+        pose_to_transform, pose_in_plan_frame, global_plan_.header.frame_id,
+        tf2::durationFromSec(transform_tolerance_.seconds()));
+    } catch (tf2::TransformException & ex) {
+      RCLCPP_ERROR(logger_, "Failed to transform robot pose into plan frame: %s", ex.what());
+      return cmd_vel;
+    }
+  }
+
   // Advance progress_index_ to the closest pose from the current position,
   // searching only forward to prevent the robot from targeting poses behind itself.
   auto search_start = global_plan_.poses.begin() + progress_index_;
   auto closest_it = min_by(
     search_start, global_plan_.poses.end(),
-    [&pose](const geometry_msgs::msg::PoseStamped & ps) {
+    [&pose_in_plan_frame](const geometry_msgs::msg::PoseStamped & ps) {
       return hypot(
-        pose.pose.position.x - ps.pose.position.x,
-        pose.pose.position.y - ps.pose.position.y);
+        pose_in_plan_frame.pose.position.x - ps.pose.position.x,
+        pose_in_plan_frame.pose.position.y - ps.pose.position.y);
     });
   progress_index_ = std::distance(global_plan_.poses.begin(), closest_it);
 
@@ -132,8 +153,8 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
   auto goal_it = std::prev(global_plan_.poses.end());
   for (auto it = closest_it; it != global_plan_.poses.end(); ++it) {
     double dist = hypot(
-      pose.pose.position.x - it->pose.position.x,
-      pose.pose.position.y - it->pose.position.y);
+      pose_in_plan_frame.pose.position.x - it->pose.position.x,
+      pose_in_plan_frame.pose.position.y - it->pose.position.y);
     if (dist >= lookahead_dist_) {
       goal_it = it;
       break;
@@ -158,8 +179,8 @@ geometry_msgs::msg::TwistStamped OmniPursuitController::computeVelocityCommands(
 
   // Scale speed down linearly as robot approaches goal
   double dist_to_goal = hypot(
-    pose.pose.position.x - global_plan_.poses.back().pose.position.x,
-    pose.pose.position.y - global_plan_.poses.back().pose.position.y);
+    pose_in_plan_frame.pose.position.x - global_plan_.poses.back().pose.position.x,
+    pose_in_plan_frame.pose.position.y - global_plan_.poses.back().pose.position.y);
 
   // Near the goal there is no pose >= lookahead_dist ahead, so goal_it above
   // falls back to the final plan pose and we drive straight at it. Do NOT stop

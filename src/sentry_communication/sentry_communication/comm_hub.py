@@ -420,11 +420,24 @@ def serial_tx_loop(tx_queue):
             time.sleep(0.05)
 
 
+def send_zero_velocity(repeats=3):
+    """Best-effort immediate zero-velocity stop written straight to the MCB, bypassing
+    tx_queue. Called on shutdown so Ctrl-C can't leave the last nonzero cmd_vel latched
+    on the wheels while the rest of the stack tears down."""
+    packet_bytes = NavMessage([0.0, 0.0, 0.0]).createMessage()
+    for _ in range(repeats):
+        try:
+            serial.write(packet_bytes)
+        except Exception as e:
+            print(f"[CommHub] Failed to send zero-velocity stop command: {e}")
+        time.sleep(0.02)
+
+
 def main():
     rclpy.init()
 
     tx_queue = queue.PriorityQueue()
-    
+
     nav_subscriber = NavSubscriber(tx_queue)
     odom_publisher = OdomPublisher()
     aim_subscriber = AimSubscriber(tx_queue)
@@ -443,6 +456,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        send_zero_velocity()
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
         aim_subscriber.destroy_node()

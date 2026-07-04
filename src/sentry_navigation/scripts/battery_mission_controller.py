@@ -1,25 +1,35 @@
 #!/usr/bin/env python3
 #
-# BATTERY MISSION CONTROLLER
-# ===========================
-# This node watches the robot's battery level and decides where it should go:
+# BATTERY MISSION CONTROLLER (finite state machine)
+# ===================================================
+# States
+# -------
+#   CAPTURING_HOME  Waiting for the initial map->base_link TF. Assumes the robot is
+#                   physically placed at "home" before this node starts.
+#   NAV_TO_CENTER   Battery is healthy -- drive to the arena centre.
+#   STRAFING        At the centre, ping-ponging sideways (+/-0.25m about centre_y) for
+#                   as long as the battery stays healthy.
+#   NAV_TO_HOME     Battery dropped below threshold -- return home.
+#   WAIT_AT_HOME    Reached home successfully -- hold position for HOME_WAIT_S seconds
+#                   (time for a human to swap/refill the battery), then head back out.
 #
-#   Battery >= 50%  →  drive to the centre of the arena
-#   Battery <  50%  →  drive back to where it started
+# Battery readings only ever trigger the NAV_TO_CENTER/STRAFING -> NAV_TO_HOME
+# transition. Once heading home or waiting at home, the FSM ignores battery readings
+# until it's back at centre -- that's what makes this a state machine instead of a
+# reactive "go wherever the battery says right now" controller like the old version.
 #
-# HOW IT WORKS
-# ------------
-# 1. At startup it waits for the map → base_link transform to exist
-#    (meaning SLAM/AMCL has initialised and knows where the robot is).
-#    Once that's available it records the robot's current position as "home".
+# STRAFE PATTERN
+# --------------
+# On arrival at centre the robot moves to (centre_y + 0.25). From there each
+# subsequent waypoint flips sides, i.e. -0.25 (a 0.5m move), then +0.25 (a 0.5m move),
+# and so on -- the classic up-0.25/down-0.5/up-0.5/... ping-pong.
 #
-# 2. It then listens to the /battery_health topic (a Float32, range 0–100).
-#    Every time a new reading arrives it decides: go to centre or go home?
-#    If the destination hasn't changed it does nothing and lets the robot keep
-#    going. If it HAS changed it cancels the current nav2 goal and sends a new one.
-#
-# 3. It talks to nav2 through the NavigateToPose action. Nav2 handles all the
-#    actual path planning and obstacle avoidance — this node just says "go here".
+# HOME POSITION
+# -------------
+# Captured from the map->base_link TF at startup (assumes the robot starts at home --
+# no separate home_x/home_y parameters). For competition, place the robot near the
+# left- or right-most point along the middle of the arena (y ~ 4.1) before launch --
+# whichever side matches your team colour, since that isn't known ahead of time.
 #
 # WHERE TO PLUG IN REAL BATTERY DATA
 # -----------------------------------
@@ -30,9 +40,13 @@
 #
 # TUNING
 # ------
-# center_x / center_y  →  set these in the launch file to match your AMCL map
-# BATTERY_THRESHOLD     →  change the 50.0 below if you want a different cutoff
-# HOME_CAPTURE_DELAY_S  →  how long to wait before locking in the home position
+# center_x / center_y   ->  set these in the launch file to match your AMCL map
+# BATTERY_THRESHOLD     ->  change the 50.0 below if you want a different cutoff
+# HOME_CAPTURE_DELAY_S  ->  how long to wait before locking in the home position
+# STRAFE_AMPLITUDE_M    ->  how far off centre_y each strafe waypoint sits
+# HOME_WAIT_S           ->  how long to hold at home after a successful arrival
+
+import enum
 
 import rclpy
 from rclpy.node import Node
@@ -48,11 +62,26 @@ import tf2_ros
 
 
 # How long after startup to wait before capturing the home position.
-# Needs to be long enough for SLAM/AMCL to produce a valid map→base_link TF.
+# Needs to be long enough for SLAM/AMCL to produce a valid map->base_link TF.
 HOME_CAPTURE_DELAY_S = 5.0
 
-# Below this percentage the robot goes home. At or above it goes to centre.
+# Below this percentage the robot goes home. At or above it goes to/stays at centre.
 BATTERY_THRESHOLD = 50.0
+
+# Half the total strafe travel -- first move off centre is this far, every move after
+# that is 2x this (peak to peak).
+STRAFE_AMPLITUDE_M = 0.25
+
+# How long to sit at home after a successful arrival before heading back to centre.
+HOME_WAIT_S = 5.0
+
+
+class State(enum.Enum):
+    CAPTURING_HOME = enum.auto()
+    NAV_TO_CENTER = enum.auto()
+    STRAFING = enum.auto()
+    NAV_TO_HOME = enum.auto()
+    WAIT_AT_HOME = enum.auto()
 
 
 class BatteryMissionController(Node):
@@ -74,15 +103,21 @@ class BatteryMissionController(Node):
         self.home_pose = None
         # last battery reading we received (None until first message arrives)
         self.battery = None
-        # which destination the robot is currently heading to ('center' or 'home')
-        self.current_target = None
-        # Forces the very first evaluation to target 'home' (a no-op goal at the
-        # robot's own start position) regardless of the battery reading, so it
-        # doesn't immediately bolt to center_x/center_y on startup.
-        self._first_evaluate_done = False
+
+        self.state = State.CAPTURING_HOME
+        # True -> next strafe waypoint is +STRAFE_AMPLITUDE_M off centre_y, False -> -.
+        # Reset to True every time we (re)arrive at centre from NAV_TO_CENTER.
+        self._strafe_up_next = True
+
         # handle to the active nav2 goal so we can cancel it if needed
         self._goal_handle = None
-        self._navigating = False
+        self._current_goal_pose = None
+        # Bumped every time a new goal is sent. Callbacks compare against this to
+        # detect they've been superseded (goal cancelled, state changed) and bail out
+        # instead of acting on stale results.
+        self._goal_generation = 0
+
+        self._home_wait_timer = None
 
         # TF listener so we can read where the robot is in the map
         self.tf_buffer = tf2_ros.Buffer()
@@ -107,7 +142,6 @@ class BatteryMissionController(Node):
         # Try to read where the robot is right now in the map frame.
         # This will fail (and we'll retry) until SLAM/AMCL has a fix.
         try:
-            # Use an explicit blank Time message to get the latest available frame
             tf = self.tf_buffer.lookup_transform(
                 self.map_frame, self.base_frame,
                 rclpy.time.Time(), timeout=Duration(seconds=1.0))
@@ -121,12 +155,10 @@ class BatteryMissionController(Node):
         self.get_logger().info(
             f'Home captured: ({self.home_pose.pose.position.x:.2f}, '
             f'{self.home_pose.pose.position.y:.2f})')
-        
 
-
-        # If a battery reading already came in while we were waiting, act on it now
-        if self.battery is not None:
-            self._evaluate()
+        # Mission starts here: head to centre. If the battery is actually already low,
+        # the next /battery_health reading will redirect us home mid-transit.
+        self._enter_state(State.NAV_TO_CENTER)
 
     # ------------------------------------------------------------------
     # BATTERY LOGIC: called every time /battery_health publishes
@@ -139,25 +171,40 @@ class BatteryMissionController(Node):
         # This callback doesn't care where the number came from.
         # ---------------------------------------------------------------
         self.battery = msg.data
-        if self.home_pose is not None:
-            self._evaluate()
+        if self.home_pose is None:
+            return  # still capturing home; mission hasn't started yet
 
-    def _evaluate(self):
-        # Decide where we should be going based on current battery level
-        if not self._first_evaluate_done:
-            self._first_evaluate_done = True
-            desired = 'home'
-        else:
-            desired = 'center' if self.battery >= BATTERY_THRESHOLD else 'home'
+        if self.battery < BATTERY_THRESHOLD and self.state in (State.NAV_TO_CENTER, State.STRAFING):
+            self.get_logger().info(
+                f'Battery {self.battery:.1f}% < {BATTERY_THRESHOLD}% -> heading home')
+            self._enter_state(State.NAV_TO_HOME)
 
-        # Don't interrupt if we're already going to the right place
-        if desired == self.current_target and self._navigating:
-            return
+    # ------------------------------------------------------------------
+    # STATE MACHINE
 
-        self.get_logger().info(f'Battery {self.battery:.1f}% → targeting {desired}')
-        self.current_target = desired
-        goal_pose = self._center_pose() if desired == 'center' else self.home_pose
-        self._send_goal(goal_pose)
+    def _enter_state(self, new_state: State):
+        self.state = new_state
+        self.get_logger().info(f'State -> {new_state.name}')
+
+        if new_state == State.NAV_TO_CENTER:
+            self._send_goal(self._pose_at(self.center_x, self.center_y))
+        elif new_state == State.STRAFING:
+            self._send_goal(self._next_strafe_pose())
+        elif new_state == State.NAV_TO_HOME:
+            self._send_goal(self.home_pose)
+        elif new_state == State.WAIT_AT_HOME:
+            self._home_wait_timer = self.create_timer(HOME_WAIT_S, self._home_wait_done)
+
+    def _home_wait_done(self):
+        self._home_wait_timer.cancel()
+        self._home_wait_timer = None
+        self._strafe_up_next = True  # first move after centre is always +STRAFE_AMPLITUDE_M
+        self._enter_state(State.NAV_TO_CENTER)
+
+    def _next_strafe_pose(self) -> PoseStamped:
+        offset = STRAFE_AMPLITUDE_M if self._strafe_up_next else -STRAFE_AMPLITUDE_M
+        self._strafe_up_next = not self._strafe_up_next
+        return self._pose_at(self.center_x, self.center_y + offset)
 
     # ------------------------------------------------------------------
     # NAV2 COMMUNICATION: send/cancel goals and handle results
@@ -171,50 +218,61 @@ class BatteryMissionController(Node):
         if self._goal_handle is not None:
             self._goal_handle.cancel_goal_async()
 
-        # FIX: Update the pose timestamp to the exact current time
+        # Update the pose timestamp to the exact current time
         # This stops the planner from looking up transforms at t=0
         pose.header.stamp = self.get_clock().now().to_msg()
 
         goal = NavigateToPose.Goal()
         goal.pose = pose
 
-        
-        self._navigating = True
-        send_future = self._nav_client.send_goal_async(goal)
-        send_future.add_done_callback(self._goal_accepted_cb)
+        self._current_goal_pose = pose
+        self._goal_generation += 1
+        my_generation = self._goal_generation
 
-    def _goal_accepted_cb(self, future):
+        send_future = self._nav_client.send_goal_async(goal)
+        send_future.add_done_callback(
+            lambda f, gen=my_generation: self._goal_accepted_cb(f, gen))
+
+    def _goal_accepted_cb(self, future, generation):
+        if generation != self._goal_generation:
+            return  # superseded before nav2 even accepted it
         self._goal_handle = future.result()
         if not self._goal_handle.accepted:
             self.get_logger().warn('Goal rejected by nav2')
-            self._navigating = False
             return
-        # Goal is running — register a callback for when it finishes
         result_future = self._goal_handle.get_result_async()
-        result_future.add_done_callback(self._goal_result_cb)
+        result_future.add_done_callback(
+            lambda f, gen=generation: self._goal_result_cb(f, gen))
 
-    def _goal_result_cb(self, future):
-        self._navigating = False
+    def _goal_result_cb(self, future, generation):
+        if generation != self._goal_generation:
+            return  # stale result from a goal we've since cancelled/superseded
         self._goal_handle = None
         status = future.result().status
+
         if status == GoalStatus.STATUS_SUCCEEDED:
-            self.get_logger().info(f'Reached {self.current_target}')
+            self.get_logger().info(f'Reached goal for {self.state.name}')
+            if self.state == State.NAV_TO_CENTER:
+                self._strafe_up_next = True
+                self._enter_state(State.STRAFING)
+            elif self.state == State.STRAFING:
+                self._enter_state(State.STRAFING)  # sends the next ping-pong waypoint
+            elif self.state == State.NAV_TO_HOME:
+                self._enter_state(State.WAIT_AT_HOME)
         else:
-            # Nav2 failed or was cancelled — we'll try again on the next battery update
             self.get_logger().warn(
-                f'Goal to {self.current_target} failed (status {status}), '
-                f'will retry on next battery update')
+                f'Goal for {self.state.name} failed (status {status}), retrying')
+            self._send_goal(self._current_goal_pose)
 
     # ------------------------------------------------------------------
     # HELPERS: build PoseStamped messages
 
-    def _center_pose(self) -> PoseStamped:
-        # Arena centre — coordinates come from launch args (center_x, center_y)
+    def _pose_at(self, x: float, y: float) -> PoseStamped:
         p = PoseStamped()
         p.header.frame_id = self.map_frame
         p.header.stamp = self.get_clock().now().to_msg()
-        p.pose.position.x = self.center_x
-        p.pose.position.y = self.center_y
+        p.pose.position.x = x
+        p.pose.position.y = y
         p.pose.orientation.w = 1.0  # face forward (no specific heading required)
         return p
 
