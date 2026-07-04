@@ -48,7 +48,7 @@ class BatteryMissionController(Node):
         super().__init__('battery_mission_controller')
 
         # These are set in the launch file — no need to touch this code
-        self.declare_parameter('center_x', 3.0)
+        self.declare_parameter('center_x', 0.0)
         self.declare_parameter('center_y', 0.0)
         self.declare_parameter('map_frame', 'map')
         self.declare_parameter('base_frame', 'base_link')
@@ -79,6 +79,11 @@ class BatteryMissionController(Node):
         # Keep retrying the home capture every HOME_CAPTURE_DELAY_S seconds
         # until the map TF is available. Timer cancels itself once home is locked.
         self._home_capture_timer = self.create_timer(HOME_CAPTURE_DELAY_S, self._capture_home_once)
+
+        # Resend the current target goal every second regardless of whether the
+        # target changed, so a dropped/rejected/aborted goal gets retried instead
+        # of silently stalling until the battery crosses the threshold again.
+        self._resend_timer = self.create_timer(1.0, self._send_current_goal)
 
     # ------------------------------------------------------------------
     # STARTUP: lock in the home position
@@ -116,11 +121,29 @@ class BatteryMissionController(Node):
         if target == 'center':
             self.get_logger().info(
                 f'Battery {msg.data:.1f}% > {BATTERY_THRESHOLD}% -> going to centre')
-            self._send_goal(self._pose_at(self.center_x, self.center_y))
         else:
             self.get_logger().info(
                 f'Battery {msg.data:.1f}% <= {BATTERY_THRESHOLD}% -> going home')
+        # A target change preempts whatever nav2 is currently doing.
+        self._cancel_current_goal()
+        self._send_current_goal()
+
+    def _send_current_goal(self):
+        # Also runs on a 1s timer so a rejected/aborted/completed goal gets
+        # retried instead of stalling until the battery crosses the threshold
+        # again. Skips while a goal is still actively executing, so this
+        # doesn't cancel-and-replan a goal that's already under way.
+        if self._goal_handle is not None:
+            return
+        if self._target == 'center':
+            self._send_goal(self._pose_at(self.center_x, self.center_y))
+        elif self._target == 'home':
             self._send_goal(self.home_pose)
+
+    def _cancel_current_goal(self):
+        if self._goal_handle is not None:
+            self._goal_handle.cancel_goal_async()
+            self._goal_handle = None
 
     # ------------------------------------------------------------------
     # NAV2 COMMUNICATION: send goals
@@ -129,11 +152,6 @@ class BatteryMissionController(Node):
         if not self._nav_client.wait_for_server(timeout_sec=3.0):
             self.get_logger().error('NavigateToPose action server not available')
             return
-
-        # Cancel whatever nav2 is currently doing before sending the new goal
-        if self._goal_handle is not None:
-            self._goal_handle.cancel_goal_async()
-            self._goal_handle = None
 
         # Update the pose timestamp to the exact current time
         # This stops the planner from looking up transforms at t=0
@@ -151,6 +169,13 @@ class BatteryMissionController(Node):
             self.get_logger().warn('Goal rejected by nav2')
             return
         self._goal_handle = goal_handle
+        goal_handle.get_result_async().add_done_callback(self._goal_result_cb)
+
+    def _goal_result_cb(self, future):
+        # Goal finished (succeeded, aborted, or canceled) — clear the handle so
+        # the next resend tick or target change can send a fresh goal instead
+        # of thinking one is still in flight.
+        self._goal_handle = None
 
     # ------------------------------------------------------------------
     # HELPERS: build PoseStamped messages

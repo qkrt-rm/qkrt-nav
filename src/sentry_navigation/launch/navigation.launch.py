@@ -55,13 +55,13 @@ def generate_launch_description():
 
     center_x_arg = DeclareLaunchArgument(
         "center_x",
-        default_value="6.0",
+        default_value="0.0",
         description="X coordinate of arena center in map frame."
     )
 
     center_y_arg = DeclareLaunchArgument(
         "center_y",
-        default_value="4.0",
+        default_value="0.0",
         description="Y coordinate of arena center in map frame."
     )
 
@@ -239,7 +239,7 @@ def generate_launch_description():
         name='battery_mission_controller',
         output='screen',
         parameters=[
-            {'use_sim_time': use_sim_time, 'map_frame': 'odom', 'base_frame': 'base_link'}, #TODO: changed last minute
+            {'use_sim_time': use_sim_time, 'map_frame': 'map', 'base_frame': 'base_link'},
             {'center_x': center_x},
             {'center_y': center_y},
         ],

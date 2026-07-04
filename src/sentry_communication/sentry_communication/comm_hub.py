@@ -188,6 +188,25 @@ class OdomPublisher(Node):
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
 
+        # Frame-health counters so link quality is visible even when nothing is
+        # wrong (a fully healthy link is otherwise silent — odom parsing only
+        # logs at DEBUG). Reported and reset every 2s by _log_comm_health.
+        self._good_frame_count = 0
+        self._bad_frame_count = 0
+        self._unknown_size_count = 0
+        self.create_timer(2.0, self._log_comm_health)
+
+    def _log_comm_health(self):
+        good, bad, unknown = self._good_frame_count, self._bad_frame_count, self._unknown_size_count
+        self._good_frame_count = 0
+        self._bad_frame_count = 0
+        self._unknown_size_count = 0
+        if bad or unknown:
+            self.get_logger().warn(
+                f'Comm health (last 2s): {good} good, {bad} CRC-bad, {unknown} unknown-size')
+        else:
+            self.get_logger().info(f'Comm health (last 2s): {good} good frames')
+
     def _read_loop(self):
         self.get_logger().info('Read loop started, waiting for data...')
         while rclpy.ok():
@@ -202,6 +221,7 @@ class OdomPublisher(Node):
 
             received = parse_frame(frame)
             if received is None:
+                self._bad_frame_count += 1
                 self.get_logger().warn('Bad frame received (CRC mismatch)')
                 continue
 
@@ -210,6 +230,7 @@ class OdomPublisher(Node):
 
                 # Test message: 4-byte counter
                 if len(body) == 4:
+                    self._good_frame_count += 1
                     counter = struct.unpack('<I', body)[0]
                     msg = UInt32()
                     msg.data = counter
@@ -218,6 +239,7 @@ class OdomPublisher(Node):
 
                 # Full odom message: 70 bytes = 17 floats + trailing uint16 battery health.
                 elif len(body) == ODOM_BYTES + BATTERY_BYTES:
+                    self._good_frame_count += 1
                     values = struct.unpack(f'<{ODOM_NUM_FLOATS}f', body[:ODOM_BYTES])
 
                     # Publish combined mcb_odom (all values)
@@ -292,6 +314,7 @@ class OdomPublisher(Node):
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
 
                 else:
+                    self._unknown_size_count += 1
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
     def _publish_odometry(self, wheel_speeds):
