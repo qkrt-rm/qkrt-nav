@@ -36,8 +36,9 @@ from nav2_msgs.action import NavigateToPose
 # Needs to be long enough for SLAM/AMCL to produce a valid map->base_link TF.
 HOME_CAPTURE_DELAY_S = 5.0
 
-# At or above this percentage the robot goes to centre. Below it goes home.
-BATTERY_THRESHOLD = 50.0
+# Battery health from the MCB is a uint16 (0-200). Above this the robot goes to
+# centre; at or below it retreats home. So at 101 it retreats.
+BATTERY_THRESHOLD = 101.0
 
 import tf2_ros
 

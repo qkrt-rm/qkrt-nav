@@ -201,14 +201,16 @@ def generate_launch_description():
         condition=UnlessCondition(use_keepout),
     )
 
-    battery_health_publisher = Node(
-        package='sentry_navigation',
-        executable='battery_health_publisher.py',
-        name='battery_health_publisher',
-        output='screen',
-        parameters=[{'use_sim_time': use_sim_time}],
-        condition=IfCondition(use_battery_mission)
-    )
+    # Simulated battery health source. Disabled now that the real battery health
+    # comes from the MCB via comm_hub, published on /battery_health as a uint16 (0-200).
+    # battery_health_publisher = Node(
+    #     package='sentry_navigation',
+    #     executable='battery_health_publisher.py',
+    #     name='battery_health_publisher',
+    #     output='screen',
+    #     parameters=[{'use_sim_time': use_sim_time}],
+    #     condition=IfCondition(use_battery_mission)
+    # )
 
     # Cancel any goal left over from a previous session (e.g. a stale RViz "2D Nav
     # Goal" click, or a mission node that was killed mid-navigation) so a fresh
@@ -260,7 +262,7 @@ def generate_launch_description():
         nav2_bt_navigator,
         nav2_lifecycle_manager,
         nav2_lifecycle_manager_no_keepout,
-        battery_health_publisher,
+        # battery_health_publisher,  # disabled: real battery health now comes from the MCB
         battery_mission_controller,
         cancel_stale_nav_goal,
     ])

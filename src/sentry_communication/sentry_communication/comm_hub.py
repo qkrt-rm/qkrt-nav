@@ -11,7 +11,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32, String
+from std_msgs.msg import Float32, Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32, String
 from sensor_msgs.msg import Imu, JointState
 from nav_msgs.msg import Odometry
 
@@ -132,6 +132,10 @@ ODOM_LABELS = [
 ODOM_NUM_FLOATS = len(ODOM_LABELS)
 ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 
+# The MCB may append a uint16 battery health value right after the 17 odom floats,
+# making the body 70 bytes instead of 68. Range 0-200. Published on /battery_health.
+BATTERY_BYTES = 2
+
 # Robot geometry for mecanum wheel odometry
 # Wheel radius from MCB: WHEEL_DIAMETER_M = 0.076 in holonomic_chassis_subsystem.hpp
 WHEEL_RADIUS = 0.038  # meters
@@ -157,6 +161,9 @@ class OdomPublisher(Node):
         self.turret_publisher_ = self.create_publisher(Float32MultiArray, 'turret', 10)
 
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
+
+        # Battery health from the MCB (uint16, 0-200), consumed by battery_mission_controller.
+        self.battery_publisher_ = self.create_publisher(Float32, '/battery_health', 10)
 
         # Odometry state (chassis = base_link frame)
         self.odom_x = 0.0
@@ -209,9 +216,9 @@ class OdomPublisher(Node):
                     self.test_publisher_.publish(msg)
                     self.get_logger().info(f'Test counter received: {counter}')
 
-                # Full odom message: 68 bytes (17 floats)
-                elif len(body) == ODOM_BYTES:
-                    values = struct.unpack(f'<{ODOM_NUM_FLOATS}f', body)
+                # Full odom message: 70 bytes = 17 floats + trailing uint16 battery health.
+                elif len(body) == ODOM_BYTES + BATTERY_BYTES:
+                    values = struct.unpack(f'<{ODOM_NUM_FLOATS}f', body[:ODOM_BYTES])
 
                     # Publish combined mcb_odom (all values)
                     msg = Float32MultiArray()
@@ -274,6 +281,12 @@ class OdomPublisher(Node):
 
                     # Compute and publish wheel odometry + joint states
                     self._publish_odometry(values[0:4])
+
+                    # Trailing uint16 battery health (0-200).
+                    battery = struct.unpack('<H', body[ODOM_BYTES:])[0]
+                    batt_msg = Float32()
+                    batt_msg.data = float(battery)
+                    self.battery_publisher_.publish(batt_msg)
 
                     self.get_logger().debug(
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
