@@ -239,7 +239,7 @@ def generate_launch_description():
         name='battery_mission_controller',
         output='screen',
         parameters=[
-            {'use_sim_time': use_sim_time, 'map_frame': 'map', 'base_frame': 'base_link'},
+            {'use_sim_time': use_sim_time, 'map_frame': 'odom', 'base_frame': 'base_link'},
             {'center_x': center_x},
             {'center_y': center_y},
         ],

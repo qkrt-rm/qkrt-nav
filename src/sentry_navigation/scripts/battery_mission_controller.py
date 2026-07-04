@@ -110,7 +110,7 @@ class BatteryMissionController(Node):
     # BATTERY LOGIC: called every time /battery_health publishes
 
     def _battery_cb(self, msg: Float32):
-        self.get_logger().info(f"received battery info: {msg.data}")
+        # self.get_logger().info(f"received battery info: {msg.data}")
 
         if self.home_pose is None:
             return  # still capturing home; mission hasn't started yet
