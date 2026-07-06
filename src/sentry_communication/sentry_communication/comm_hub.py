@@ -11,7 +11,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import MultiThreadedExecutor
 from geometry_msgs.msg import Twist
-from std_msgs.msg import Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32, String
+from std_msgs.msg import Float32, Float32MultiArray, MultiArrayDimension, MultiArrayLayout, UInt8MultiArray, UInt32, String
 from sensor_msgs.msg import Imu, JointState
 from nav_msgs.msg import Odometry
 
@@ -132,6 +132,10 @@ ODOM_LABELS = [
 ODOM_NUM_FLOATS = len(ODOM_LABELS)
 ODOM_BYTES = ODOM_NUM_FLOATS * 4  # 68
 
+# The MCB may append a uint16 battery health value right after the 17 odom floats,
+# making the body 70 bytes instead of 68. Range 0-200. Published on /battery_health.
+BATTERY_BYTES = 2
+
 # Robot geometry for mecanum wheel odometry
 # Wheel radius from MCB: WHEEL_DIAMETER_M = 0.076 in holonomic_chassis_subsystem.hpp
 WHEEL_RADIUS = 0.038  # meters
@@ -158,6 +162,9 @@ class OdomPublisher(Node):
 
         self.odom_publisher_ = self.create_publisher(Odometry, 'odom', 10)
 
+        # Battery health from the MCB (uint16, 0-200), consumed by battery_mission_controller.
+        self.battery_publisher_ = self.create_publisher(Float32, '/battery_health', 10)
+
         # Odometry state (chassis = base_link frame)
         self.odom_x = 0.0
         self.odom_y = 0.0
@@ -173,10 +180,32 @@ class OdomPublisher(Node):
         self.pitch_pos = 0.0    # turret pitch position from MCB encoder
         self.pitch_vel = 0.0    # turret pitch velocity from MCB encoder
         self.turret_pos = 0.0   # integrated gimbal_joint angle (turret relative to base)
-        self.gyro_z_integrated = 0.0     # integrated gyro z (turret world angle)
+        self.gimbal_pos = 0.0   # alias for turret_pos. TODO: Fix this bad code
+        self.odom_theta_integrated = 0.0    #integrated chassis yaw heading relative to world
+        self.turret_yaw_world = 0.0
+
 
         self._thread = threading.Thread(target=self._read_loop, daemon=True)
         self._thread.start()
+
+        # Frame-health counters so link quality is visible even when nothing is
+        # wrong (a fully healthy link is otherwise silent — odom parsing only
+        # logs at DEBUG). Reported and reset every 2s by _log_comm_health.
+        self._good_frame_count = 0
+        self._bad_frame_count = 0
+        self._unknown_size_count = 0
+        self.create_timer(2.0, self._log_comm_health)
+
+    def _log_comm_health(self):
+        good, bad, unknown = self._good_frame_count, self._bad_frame_count, self._unknown_size_count
+        self._good_frame_count = 0
+        self._bad_frame_count = 0
+        self._unknown_size_count = 0
+        if bad or unknown:
+            self.get_logger().warn(
+                f'Comm health (last 2s): {good} good, {bad} CRC-bad, {unknown} unknown-size')
+        else:
+            self.get_logger().info(f'Comm health (last 2s): {good} good frames')
 
     def _read_loop(self):
         self.get_logger().info('Read loop started, waiting for data...')
@@ -192,6 +221,7 @@ class OdomPublisher(Node):
 
             received = parse_frame(frame)
             if received is None:
+                self._bad_frame_count += 1
                 self.get_logger().warn('Bad frame received (CRC mismatch)')
                 continue
 
@@ -200,15 +230,17 @@ class OdomPublisher(Node):
 
                 # Test message: 4-byte counter
                 if len(body) == 4:
+                    self._good_frame_count += 1
                     counter = struct.unpack('<I', body)[0]
                     msg = UInt32()
                     msg.data = counter
                     self.test_publisher_.publish(msg)
                     self.get_logger().info(f'Test counter received: {counter}')
 
-                # Full odom message: 68 bytes (17 floats)
-                elif len(body) == ODOM_BYTES:
-                    values = struct.unpack(f'<{ODOM_NUM_FLOATS}f', body)
+                # Full odom message: 70 bytes = 17 floats + trailing uint16 battery health.
+                elif len(body) == ODOM_BYTES + BATTERY_BYTES:
+                    self._good_frame_count += 1
+                    values = struct.unpack(f'<{ODOM_NUM_FLOATS}f', body[:ODOM_BYTES])
 
                     # Publish combined mcb_odom (all values)
                     msg = Float32MultiArray()
@@ -270,15 +302,22 @@ class OdomPublisher(Node):
                     self.pitch_vel = values[7]
 
                     # Compute and publish wheel odometry + joint states
-                    self._publish_odometry(values[0:4], yaw)
+                    self._publish_odometry(values[0:4])
+
+                    # Trailing uint16 battery health (0-200).
+                    battery = struct.unpack('<H', body[ODOM_BYTES:])[0]
+                    batt_msg = Float32()
+                    batt_msg.data = float(battery)
+                    self.battery_publisher_.publish(batt_msg)
 
                     self.get_logger().debug(
                         f'Odom: ' + ', '.join(f'{l}={v:.3f}' for l, v in zip(ODOM_LABELS, values)))
 
                 else:
+                    self._unknown_size_count += 1
                     self.get_logger().warn(f'Unknown ODOM body size: {len(body)} bytes')
 
-    def _publish_odometry(self, wheel_speeds, imu_yaw):
+    def _publish_odometry(self, wheel_speeds):
         """Compute odometry from mecanum wheel speeds and publish.
 
         base_link is the chassis frame. odom_theta tracks chassis heading.
@@ -313,8 +352,13 @@ class OdomPublisher(Node):
         omega = self.gimbal_vel - (-self.gyro_z)
         #######################################################
 
-        self.gyro_z_integrated += omega * dt
-        self.odom_theta = self.gyro_z_integrated % (2 * math.pi)  # Keep in [0, 2pi)
+        #old code
+        # self.odom_theta_integrated += omega * dt
+        # self.odom_theta = self.odom_theta_integrated % (2 * math.pi)  # Keep in [0, 2pi)
+
+        self.turret_yaw_world = (self.turret_yaw_world + dt * self.gyro_z) % (2*math.pi) #TODO: verify the sign on gyro_z
+        self.odom_theta = (self.turret_yaw_world + self.gimbal_pos) % (2*math.pi)  #TODO: verify signs here as well, spin turret, look for 0 chassis yaw
+
 
         cos_theta = math.cos(self.odom_theta)
         sin_theta = math.sin(self.odom_theta)
@@ -366,7 +410,7 @@ class OdomPublisher(Node):
         # gimbal_joint = turret angle relative to base.
         # Integrate (turret_world_vel - base_world_vel). VERIFY SIGNS IRL.
         # self.turret_pos += dt * (-self.gimbal_vel)
-        # self.turret_pos += dt * (omega - self.gyro_z) 
+        # self.turret_pos += dt * (omega - self.gyro_z)
         self.turret_pos = self.gimbal_pos
         # self.turret_pos += 0.0
         js_msg.position = [
@@ -396,9 +440,9 @@ def serial_tx_loop(tx_queue):
             # If a vision tracking command sits in the queue for more than 40ms 
             # (e.g. during heavy serial traffic or a skipped camera frame), drop it.
             # This prevents the turret from lagging or shooting at outdated target positions.
-            if priority == PRIORITY_VISION and (time.monotonic() - timestamp) > 0.040:
-                tx_queue.task_done()
-                continue
+            # if priority == PRIORITY_VISION and (time.monotonic() - timestamp) > 0.040:
+            #     tx_queue.task_done()
+            #     continue
                 
             # ADDED: Perform the sequential execution down the physical wire.
             # Since this is the only thread doing this, write collisions are impossible.
@@ -412,11 +456,24 @@ def serial_tx_loop(tx_queue):
             time.sleep(0.05)
 
 
+def send_zero_velocity(repeats=3):
+    """Best-effort immediate zero-velocity stop written straight to the MCB, bypassing
+    tx_queue. Called on shutdown so Ctrl-C can't leave the last nonzero cmd_vel latched
+    on the wheels while the rest of the stack tears down."""
+    packet_bytes = NavMessage([0.0, 0.0, 0.0]).createMessage()
+    for _ in range(repeats):
+        try:
+            serial.write(packet_bytes)
+        except Exception as e:
+            print(f"[CommHub] Failed to send zero-velocity stop command: {e}")
+        time.sleep(0.02)
+
+
 def main():
     rclpy.init()
 
     tx_queue = queue.PriorityQueue()
-    
+
     nav_subscriber = NavSubscriber(tx_queue)
     odom_publisher = OdomPublisher()
     aim_subscriber = AimSubscriber(tx_queue)
@@ -435,6 +492,7 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        send_zero_velocity()
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
         aim_subscriber.destroy_node()

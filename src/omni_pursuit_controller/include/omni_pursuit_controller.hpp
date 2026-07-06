@@ -60,10 +60,18 @@ protected:
   double max_angular_vel_;
   double approach_velocity_scaling_dist_;
   double min_approach_linear_velocity_;
+  double max_linear_accel_;
   rclcpp::Duration transform_tolerance_ {0, 0};
 
   nav_msgs::msg::Path global_plan_;
   size_t progress_index_{0};
+
+  // Output acceleration limiting: ramp vx/vy between cycles instead of allowing
+  // instantaneous reversals (the +0.2 -> -0.2 jitter when the lookahead flips).
+  double prev_vx_{0.0};
+  double prev_vy_{0.0};
+  rclcpp::Time last_cmd_time_;
+  bool have_prev_cmd_{false};
 };
 
 }  // namespace nav2_omni_pursuit_controller

@@ -20,6 +20,7 @@ def generate_launch_description():
     use_battery_mission = LaunchConfiguration('use_battery_mission')
     center_x = LaunchConfiguration('center_x')
     center_y = LaunchConfiguration('center_y')
+    use_keepout = LaunchConfiguration('use_keepout')
 
     slam_arg = DeclareLaunchArgument(
         'slam',
@@ -35,7 +36,7 @@ def generate_launch_description():
 
     map_arg = DeclareLaunchArgument(
         'map',
-        default_value='sentry_map.yaml'
+        default_value='ARCC20263v3FieldCleaned.yaml'
     )
 
     robot_model_arg = DeclareLaunchArgument(
@@ -56,7 +57,7 @@ def generate_launch_description():
 
     center_x_arg = DeclareLaunchArgument(
         'center_x',
-        default_value='1.0',
+        default_value='0.0',
         description='X coordinate of arena center in map frame.'
     )
 
@@ -64,6 +65,12 @@ def generate_launch_description():
         'center_y',
         default_value='0.0',
         description='Y coordinate of arena center in map frame.'
+    )
+
+    use_keepout_arg = DeclareLaunchArgument(
+        'use_keepout',
+        default_value='false',
+        description='Enable arena keepout filter in navigation. Set true in the arena.'
     )
 
     gazebo = IncludeLaunchDescription(
@@ -89,10 +96,16 @@ def generate_launch_description():
         launch_arguments={
             'use_sim_time': use_sim_time,
             'slam': slam,
-            'map': map_yaml
+            'map': map_yaml,
+            # Sim spawns the robot at a known pose, so seed AMCL instead of scattering.
+            # Keep these in sync with the spawn pose in gazebo.launch.py (-x -y -Y).
+            'seed_initial_pose': 'true',
+            'initial_pose_x': '-5.25',
+            'initial_pose_y': '0.0',
+            'initial_pose_yaw': '0.0',
         }.items()
     )
-    
+
     local_localization = IncludeLaunchDescription(
         os.path.join(
             get_package_share_directory('sentry_localization'),
@@ -113,6 +126,7 @@ def generate_launch_description():
             'use_battery_mission': use_battery_mission,
             'center_x': center_x,
             'center_y': center_y,
+            'use_keepout': use_keepout,
         }.items()
     )
 
@@ -136,6 +150,7 @@ def generate_launch_description():
         use_battery_mission_arg,
         center_x_arg,
         center_y_arg,
+        use_keepout_arg,
         gazebo,
         TimerAction(
             period=5.0,

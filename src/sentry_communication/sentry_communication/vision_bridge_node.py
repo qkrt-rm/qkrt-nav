@@ -1,9 +1,35 @@
 import os
 import sys
+import types
+
+# apt opencv 4.5.4 defaults to a GStreamer pipeline that fails to open the
+# OV9782 (reports 0x0); force the V4L2 backend instead.
+os.environ.setdefault('OPENCV_VIDEOIO_PRIORITY_GSTREAMER', '0')
 
 # 1. POINT DIRECTLY TO THE INNER SRC DIRECTORY
 # This allows Python to see 'camera', 'detector', 'pose_estimator', etc.
 sys.path.append('/home/qkrt/qkrt-aim/src')
+
+# Compatibility shims: qkrt-aim targets Python 3.12 with opencv>=4.8 and
+# line_profiler; ROS Humble runs Python 3.10 with apt opencv 4.5.4 and
+# neither is available for 3.10.
+import cv2
+import numpy as np
+if not hasattr(cv2, 'typing'):
+    _cv2_typing = types.ModuleType('cv2.typing')
+    _cv2_typing.MatLike = np.ndarray
+    sys.modules['cv2.typing'] = _cv2_typing
+    cv2.typing = _cv2_typing
+try:
+    import line_profiler  # noqa: F401
+except ImportError:
+    _lp = types.ModuleType('line_profiler')
+    _lp.profile = lambda func: func
+    sys.modules['line_profiler'] = _lp
+
+# Importing util before detector avoids a circular-import failure under
+# Python 3.10 (detector -> Target -> util -> ImageLabeller -> detector).
+import util  # noqa: F401
 
 import rclpy
 from rclpy.node import Node
@@ -33,6 +59,9 @@ class VisionBridgeNode(Node):
 
     def processing_loop(self):
         frame = self.camera.getFrame()
+        if frame is None:
+            self.get_logger().warn("No frame from camera", throttle_duration_sec=5.0)
+            return
         targets = self.detector.processInput(frame)
        
         if len(targets) > 0:
@@ -57,7 +86,8 @@ def main(args=None):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
