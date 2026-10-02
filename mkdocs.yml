@@ -1,0 +1,104 @@
+# Builds a website from the GitHub wiki (qkrt-rm/qkrt-nav.wiki).
+# The wiki stays the single source of truth: edit pages there, not here.
+#
+# Local preview:
+#   git clone https://github.com/qkrt-rm/qkrt-nav.wiki.git wiki   (or symlink an existing clone to ./wiki)
+#   pip install mkdocs-material
+#   mkdocs serve
+#
+# Deployment happens automatically via .github/workflows/docs.yml.
+
+site_name: QKRT AutoNav Docs
+site_url: https://qkrt-rm.github.io/qkrt-nav/
+repo_url: https://github.com/qkrt-rm/qkrt-nav
+repo_name: qkrt-rm/qkrt-nav
+edit_uri: ""
+
+docs_dir: wiki
+exclude_docs: |
+  _Sidebar.md
+  _Footer.md
+  .git/
+
+hooks:
+  - docs_hooks/wiki.py
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      custom_fences:
+        # GitHub-style ```math blocks
+        - name: math
+          class: arithmatex
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_fenced_format {kwds: {mode: generic, tag: div}}
+
+extra_javascript:
+  - docs_hooks/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+validation:
+  links:
+    anchors: warn
+
+# Mirrors _Sidebar.md in the wiki. Add new pages here too.
+nav:
+  - Home: Home.md
+  - Future Ideas: Future-Ideas.md
+  - Environment Setup:
+      - Ubuntu VM Installation: Ubuntu-VM-Installation.md
+  - Tutorials:
+      - ROS2 Tutorial (Python): ROS2-Tutorial-(Python).md
+      - ROS2 Tutorial (C++): ROS2-Tutorial-(C--).md
+  - Concepts:
+      - ROS2 Basics: ROS2-Basics.md
+      - TF, URDF and Gazebo: TF,-URDF-and-Gazebo.md
+      - Path Planning: Path-Planning.md
+      - Path Execution: Path-Execution.md
+      - Costmaps and Obstacle Avoidance: Costmaps-and-Obstacle-Avoidance.md
+      - Sensing: Interoceptive-and-Exteroceptive-Sensing.md
+      - Localization: Localization.md
+      - Behavior Trees: Behavior-Trees.md
+      - Nav2 Architecture: Nav2-Architecture.md
+      - Full Stack Overview: Full-Stack-Overview.md
+  - Our Code:
+      - System Architecture: System-Architecture.md
+      - sentry_bringup: sentry_bringup.md
+      - sentry_communication: sentry_communication.md
+      - sentry_description: sentry_description.md
+      - sentry_localization: sentry_localization.md
+      - sentry_navigation: sentry_navigation.md
+      - omni_pursuit_controller: omni_pursuit_controller.md
+  - Hardware & Status:
+      - Setup and Operation: Setup-and-Operation.md
+      - README (status & bugs): https://github.com/qkrt-rm/qkrt-nav#readme

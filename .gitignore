@@ -80,3 +80,7 @@ maps/tmp/
 *.backup
 *.pid
 *.core
+
+# Docs site (wiki is cloned/symlinked into ./wiki, see mkdocs.yml)
+wiki
+site/
