@@ -1,0 +1,18 @@
+/* Custom styles for the docs site. Save and `mkdocs serve` reloads instantly.
+   Material's CSS variables: https://squidfunk.github.io/mkdocs-material/customization/#additional-css */
+
+/* Example: exact brand colour for the top bar (set primary: custom in mkdocs.yml to use) */
+/*
+:root {
+  --md-primary-fg-color: #8b0000;
+  --md-primary-fg-color--light: #b22222;
+  --md-primary-fg-color--dark: #5c0000;
+}
+*/
+
+/* Keep figures from getting huge on wide screens */
+.md-typeset img {
+  max-width: 100%;
+  display: block;
+  margin: 1rem auto;
+}

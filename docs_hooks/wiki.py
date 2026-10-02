@@ -4,7 +4,7 @@
 - Rewrites wiki-style links like [x](Path-Planning#anchor) to [x](Path-Planning.md#anchor)
   so MkDocs can resolve them. GitHub turns "+" into "-" in page filenames, so
   "ROS2-Tutorial-(C++)" maps to "ROS2-Tutorial-(C--).md".
-- Copies mathjax.js next to the built site.
+- Copies the .js/.css files in docs_hooks/ next to the built site.
 """
 
 import os
@@ -45,4 +45,6 @@ def on_post_build(config):
     here = os.path.dirname(__file__)
     dest = os.path.join(config["site_dir"], "docs_hooks")
     os.makedirs(dest, exist_ok=True)
-    shutil.copy(os.path.join(here, "mathjax.js"), dest)
+    for name in os.listdir(here):
+        if name.endswith((".js", ".css")):
+            shutil.copy(os.path.join(here, name), dest)
