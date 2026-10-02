@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{#
+  With navigation.tabs, the sidebar only shows the current tab's pages.
+  On the home page, show every section so the whole site is visible at a glance.
+  The style sits inside the content block so instant navigation swaps it out on other pages.
+#}
+{% block content %}
+  {% if page and page.file.src_uri == "Home.md" %}
+    <style>
+      @media screen and (min-width: 76.25em) {
+        .md-nav--lifted > .md-nav__list > .md-nav__item { display: block; }
+        .md-nav--lifted > .md-nav__list > .md-nav__item--section { margin: 1.25em 0; }
+        .md-nav--lifted > .md-nav__list > .md-nav__item > .md-nav:not(.md-nav--secondary) { margin: 0; }
+        .md-nav--lifted > .md-nav__list > .md-nav__item--section > .md-nav__link {
+          font-weight: 700;
+          color: var(--md-default-fg-color);
+        }
+      }
+    </style>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

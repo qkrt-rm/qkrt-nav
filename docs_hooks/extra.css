@@ -1,6 +1,51 @@
 /* Custom styles for the docs site. Save and `mkdocs serve` reloads instantly.
    Material's CSS variables: https://squidfunk.github.io/mkdocs-material/customization/#additional-css */
 
+/* Comfortable reading width and slightly larger body text */
+.md-grid {
+  max-width: 1360px;
+}
+.md-typeset {
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+/* Clearer heading hierarchy */
+.md-typeset h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--md-default-fg-color);
+}
+.md-typeset h2 {
+  font-weight: 600;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+/* Figures: centered, rounded, never wider than the page */
+.md-typeset img {
+  display: block;
+  max-width: 100%;
+  margin: 1.2rem auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Tables: full width with zebra rows */
+.md-typeset table:not([class]) {
+  display: table;
+  width: 100%;
+  font-size: 0.75rem;
+}
+.md-typeset table:not([class]) tbody tr:nth-child(odd) {
+  background-color: var(--md-code-bg-color);
+}
+
+/* Rounded code blocks */
+.md-typeset pre > code {
+  border-radius: 6px;
+}
+
 /* Example: exact brand colour for the top bar (set primary: custom in mkdocs.yml to use) */
 /*
 :root {
@@ -9,10 +54,3 @@
   --md-primary-fg-color--dark: #5c0000;
 }
 */
-
-/* Keep figures from getting huge on wide screens */
-.md-typeset img {
-  max-width: 100%;
-  display: block;
-  margin: 1rem auto;
-}
