@@ -1,5 +1,7 @@
 """MkDocs hook that lets the site build straight from GitHub wiki markdown.
 
+- Builds the site navigation from the wiki's _Sidebar.md, so new wiki pages show up
+  on the site as soon as they're added to the sidebar.
 - Serves Home.md as the site's front page (index.html).
 - Rewrites wiki-style links like [x](Path-Planning#anchor) to [x](Path-Planning.md#anchor)
   so MkDocs can resolve them. GitHub turns "+" into "-" in page filenames, so
@@ -7,11 +9,68 @@
 - Copies the .js/.css files in docs_hooks/ next to the built site.
 """
 
+import logging
 import os
 import re
 import shutil
 
+log = logging.getLogger("mkdocs.hooks.wiki")
+
 _link_re = None
+# Allows one level of parentheses inside the target, e.g. ROS2-Tutorial-(C++)
+_sidebar_link_re = re.compile(r"\[([^\]]+)\]\(((?:[^()\s]|\([^()\s]*\))+)\)")
+_sidebar_heading_re = re.compile(r"^\*\*([^*\[\]]+)\*\*$")
+
+
+def _sidebar_target(target, docs_dir):
+    """Map a wiki link target to a docs file, or None if no such page exists."""
+    if "://" in target:
+        return target
+    target = target.split("#")[0]
+    for name in (target, target.replace("+", "-")):
+        if os.path.isfile(os.path.join(docs_dir, name + ".md")):
+            return name + ".md"
+    return None
+
+
+def _nav_from_sidebar(path, docs_dir):
+    """Turn _Sidebar.md into an MkDocs nav.
+
+    A bold line with a link (**[Home](Home)**) is a top-level page; a bold line
+    without one (**Concepts**) starts a section; list items below it are its pages.
+    """
+    nav, section = [], None
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            heading = _sidebar_heading_re.match(line)
+            if heading:
+                section = []
+                nav.append({heading.group(1).strip(): section})
+                continue
+            link = _sidebar_link_re.search(line)
+            if not link:
+                continue
+            title, target = link.group(1).strip(), _sidebar_target(link.group(2), docs_dir)
+            if target is None:
+                log.info("_Sidebar.md links to missing page %r, skipping", link.group(2))
+                continue
+            is_item = re.match(r"^([-*+]|\d+\.)\s", line)
+            if is_item and section is not None:
+                section.append({title: target})
+            else:
+                section = None
+                nav.append({title: target})
+    return [entry for entry in nav if list(entry.values())[0] != []]
+
+
+def on_config(config):
+    sidebar = os.path.join(config["docs_dir"], "_Sidebar.md")
+    if os.path.isfile(sidebar):
+        config["nav"] = _nav_from_sidebar(sidebar, config["docs_dir"])
+    return config
 
 
 def _wiki_name(src_uri):

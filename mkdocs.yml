@@ -120,34 +120,5 @@ validation:
   links:
     anchors: warn
 
-# Mirrors _Sidebar.md in the wiki. Add new pages here too.
-nav:
-  - Home: Home.md
-  - Future Ideas: Future-Ideas.md
-  - Environment Setup:
-      - Ubuntu VM Installation: Ubuntu-VM-Installation.md
-  - Tutorials:
-      - ROS2 Tutorial (Python): ROS2-Tutorial-(Python).md
-      - ROS2 Tutorial (C++): ROS2-Tutorial-(C--).md
-  - Concepts:
-      - ROS2 Basics: ROS2-Basics.md
-      - TF, URDF and Gazebo: TF,-URDF-and-Gazebo.md
-      - Path Planning: Path-Planning.md
-      - Path Execution: Path-Execution.md
-      - Costmaps and Obstacle Avoidance: Costmaps-and-Obstacle-Avoidance.md
-      - Sensing: Interoceptive-and-Exteroceptive-Sensing.md
-      - Localization: Localization.md
-      - Behavior Trees: Behavior-Trees.md
-      - Nav2 Architecture: Nav2-Architecture.md
-      - Full Stack Overview: Full-Stack-Overview.md
-  - Our Code:
-      - System Architecture: System-Architecture.md
-      - sentry_bringup: sentry_bringup.md
-      - sentry_communication: sentry_communication.md
-      - sentry_description: sentry_description.md
-      - sentry_localization: sentry_localization.md
-      - sentry_navigation: sentry_navigation.md
-      - omni_pursuit_controller: omni_pursuit_controller.md
-  - Hardware & Status:
-      - Setup and Operation: Setup-and-Operation.md
-      - README (status & bugs): https://github.com/qkrt-rm/qkrt-nav#readme
+# The site navigation is generated from the wiki's _Sidebar.md (see docs_hooks/wiki.py).
+# To add a page to the site, add it to _Sidebar.md on the wiki.
