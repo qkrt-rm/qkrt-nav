@@ -38,8 +38,9 @@ def _nav_from_sidebar(path, docs_dir):
 
     A bold line with a link (**[Home](Home)**) is a top-level page; a bold line
     without one (**Concepts**) starts a section; list items below it are its pages.
+    A page listed more than once only appears under its first listing.
     """
-    nav, section = [], None
+    nav, section, seen = [], None, set()
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -57,6 +58,12 @@ def _nav_from_sidebar(path, docs_dir):
             if target is None:
                 log.info("_Sidebar.md links to missing page %r, skipping", link.group(2))
                 continue
+            # MkDocs files a page under the last section that lists it, which makes the
+            # earlier tab open the wrong section. Keep only the first listing.
+            if target in seen:
+                log.info("_Sidebar.md lists %r more than once, keeping the first", target)
+                continue
+            seen.add(target)
             is_item = re.match(r"^([-*+]|\d+\.)\s", line)
             if is_item and section is not None:
                 section.append({title: target})
