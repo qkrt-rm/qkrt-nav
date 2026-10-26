@@ -46,7 +46,7 @@ def generate_launch_description():
     use_localization = LaunchConfiguration("use_localization")
     use_localization_arg = DeclareLaunchArgument(
         "use_localization",
-        default_value="false",
+        default_value="true",
         description="Launch global localization (SLAM or AMCL). Set false to skip map entirely."
     )
 
