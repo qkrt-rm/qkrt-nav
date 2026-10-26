@@ -46,7 +46,7 @@ def generate_launch_description():
     use_localization = LaunchConfiguration("use_localization")
     use_localization_arg = DeclareLaunchArgument(
         "use_localization",
-        default_value="true",
+        default_value="false",
         description="Launch global localization (SLAM or AMCL). Set false to skip map entirely."
     )
 
@@ -141,10 +141,14 @@ def generate_launch_description():
     )
 
     # Comm hub - MCB communication (publishes /odom, /imu, subscribes /cmd_vel_rotated)
+    # No name= here: comm_hub's executable creates three nodes (nav_subscriber,
+    # odom_publisher, aim_subscriber). A name= forces a blanket __node remap that
+    # renames ALL THREE to the same name, which collides in the ROS graph
+    # ("Publisher already registered for provided node name") and shows up as
+    # multiple identical /comm_hub entries. Let each keep its own name.
     comm_hub = Node(
         package='sentry_communication',
         executable='comm_hub',
-        name='comm_hub',
         output='screen',
         remappings=[('cmd_vel', 'cmd_vel_rotated')]
     )

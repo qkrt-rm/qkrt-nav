@@ -85,10 +85,6 @@ def generate_launch_description():
         condition=UnlessCondition(use_sim_time)
     )
 
-    # In sim, Gazebo's joint_state_publisher plugin already publishes all joints
-    # (including gimbal_joint, turret_shaft_joint) with sim timestamps — running
-    # this node too would create a competing wall-clock-stamped publisher that
-    # causes TF extrapolation errors in robot_state_publisher.
     # turret_joint_state_publisher = Node(
     #     package='sentry_localization',
     #     executable='turret_joint_state_publisher.py',
@@ -101,7 +97,7 @@ def generate_launch_description():
     return LaunchDescription([
         use_sim_time_arg,
         sim_comm_hub_bridge,
-        imu_compensator_real,
+        # imu_compensator_real,  # disabled
         # turret_joint_state_publisher,
         ekf_node,
         ekf_node_real,

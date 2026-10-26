@@ -31,6 +31,11 @@ MCB_MESSAGE_TYPE_ODOM = 3
 PRIORITY_VISION = 1
 PRIORITY_NAV = 2
 
+# Set during shutdown so the background serial read/tx threads exit their loops
+# promptly instead of racing against context teardown. Checked alongside
+# rclpy.ok() in both threads.
+shutdown_event = threading.Event()
+
 def read_frame(ser):
     """Synchronize on 0xA5 and read one complete DJI serial frame.
 
@@ -209,10 +214,16 @@ class OdomPublisher(Node):
 
     def _read_loop(self):
         self.get_logger().info('Read loop started, waiting for data...')
-        while rclpy.ok():
+        while rclpy.ok() and not shutdown_event.is_set():
             frame = read_frame(serial.port)
             if frame is None:
                 continue
+
+            # read_frame can block up to its serial timeout; a shutdown may have
+            # invalidated the context in that window. Re-check before publishing
+            # so we don't throw "publisher's context is invalid" on the way out.
+            if shutdown_event.is_set() or not rclpy.ok():
+                break
 
             # Publish raw frame bytes (for debugging)
             raw_msg = UInt8MultiArray()
@@ -430,7 +441,7 @@ class OdomPublisher(Node):
 
 def serial_tx_loop(tx_queue):
     """The exclusive gateway worker thread handling safe sequential UART writes."""
-    while rclpy.ok():
+    while rclpy.ok() and not shutdown_event.is_set():
         try:
             # ADDED: Safely blocks thread until an item is pushed into the queue.
             # Drops CPU utilization to near 0% when the robot is idling.
@@ -492,11 +503,27 @@ def main():
     except KeyboardInterrupt:
         pass
     finally:
+        # Stop the background serial threads BEFORE tearing down ROS. If they
+        # keep running, they call publish()/write() against a context that is
+        # being destroyed — which raises "publisher's context is invalid" and,
+        # worse, makes destroy_node() block in destroy_when_not_in_use() because
+        # the publisher never goes idle. That block is why the process hangs on
+        # Ctrl-C and has to be pkill'd.
+        shutdown_event.set()
+        odom_publisher._thread.join(timeout=1.0)
+        tx_worker.join(timeout=1.0)
+
         send_zero_velocity()
+
+        executor.shutdown()
         nav_subscriber.destroy_node()
         odom_publisher.destroy_node()
         aim_subscriber.destroy_node()
-        rclpy.shutdown()
+
+        # rclpy's own SIGINT handler may have already shut the context down;
+        # try_shutdown() is a no-op then, instead of raising "rcl_shutdown
+        # already called on the given context".
+        rclpy.try_shutdown()
 
 
 if __name__ == "__main__":
