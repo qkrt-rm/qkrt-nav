@@ -1,0 +1,11 @@
+# Known AprilTag world poses for the competition arena
+# Each tag entry maps a tag ID to its known position and orientation in the map frame
+# Position: [x, y, z] in meters
+# Orientation: [roll, pitch, yaw] in radians
+
+tags:
+  0:
+    # Tag 36h11 ID 0 - mounted on the north wall, facing south (toward center)
+    position: [0.0, 3.95, 0.5]
+    orientation: [-1.5708, 0.0, 0.0]  # roll, pitch, yaw (empirically corrected for detection frame convention)
+    size: 0.2  # tag side length in meters

@@ -754,6 +754,14 @@
 
 
     </model>
+
+    <!-- AprilTag 36h11 marker for vision-based detection -->
+    <include>
+      <name>Apriltag36_11_00000</name>
+      <pose>0 3.95 0.5 1.5708 0 0</pose> 
+      <static>true</static>
+      <uri>model://Apriltag36_11_00000</uri>
+    </include>
     
   </world>
 </sdf>
