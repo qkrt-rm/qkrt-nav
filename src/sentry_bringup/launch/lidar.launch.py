@@ -8,8 +8,8 @@ def generate_launch_description():
 
     # LiDAR 1 (STL-19P)
     laser_driver_1 = Node(
-        package='ldlidar_stl_ros2',
-        executable='ldlidar_stl_ros2_node',
+        package='ldlidar_ros2',
+        executable='ldlidar_ros2_node',
         name='ldlidar_node_1',
         output='screen',
         parameters=[
@@ -27,8 +27,8 @@ def generate_launch_description():
 
     # LiDAR 2 (STL-19P)
     laser_driver_2 = Node(
-        package='ldlidar_stl_ros2',
-        executable='ldlidar_stl_ros2_node',
+        package='ldlidar_ros2',
+        executable='ldlidar_ros2_node',
         name='ldlidar_node_2',
         output='screen',
         parameters=[

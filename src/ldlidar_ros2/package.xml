@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>ldlidar_stl_ros2</name>
+  <name>ldlidar_ros2</name>
   <version>3.0.0</version>
   <description>The ldlidar ROS2 package</description>
   <maintainer email="support@ldrobot.com">SHENZHEN LDROBOT CO., LTD.</maintainer>

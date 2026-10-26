@@ -8,10 +8,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 
 install(PROGRAMS
-  scripts/sim_comm_hub_bridge.py
-  scripts/imu_turret_compensator.py
   scripts/generate_keepout_from_sdf.py
-  scripts/turret_joint_state_publisher.py
+
   DESTINATION lib/${PROJECT_NAME}
 )
 
